@@ -76,31 +76,46 @@ body {
 }
 
 .hero {
+
+  min-height: 100vh;
+
   max-width: 1200px;
+
   margin: 0 auto;
+
   padding: 140px 40px 80px;
 
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
-  gap: 80px;
+
+  gap: 100px;
+
 }
 
 .hero-text {
   flex: 1;
-  max-width: 500px;
+  max-width: 550px;
 }
 
 .hero-text h1 {
-  font-size: 56px;
-  color: #676F54;
-  margin-bottom: 20px;
+  font-size: 72px;
+
+  line-height: 1.1;
+
+  margin-bottom: 25px;
 }
 
 .hero-text p {
   font-size: 20px;
-  line-height: 1.6;
-  margin-bottom: 30px;
+
+  line-height: 1.7;
+
+  margin-bottom: 35px;
+
+  color: #555;
 }
 
 .hero-image {
@@ -109,10 +124,11 @@ body {
 }
 
 .hero-image img {
-  width: 100%;
+  width: 540;
   max-width: 520px;
   border-radius: 30px;
-  margin-bottom: -50px;
+  margin-bottom: -40px;
+  display: block;
 }
 
 .cards-section {
