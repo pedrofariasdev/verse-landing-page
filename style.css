@@ -32,17 +32,63 @@ body {
 
 }
 
-.logo img {
+.logo {
+  display: flex;
 
-  width: 480px;
+  flex-direction: column;
 
-  position: absolute;
-
-  top: -190px;
-
-  left: 55px;
+  align-items: flex-start;
 
 }
+
+.logo-link {
+
+  display: inline-flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  text-decoration: none;
+
+}
+
+.logo-link h1 {
+
+  font-family: 'Belleza', sans-serif;
+
+  font-size: 64px;
+
+  font-weight: 300;
+
+  letter-spacing: 4px;
+
+  color: #6d9195;
+
+  margin: 0;
+
+}
+
+.logo-line {
+
+  width: 100%;
+
+  height: 4px;
+
+  background-color: #d4af37;
+
+  border-radius: 20px;
+
+  margin-top: 8px;
+
+}
+
+
+.logo img {
+  width: 220px;
+  display: block;
+}
+
 .nav-buttons {
   display: flex;
   gap: 15px;
@@ -75,6 +121,95 @@ body {
   color: white;
 }
 
+.hero-banner {
+
+  width: 100%;
+
+  margin-top: 90px;
+
+}
+
+.carousel {
+
+  position: relative;
+
+  width: 100%;
+
+  overflow: hidden;
+
+}
+
+.slide {
+
+  position: absolute;
+
+  width: 100%;
+
+  opacity: 0;
+
+  transition: opacity 0.5s ease;
+
+}
+
+.slide.active {
+
+  opacity: 1;
+
+  position: relative;
+
+}
+
+.slide img {
+
+  width: 100%;
+
+  display: block;
+
+  border-radius: 30px;
+
+}
+
+.button-more {
+
+  position: absolute;
+
+  bottom: 120px;
+
+  left: 200px;
+
+}
+
+.btn {
+
+  text-decoration: none;
+
+  padding: 12px 22px;
+
+  border-radius: 30px;
+
+  transition: 0.3s;
+
+}
+
+.btn-more {
+
+  background-color: #79B4A9;
+
+  color: white;
+
+  font-size: 40px;
+
+  padding: 18px 40px;
+
+}
+
+.btn-more:hover {
+
+  background-color: #676F54;
+
+}
+
+
 .hero {
 
   min-height: 100vh;
@@ -83,7 +218,7 @@ body {
 
   margin: 0 auto;
 
-  padding: 140px 40px 80px;
+  padding: 30px 10px 200px;
 
   display: flex;
 
@@ -125,9 +260,9 @@ body {
 
 .hero-image img {
   width: 540;
-  max-width: 520px;
+  max-width: 550px;
   border-radius: 30px;
-  margin-bottom: -40px;
+  margin-bottom: -30px;
   display: block;
 }
 
@@ -139,11 +274,11 @@ body {
 }
 
 .cards-section h2 {
-  font-size: 38px;
+  font-size: 48px;
   color: #676F54;
   margin-bottom: 40px;
   position: relative;
-  top: -100px;
+  top: -200px;
 }
 
 .cards-container {
@@ -161,10 +296,9 @@ body {
   box-shadow: 0 10px 30px rgba(0,0,0,0.08);
   text-align: left;
   position: relative;
-  top: -100px;
+  top: -150px;
   
 }
-.cqrd
 
 .card h3 {
   color: #676F54;
