@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Verse Feed</title>
+
+  <link rel="stylesheet" href="feed.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Belleza&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+
+  <nav class="navbar">
+
+    <!-- LOGO -->
+
+    <div class="logo">
+
+      <a href="feed.html" class="logo-link">
+
+        <h1>VERSE</h1>
+
+        <div class="logo-line"></div>
+
+      </a>
+
+    </div>
+
+    <!-- MENU -->
+
+    <div class="search-area">
+        <input type="text" placeholder="Pesquisar na Verse...">
+
+        <div class="menu-icons">
+            <a href="#" title="Feed">🏠</a>
+            <a href="#" title="Biblioteca">📚</a>
+            <a href="#" title="Comunidade">👥</a>
+        </div>
+    </div>
+
+    <!-- AÇÕES -->
+
+    <div class="nav-actions">
+
+      <button class="notification-btn">
+        🔔
+      </button>
+
+      <div class="profile-btn">
+        <a href="profile.html">
+        <img src="profile.png" alt="Foto do perfil">
+        </a>
+
+      </div>
+
+    </div>
+
+  </nav>
+
+  <!-- LAYOUT -->
+
+  <main class="app-layout">    
+
+    <aside class="sidebar-left">
+        <h2>Menu</h2>
+
+        <nav class="side-menu">
+            <a href="profile.html">Perfil</a>
+            <a href="#">Publicações</a>
+            <a href="#">Histórias</a>
+            <a href="#">Livros</a>
+            <a href="#">Projetos</a>
+            <a href="#">Mensagens</a>
+            <a href="#">Parcerias</a>
+            <a href="#">Eventos</a>
+            <a href="#">Configurações</a>
+        </nav>
+
+
+
+
+    </aside>
+
+    <section class="feed-main">
+        <h2>Feed</h2>
+        <div class="create-post-card">
+
+            <div class="create-post">
+                <img src="profile.png" alt="Foto do perfil">
+                <textarea placeholder="O que você está lendo?"></textarea>
+            </div>
+
+            <div class="createpost-actions">
+                <button>📖 Lendo</button>
+                <button>✍️ Escrevendo</button>
+                <button>⭐ Recomendando</button>
+                <button>📷 Foto</button>
+                <button>📎 Anexo</button>
+            </div>
+
+            <div class="publish-area">
+                <button class="post-btn">Publicar</button>
+            </div>
+
+        </div>
+
+        <article class="post-card">
+
+            <div class="post-header">
+
+                    <img src="profile.png" alt="Foto do autor">
+
+                <div class="post-user-info">
+                    <h3>Caio Martins</h3>
+                    <span>@caiomartins · há 12 min</span>
+                </div>
+
+            </div>
+
+            <p class="post-status">
+                Caio Martins publicou uma citação
+            </p>
+
+            <div class="quote-post">
+                <p>
+                    “Algumas histórias não começam quando abrimos um livro, mas quando finalmente temos coragem de escrever a primeira linha.”
+                </p>
+            </div>
+
+            <div class="post-actions">
+
+                <button>♡ Curtir</button>
+
+                <button>💬 Comentar</button>
+
+                <button>↻ Repostar</button>
+
+                <button>❝ Citar</button>
+
+                <button>↗ Compartilhar</button>
+
+            </div>
+
+
+        
+        </article>
+
+        <article class="post-card">
+
+            <div class="post-header">
+
+                    <img src="profile.png" alt="Foto do autor">
+
+                <div class="post-user-info">
+                    <h3>Caio Martins</h3>
+                    <span>@caiomartins · há 12 min</span>
+                </div>
+
+            </div>
+            <p class="post-status">
+                Caio Martins está lendo <strong>“Duna”</strong>
+            </p>
+
+            <p class="post-text">
+                Estou completamente preso nesse universo. A construção política e a atmosfera do livro são absurdas até agora.
+            </p>
+
+            <div class="post-image">
+                <img src="post.png" alt="Imagem da postagem">
+            </div>
+
+            <div class="post-actions">
+
+                <button>♡ Curtir</button>
+
+                <button>💬 Comentar</button>
+
+                <button>↻ Repostar</button>
+
+                <button>❝ Citar</button>
+
+                <button>↗ Compartilhar</button>
+
+            </div>
+
+        </article>
+    </section>
+
+    <aside class="sidebar-right">
+
+        <h2>Tendências</h2>
+
+             <div class="trend-card">
+                <span>#romance</span>
+                <p>128 publicações hoje</p>
+            </div>
+
+        <div class="trend-card">
+         <span>#fantasia</span>
+            <p>92 histórias novas</p>
+        </div>
+
+        <div class="trend-card">
+             <span>#escritaCriativa</span>
+             <p>Autores comentando agora</p>
+        </div>
+
+        <div class="trend-card">
+            <span>Livro em destaque</span>
+            <p>“A Biblioteca da Meia-Noite”</p>
+        </div>
+
+    </aside>
+
+  </main>
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>

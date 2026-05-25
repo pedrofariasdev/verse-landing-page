@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Verse - Perfil</title>
+
+  <link rel="stylesheet" href="profile.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Belleza&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <nav class="navbar">
+
+    <div class="logo">
+      <a href="feed.html" class="logo-link">
+        <h1>VERSE</h1>
+        <div class="logo-line"></div>
+      </a>
+    </div>
+
+    <div class="search-area">
+      <input type="text" placeholder="Pesquisar na Verse...">
+    </div>
+
+    <div class="nav-actions">
+
+      <p>Caio Martins</p>
+
+      <a href="profile.html" class="profile-btn">
+        <img src="https://i.pravatar.cc/300" alt="Foto do perfil">
+      </a>
+
+      <button class="notification-btn">
+        🔔
+      </button>
+
+    </div>
+
+  </nav>
+
+  <main class="app-layout">
+
+    <aside class="sidebar-left">
+
+      <h2>Perfil</h2>
+
+      <nav class="side-menu">
+        <a href="profile.html">Editar Perfil</a>
+        <a href="#">Publicações</a>
+        <a href="#">Histórias</a>
+        <a href="#">Livros</a>
+        <a href="#">Comunidades</a>
+      </nav>
+
+    </aside>
+
+    <section class="feed-main">
+        <a href="feed.html" class="back-btn">
+            ← Voltar
+        </a>
+
+      <div class="profile-banner">
+         <button class="edit-banner-btn">📷</button>
+      </div>
+
+      <div class="profile-info-card">
+
+        <div class="profile-avatar">
+          <img src="https://i.pravatar.cc/300" alt="Foto do perfil">
+          <button class="edit-avatar-btn">📷</button>
+        </div>
+
+        <div class="profile-info">
+
+          <h2>Caio Martins</h2>
+
+          <span class="profile-tags">
+            escritor · leitor · designer
+          </span>
+
+          <p class="profile-bio">
+            “Algumas histórias não começam quando abrimos um livro, mas quando finalmente temos coragem de escrever a primeira linha.”
+          </p>
+
+          <div class="profile-stats">
+
+            <div class="stat-box">
+              <strong>24</strong>
+              <span>Publicações</span>
+            </div>
+
+            <div class="stat-box">
+              <strong>8</strong>
+              <span>Histórias</span>
+            </div>
+
+            <div class="stat-box">
+              <strong>12</strong>
+              <span>Livros</span>
+            </div>
+
+            <div class="stat-box">
+              <strong>180</strong>
+              <span>Seguidores</span>
+            </div>
+
+            <div class="stat-box">
+              <strong>5</strong>
+              <span>Comunidades</span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="create-post-card">
+
+        <div class="create-post">
+          <img src="https://i.pravatar.cc/300" alt="Foto do perfil">
+          <textarea placeholder="O que você está lendo?"></textarea>
+        </div>
+
+        <div class="createpost-actions">
+          <button>📖 Lendo</button>
+          <button>✍️ Escrevendo</button>
+          <button>⭐ Recomendando</button>
+          <button>📷 Foto</button>
+          <button>📎 Anexo</button>
+        </div>
+
+        <div class="publish-area">
+          <button class="post-btn">Publicar</button>
+        </div>
+
+      </div>
+
+    </section>
+
+    <aside class="sidebar-right">
+
+      <h2>Amigos</h2>
+
+        <div class="trend-card">
+            <img src="https://i.pravatar.cc/300" alt="Foto do perfil">
+
+            <span>Caio Martins</span>
+
+            <p class="friend-tags">
+                leitor · writer · designer · ...
+            </p>
+
+            <button>+ Adicionar</button>
+        </div>
+
+    </aside>
+
+  </main>
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>

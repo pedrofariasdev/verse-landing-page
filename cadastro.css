@@ -13,7 +13,7 @@ body {
 
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: right;
 
     padding: 20px;
     line-height: 1.6;
@@ -41,14 +41,77 @@ body {
   transform: translateX(-4px);
 }
 
-.login-logo {
+.page-cadastro {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 40px;
+
+  padding: 20px 40px;
+}
+
+.page-cadastro-image {
+  display: flex;
+  align-items: center;
+}
+
+.left-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.page-cadastro-image img {
+  width: 100%;
+  max-width: 430px;
+
+  display: block;
+}
+
+.quote {
+  margin-top: -5px;
+  text-align: center;
+}
+
+.quote p {
+  font-family: 'Belleza', sans-serif;
+  font-size: 22px;
+
+  font-style: italic;
+  line-height: 1.4;
+
+  color: #676F54;
+}
+
+.quote span {
+  display: block;
+
+  margin-top: 10px;
+
+  font-size: 15px;
+  letter-spacing: 1px;
+
+  color: #8A8A8A;
+}
+
+
+.cadastro-container {
+  width: 100%;
+  max-width: 420px;
+}
+
+.cadastro-logo {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 28px;
 }
 
-.login-logo h1 {
+.cadastro-logo h1 {
     font-family: "Belleza", sans-serif;
     font-size: 58px;
     font-weight: 400;
@@ -58,7 +121,7 @@ body {
     line-height: 1;
 }
 
-.login-logo .logo-line {
+.cadastro-logo .logo-line {
     width: 140px;
     height: 4px;
     background: #D4AF37;
@@ -66,27 +129,27 @@ body {
     margin-top: 10px;
 }
 
-.login-container {
+.cadastro-container {
     width: 100%;
     max-width: 420px;
+    
 }
-
-.login-card {
+.cadastro-card {
     background: rgba(255, 255, 255, 0.92);
     border-radius: 28px;
-    padding: 40px;
+    padding: 25px;
     border: 1px solid rgba(103, 111, 84, 0.15);
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
     backdrop-filter: blur(10px);
-    
+
 }
 
-.login-header {
+.cadastro-header {
     text-align: center;
     margin-bottom: 32px;
 }
 
-.login-header h2 {
+.cadastro-header h2 {
     font-family: "Belleza", sans-serif;
     font-size: 2.4rem;
     font-weight: 400;
@@ -95,7 +158,7 @@ body {
     margin-bottom: 10px;
 }
 
-.login-header p {
+.cadastro-header p {
     color: #4f5f57;
     font-size: 0.95rem;
 }
@@ -277,7 +340,7 @@ body {
 }
 
 /* Button */
-.login-btn {
+.cadastro-btn {
     width: 100%;
     background: #676F54;
     border: none;
@@ -294,7 +357,7 @@ body {
     margin-bottom: 24px;
 }
 
-.login-btn:hover {
+.cadastro-btn:hover {
 
     background: #79B4A9;
     transform: translateY(-2px);
@@ -302,12 +365,12 @@ body {
 }
 
 
-.login-btn:active {
+.cadastro-btn:active {
     transform: translateY(0);
 }
 
 /* Loading */
-.login-btn.loading {
+.cadastro-btn.loading {
     pointer-events: none;
     background: #9CC69B;
 }
@@ -334,11 +397,11 @@ body {
     transition: opacity 0.2s ease;
 }
 
-.login-btn.loading .btn-text {
+.cadastro-btn.loading .btn-text {
     opacity: 0;
 }
 
-.login-btn.loading .btn-loader {
+.cadastro-btn.loading .btn-loader {
     opacity: 1;
 }
 
@@ -432,13 +495,13 @@ body {
 
 /* Mobile */
 @media (max-width: 480px) {
-    .login-card {
+    .cadastro-card {
         padding: 28px;
         margin: 10px;
         border-radius: 22px;
     }
 
-    .login-header h2 {
+    .cadastro-header h2 {
         font-size: 2rem;
     }
 
