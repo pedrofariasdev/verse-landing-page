@@ -136,6 +136,7 @@ body {
     border: 1px solid rgba(103, 111, 84, 0.15);
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
     backdrop-filter: blur(10px);
+    max-width: 480px;
 
 }
 
@@ -208,131 +209,15 @@ body {
 .input-wrapper input:focus + label,
 .input-wrapper input:valid + label,
 .input-wrapper input.has-value + label {
-    transform: translateY(-9px) scale(0.85);
+     transform: translateY(-16px) scale(0.80);
     color: #79B4A9;
     font-weight: 600;
-}
-
-/* Password Toggle */
-.password-wrapper {
-    position: relative;
-}
-
-.password-wrapper input {
-    padding-right: 50px;
-}
-
-.password-toggle {
-    position: absolute;
-    right: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 8px;
-    color: #676F54;
-    transition: 0.2s ease;
-}
-
-.password-toggle:hover {
-    color: #79B4A9;
-}
-
-/* Error */
-.error-message {
-    display: block;
-    color: #b91c1c;
-    font-size: 0.75rem;
-    font-weight: 500;
-    margin-top: 6px;
-    margin-left: 6px;
-    opacity: 0;
-    transform: translateY(-4px);
-    transition: 0.2s ease;
-}
-
-.error-message.show {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 .form-group.error .input-wrapper input {
     border-color: #b91c1c;
 }
 
-/* Options */
-.form-options {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    margin-bottom: 26px;
-    flex-wrap: wrap;
-    gap: 12px;
-}
-
-.remember-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-}
-
-.remember-wrapper input[type="checkbox"] {
-    display: none;
-}
-
-.checkbox-label {
-    color: #4f5f57;
-    font-size: 0.875rem;
-    cursor: pointer;
-    user-select: none;
-
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.checkmark {
-    width: 17px;
-    height: 17px;
-    border: 2px solid #9CC69B;
-    border-radius: 5px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    transition: 0.2s ease;
-    flex-shrink: 0;
-    background: white;
-}
-
-.remember-wrapper input[type="checkbox"]:checked ~ .checkbox-label .checkmark {
-    background: #79B4A9;
-    border-color: #79B4A9;
-}
-
-.remember-wrapper input[type="checkbox"]:checked ~ .checkbox-label .checkmark::after {
-    content: "✓";
-    color: white;
-    font-size: 10px;
-    font-weight: bold;
-}
-
-.forgot-password {
-    color: #676F54;
-    text-decoration: none;
-    font-size: 0.875rem;
-    font-weight: 600;
-    transition: 0.2s ease;
-}
-
-.forgot-password:hover {
-    color: #79B4A9;
-}
 
 /* Button */
 .waitlist-btn {
@@ -400,28 +285,32 @@ body {
     opacity: 1;
 }
 
-/* Signup Link */
-.signup-link {
-    text-align: center;
-}
-
-.signup-link p {
-    color: #4f5f57;
-    font-size: 0.875rem;
-}
-
-.signup-link a {
-    color: #676F54;
-    text-decoration: none;
-    font-weight: 700;
-    transition: 0.2s ease;
-}
-
-.signup-link a:hover {
-    color: #79B4A9;
-}
 
 /* Success */
+
+.success-link {
+    display: inline-block;
+
+    margin-top: 24px;
+    padding: 14px 28px;
+
+    background: #6F765A;
+    color: white;
+
+    border-radius: 999px;
+
+    text-decoration: none;
+    font-weight: 600;
+
+    transition: all 0.3s ease;
+}
+
+.success-link:hover {
+    background: #7FB3A8;
+    transform: translateY(-2px);
+}
+
+
 .success-message {
     display: none;
     text-align: center;
@@ -464,16 +353,48 @@ body {
 .success-message p {
     color: #4f5f57;
     font-size: 0.875rem;
+
 }
 
-/* Icons */
-.eye-icon {
+.error-message {
     display: block;
-    width: 20px;
-    height: 20px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+    color: #b91c1c;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-top: 6px;
+    margin-left: 6px;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: 0.2s ease;
+}
+
+.error-message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.form-group.error .input-wrapper input {
+    border-color: #b91c1c;
+}
+
+.form-group.shake {
+    animation: shake 0.35s ease;
+}
+
+.success-message {
+    display: none;
+}
+
+.success-message.show {
+    display: block;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    50% { transform: translateX(6px); }
+    75% { transform: translateX(-4px); }
+    100% { transform: translateX(0); }
 }
 
 /* Animations */
