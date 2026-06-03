@@ -104,7 +104,7 @@ waitlistForm.addEventListener("submit", async (event) => {
         return;
     }
 
-    await fetch(`${supabaseUrl}/functions/v1/send-waitlist-email`, {
+    const emailResponse = await fetch(`${supabaseUrl}/functions/v1/send-waitlist-email`, {
     method: "POST",
     headers: {
         "Content-Type": "application/json"
@@ -113,7 +113,11 @@ waitlistForm.addEventListener("submit", async (event) => {
         name: name,
         email: email
     })
-});
+    });
+
+    const emailResult = await emailResponse.json();
+
+    console.log("Resultado do envio de e-mail:", emailResult);
 
     waitlistForm.style.display = "none";
     successMessage.classList.add("show");
