@@ -104,6 +104,17 @@ waitlistForm.addEventListener("submit", async (event) => {
         return;
     }
 
+    await fetch(`${supabaseUrl}/functions/v1/send-waitlist-email`, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        name: name,
+        email: email
+    })
+});
+
     waitlistForm.style.display = "none";
     successMessage.classList.add("show");
 });
