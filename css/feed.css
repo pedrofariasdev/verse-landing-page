@@ -509,3 +509,146 @@ body {
   line-height: 1.5;
   color: #676F54;
 }
+
+/* =========================
+   RESPONSIVO - FEED
+========================= */
+
+@media (max-width: 1200px) {
+
+  .app-layout {
+    grid-template-columns: 220px 1fr;
+  }
+
+  .sidebar-right {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+
+  .navbar {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 15px;
+    gap: 15px;
+  }
+
+  .search-area {
+    order: 3;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .logo-link h1 {
+    font-size: 34px;
+  }
+
+  .nav-actions {
+    gap: 10px;
+  }
+
+  .app-layout {
+    grid-template-columns: 1fr;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 150px;
+  }
+
+  .sidebar-left {
+    min-height: auto;
+  }
+
+  .sidebar-right {
+    display: none;
+  }
+
+  .feed-main {
+    min-height: auto;
+  }
+
+  .post-card,
+  .create-post-card {
+    padding: 18px;
+  }
+
+  .createpost-actions {
+    padding-left: 0;
+    justify-content: center;
+  }
+
+  .post-image img {
+    max-height: 300px;
+  }
+
+  .quote-post {
+    padding: 20px;
+  }
+
+  .quote-post p {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .navbar {
+    padding: 10px;
+  }
+
+  .logo-link h1 {
+    font-size: 28px;
+  }
+
+  .logo-line {
+    height: 3px;
+  }
+
+  .search-area input {
+    height: 42px;
+    font-size: 14px;
+  }
+
+  .notification-btn,
+  .profile-btn img {
+    width: 42px;
+    height: 42px;
+  }
+
+  .menu-icons a {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .post-header {
+    gap: 10px;
+  }
+
+  .post-header img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .post-header h3 {
+    font-size: 15px;
+  }
+
+  .post-text {
+    font-size: 15px;
+  }
+
+  .quote-post p {
+    font-size: 18px;
+  }
+
+  .post-btn {
+    width: 100%;
+  }
+
+  .create-post textarea {
+    min-height: 70px;
+    font-size: 14px;
+  }
+}

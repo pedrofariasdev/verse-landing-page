@@ -444,3 +444,107 @@ body {
     }
 }
 
+/* =========================
+   RESPONSIVO - WAITLIST
+========================= */
+
+@media (max-width: 900px) {
+
+    body {
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .back-button {
+        top: 20px;
+        left: 20px;
+        font-size: 16px;
+    }
+
+    .page-waitlist {
+        flex-direction: column;
+        gap: 25px;
+        padding: 80px 20px 30px;
+    }
+
+    .left-side {
+        order: 1;
+    }
+
+    .waitlist-container {
+        order: 2;
+        max-width: 420px;
+    }
+
+    .waitlist-page-image img {
+        max-width: 300px;
+    }
+
+    .quote p {
+        font-size: 18px;
+    }
+
+    .quote span {
+        font-size: 13px;
+    }
+
+    .waitlist-logo h1 {
+        font-size: 46px;
+    }
+
+    .waitlist-header h3 {
+        font-size: 2rem;
+    }
+
+    .waitlist-card {
+        padding: 28px;
+        border-radius: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .page-waitlist {
+        padding: 75px 12px 25px;
+    }
+
+    .waitlist-page-image img {
+        max-width: 230px;
+    }
+
+    .waitlist-card {
+        padding: 24px 20px;
+    }
+
+    .waitlist-logo h1 {
+        font-size: 40px;
+        letter-spacing: 4px;
+    }
+
+    .waitlist-logo .logo-line {
+        width: 110px;
+    }
+
+    .waitlist-header h3 {
+        font-size: 1.7rem;
+    }
+
+    .waitlist-header p {
+        font-size: 0.9rem;
+    }
+
+    .input-wrapper input {
+        font-size: 15px;
+        padding: 15px 16px 10px;
+    }
+
+    .waitlist-btn {
+        padding: 14px 20px;
+    }
+
+    .success-link {
+        width: 100%;
+        text-align: center;
+    }
+}
+

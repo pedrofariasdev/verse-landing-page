@@ -493,38 +493,102 @@ body {
     100% { transform: scale(1); }
 }
 
-/* Mobile */
-@media (max-width: 480px) {
-    .cadastro-card {
-        padding: 28px;
-        margin: 10px;
-        border-radius: 22px;
+/* =========================
+   RESPONSIVO - CADASTRO
+========================= */
+
+@media (max-width: 900px) {
+
+    body {
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .back-button {
+        top: 20px;
+        left: 20px;
+        font-size: 16px;
+    }
+
+    .page-cadastro {
+        flex-direction: column;
+        gap: 25px;
+        padding: 80px 20px 30px;
+    }
+
+    .left-side {
+        order: 1;
+    }
+
+    .cadastro-container {
+        order: 2;
+        max-width: 420px;
+    }
+
+    .page-cadastro-image img {
+        max-width: 300px;
+    }
+
+    .quote p {
+        font-size: 18px;
+    }
+
+    .quote span {
+        font-size: 13px;
+    }
+
+    .cadastro-logo h1 {
+        font-size: 46px;
     }
 
     .cadastro-header h2 {
         font-size: 2rem;
     }
 
-    .form-options {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
+    .cadastro-card {
+        padding: 28px;
+        border-radius: 24px;
     }
 }
 
-/* Accessibility */
-:focus-visible {
-    outline: 2px solid #79B4A9;
-    outline-offset: 3px;
-    border-radius: 8px;
-}
+@media (max-width: 480px) {
 
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
+    .page-cadastro {
+        padding: 75px 12px 25px;
+    }
+
+    .page-cadastro-image img {
+        max-width: 230px;
+    }
+
+    .cadastro-card {
+        padding: 24px 20px;
+    }
+
+    .cadastro-logo h1 {
+        font-size: 40px;
+        letter-spacing: 4px;
+    }
+
+    .cadastro-logo .logo-line {
+        width: 110px;
+    }
+
+    .cadastro-header h2 {
+        font-size: 1.7rem;
+    }
+
+    .cadastro-header p {
+        font-size: 0.9rem;
+    }
+
+    .input-wrapper input {
+        font-size: 15px;
+        padding: 15px 16px 10px;
+    }
+
+    .cadastro-btn {
+        padding: 14px 20px;
     }
 }
 

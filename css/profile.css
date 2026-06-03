@@ -675,3 +675,217 @@ body {
   background-color: #676F54;
   transform: translateY(-2px);
 }
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================
+   RESPONSIVO - PROFILE
+========================= */
+
+@media (max-width: 1200px) {
+
+  .app-layout {
+    grid-template-columns: 220px 1fr;
+  }
+
+  .sidebar-right {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+
+  .navbar {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 15px;
+    gap: 15px;
+  }
+
+  .logo-link h1 {
+    font-size: 34px;
+  }
+
+  .search-area {
+    order: 3;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .nav-actions {
+    gap: 10px;
+  }
+
+  .app-layout {
+    grid-template-columns: 1fr;
+    padding-top: 150px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .sidebar-left,
+  .sidebar-right {
+    display: none;
+  }
+
+  .profile-banner {
+    height: 190px;
+  }
+
+  .profile-info-card {
+    padding: 90px 22px 28px;
+  }
+
+  .profile-avatar {
+    top: -65px;
+    left: 22px;
+  }
+
+  .profile-avatar img {
+    width: 125px;
+    height: 125px;
+  }
+
+  .profile-info h2 {
+    font-size: 34px;
+  }
+
+  .profile-bio {
+    font-size: 16px;
+  }
+
+  .profile-stats {
+    justify-content: center;
+  }
+
+  .stat-box {
+    flex: 1 1 140px;
+  }
+
+  .createpost-actions {
+    padding-left: 0;
+    justify-content: center;
+  }
+
+  .publish-area {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .navbar {
+    padding: 10px;
+  }
+
+  .logo-link h1 {
+    font-size: 28px;
+  }
+
+  .logo-line {
+    height: 3px;
+  }
+
+  .search-area input {
+    height: 42px;
+    font-size: 14px;
+  }
+
+  .notification-btn,
+  .profile-btn img {
+    width: 42px;
+    height: 42px;
+  }
+
+  .profile-banner {
+    height: 150px;
+  }
+
+  .edit-banner-btn {
+    width: 38px;
+    height: 38px;
+    right: 15px;
+    bottom: 15px;
+  }
+
+  .profile-info-card {
+    padding: 75px 18px 24px;
+  }
+
+  .profile-avatar {
+    top: -55px;
+    left: 18px;
+  }
+
+  .profile-avatar img {
+    width: 105px;
+    height: 105px;
+  }
+
+  .edit-avatar-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 13px;
+  }
+
+  .profile-info h2 {
+    font-size: 28px;
+  }
+
+  .profile-tags {
+    font-size: 14px;
+  }
+
+  .profile-bio {
+    font-size: 15px;
+  }
+
+  .profile-stats {
+    gap: 10px;
+  }
+
+  .stat-box {
+    padding: 14px 12px;
+    min-width: 120px;
+  }
+
+  .stat-box strong {
+    font-size: 22px;
+  }
+
+  .create-post {
+    gap: 10px;
+  }
+
+  .create-post img {
+    width: 42px;
+    height: 42px;
+  }
+
+  .create-post textarea {
+    min-height: 75px;
+    font-size: 14px;
+  }
+
+  .createpost-actions button,
+  .post-btn {
+    width: 100%;
+  }
+}

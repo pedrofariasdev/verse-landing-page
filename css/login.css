@@ -465,3 +465,121 @@ body {
     }
 }
 
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================
+   RESPONSIVO - LOGIN
+========================= */
+
+@media (max-width: 768px) {
+
+    body {
+        padding: 15px;
+    }
+
+    .back-button {
+        top: 20px;
+        left: 20px;
+        font-size: 16px;
+    }
+
+    .login-container {
+        max-width: 100%;
+    }
+
+    .login-card {
+        padding: 30px 24px;
+    }
+
+    .login-logo h1 {
+        font-size: 46px;
+        letter-spacing: 4px;
+    }
+
+    .login-header h2 {
+        font-size: 2rem;
+    }
+
+    .login-header p {
+        font-size: 0.9rem;
+    }
+
+    .form-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    body {
+        padding: 10px;
+    }
+
+    .back-button {
+        top: 15px;
+        left: 15px;
+        font-size: 15px;
+    }
+
+    .login-card {
+        padding: 24px 18px;
+        border-radius: 20px;
+    }
+
+    .login-logo h1 {
+        font-size: 40px;
+        letter-spacing: 3px;
+    }
+
+    .login-logo .logo-line {
+        width: 100px;
+    }
+
+    .login-header h2 {
+        font-size: 1.7rem;
+    }
+
+    .login-header p {
+        font-size: 0.85rem;
+    }
+
+    .input-wrapper input {
+        font-size: 15px;
+        padding: 15px 16px 10px;
+    }
+
+    .checkbox-label {
+        font-size: 0.8rem;
+    }
+
+    .forgot-password {
+        font-size: 0.8rem;
+    }
+
+    .login-btn {
+        padding: 14px 18px;
+    }
+
+    .signup-link p {
+        font-size: 0.8rem;
+    }
+}
+
