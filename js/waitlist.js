@@ -121,4 +121,4 @@ waitlistForm.addEventListener("submit", async (event) => {
 
     waitlistForm.style.display = "none";
     successMessage.classList.add("show");
-});
+}); 
