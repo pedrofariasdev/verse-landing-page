@@ -35,7 +35,7 @@ Deno.serve(async (req) => {
       body: JSON.stringify({
         from: "Verse <contato@verseonline.pt>",
         to: [email],
-        subject: "Bem-vindo à lista de espera da Verse 📚",
+        subject: "Sua vaga na Verse foi reservada 📚",
         html: `
           <div style="font-family: Arial, sans-serif; background:#f8f8f5; padding:40px;">
             <div style="max-width:600px; margin:0 auto; background:white; padding:40px; border-radius:24px;">
@@ -61,12 +61,27 @@ Deno.serve(async (req) => {
 
               <div style="margin:35px 0; padding:22px; background:#D7F2BA; border-radius:18px;">
                 <p style="margin:0; color:#2b2b2b; line-height:1.6;">
-                  Obrigado por fazer parte do começo da Verse. Toda grande comunidade começa com uma primeira história.
+                  Obrigado por acreditar na Verse desde o início. As melhores histórias começam com uma única página — e você está escrevendo a primeira conosco.
                 </p>
               </div>
 
-              <p style="color:#676F54; font-weight:bold;">
-                — Equipe Verse
+              <hr style="border:none; border-top:1px solid #d9e0cf; margin:30px 0;">
+
+              <p style="color:#676F54; font-weight:bold; margin-bottom:10px;">
+                - Equipe Verse
+              </p>
+
+              <p style="color:#8a927b; font-size:14px; line-height:1.6;">
+                Rede social literária para leitores, escritores e criadores.
+              </p>
+
+              <p style="color:#8a927b; font-size:14px; line-height:1.6;">
+                🌐 verseonline.pt<br>
+                ✉️ contato@verseonline.pt
+              </p>
+
+              <p style="color:#a0a792; font-size:12px; margin-top:20px;">
+                   Você está recebendo este e-mail porque se inscreveu na lista de espera da Verse.
               </p>
             </div>
           </div>
