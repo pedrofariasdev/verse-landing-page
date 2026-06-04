@@ -81,7 +81,7 @@ Deno.serve(async (req) => {
               </p>
 
               <p style="color:#a0a792; font-size:12px; margin-top:20px;">
-                   Você está recebendo este e-mail porque se inscreveu na lista de espera da Verse.
+                Você está recebendo este e-mail porque se inscreveu na lista de espera da Verse.
               </p>
             </div>
           </div>
