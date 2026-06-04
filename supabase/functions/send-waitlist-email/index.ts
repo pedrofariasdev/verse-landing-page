@@ -33,7 +33,7 @@ Deno.serve(async (req) => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "Verse <onboarding@resend.dev>",
+        from: "Verse <contato@verseonline.pt>",
         to: [email],
         subject: "Bem-vindo à lista de espera da Verse 📚",
         html: `
