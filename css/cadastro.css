@@ -474,11 +474,16 @@ body {
 /*error messagbe*/
 
 .error-message {
-  display: block;
-  color: #c0392b;
-  font-size: 0.85rem;
-  margin-top: 6px;
-  margin-left: 12px;
+    display: block;
+    color: #c0392b;
+    font-size: 0.85rem;
+    margin-top: 6px;
+    margin-left: 12px;
+    min-height: 18px;
+}
+
+.error-message:not(:empty) {
+    margin-bottom: 10px;
 }
 
 /* Icons */
