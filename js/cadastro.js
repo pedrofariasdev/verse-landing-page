@@ -79,7 +79,11 @@ cadastroForm.addEventListener("submit", async function (event) {
 
   if (error) {
     console.error("Erro Supabase:", error.message);
-    emailError.textContent = error.message;
+    if (error.message.includes("rate limit")) {
+  emailError.textContent = "Muitas tentativas. Aguarde alguns minutos e tente novamente.";
+    } else {
+  emailError.textContent = error.message;
+    }
     return;
   }
 
