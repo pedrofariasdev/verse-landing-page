@@ -1,8 +1,8 @@
-    console.log("Cadastro.js carregado!");
+console.log("Cadastro.js carregado!");
 
-    const cadastroForm = document.getElementById("cadastroForm");
+const cadastroForm = document.getElementById("cadastroForm");
 
-    cadastroForm.addEventListener("submit", async function (event) {
+cadastroForm.addEventListener("submit", async function (event) {
   event.preventDefault();
 
   const fullName = document.getElementById("name").value.trim();
@@ -14,15 +14,15 @@
   const emailError = document.getElementById("emailError");
   const passwordError = document.getElementById("passwordError");
   const confirmPasswordError = document.getElementById("confirmPasswordError");
+  const successMessage = document.getElementById("successMessage");
+  const cadastroBtn = document.querySelector(".cadastro-btn");
 
   nameError.textContent = "";
   emailError.textContent = "";
   passwordError.textContent = "";
   confirmPasswordError.textContent = "";
 
-  const partesNome = fullName
-    .split(" ")
-    .filter(parte => parte.length > 0);
+  const partesNome = fullName.split(" ").filter(parte => parte.length > 0);
 
   if (partesNome.length < 2) {
     nameError.textContent = "Por favor, informe nome e sobrenome.";
@@ -61,29 +61,30 @@
     return;
   }
 
-    console.log("Enviando cadastro...");
+  cadastroBtn.disabled = true;
+  cadastroBtn.classList.add("loading");
 
-    const { data, error } = await supabaseClient.auth.signUp({
+  const { data, error } = await supabaseClient.auth.signUp({
     email,
-    password
-    });
-
-    if (error) {
-    console.error("Erro Supabase:", error.message);
-    alert(error.message);
-    return;
+    password,
+    options: {
+      data: {
+        full_name: fullName
+      }
     }
+  });
 
-    console.log("Usuário criado:", data);
-    const successMessage = document.getElementById("successMessage");
-    const form = document.getElementById("cadastroForm");
+  cadastroBtn.disabled = false;
+  cadastroBtn.classList.remove("loading");
 
-    form.style.display = "none";
-    successMessage.classList.add("show");
+  if (error) {
+    console.error("Erro Supabase:", error.message);
+    emailError.textContent = error.message;
+    return;
+  }
 
-    console.log({
-      fullName,
-      email,
-      password,
-    });
+  console.log("Usuário criado:", data);
+
+  cadastroForm.style.display = "none";
+  successMessage.classList.add("show");
 });
