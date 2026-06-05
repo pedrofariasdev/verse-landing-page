@@ -22,7 +22,9 @@ cadastroForm.addEventListener("submit", async function (event) {
   passwordError.textContent = "";
   confirmPasswordError.textContent = "";
 
-  const partesNome = fullName.split(" ").filter(parte => parte.length > 0);
+  const partesNome = fullName
+    .split(" ")
+    .filter(parte => parte.length > 0);
 
   if (partesNome.length < 2) {
     nameError.textContent = "Por favor, informe nome e sobrenome.";
@@ -79,11 +81,13 @@ cadastroForm.addEventListener("submit", async function (event) {
 
   if (error) {
     console.error("Erro Supabase:", error.message);
+
     if (error.message.includes("rate limit")) {
-  emailError.textContent = "Muitas tentativas. Aguarde alguns minutos e tente novamente.";
+      emailError.textContent = "Muitas tentativas. Aguarde alguns minutos e tente novamente.";
     } else {
-  emailError.textContent = error.message;
+      emailError.textContent = error.message;
     }
+
     return;
   }
 
