@@ -70,7 +70,7 @@ cadastroForm.addEventListener("submit", async function (event) {
         email,
         password,
         options: {
-        emailRedirectTo: "https://verseonline.pt/html/confirmado.html",
+        emailRedirectTo: "https://verseonline.pt/html/login.html",
         data: {
       full_name: fullName
         }
