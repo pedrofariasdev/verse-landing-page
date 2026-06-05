@@ -75,6 +75,11 @@
     }
 
     console.log("Usuário criado:", data);
+    const successMessage = document.getElementById("successMessage");
+    const form = document.getElementById("cadastroForm");
+
+    form.style.display = "none";
+    successMessage.classList.add("show");
 
     console.log({
       fullName,
