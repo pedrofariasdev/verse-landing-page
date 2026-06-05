@@ -1,8 +1,8 @@
-console.log("Cadastro.js carregado!");
+    console.log("Cadastro.js carregado!");
 
-const cadastroForm = document.getElementById("cadastroForm");
+    const cadastroForm = document.getElementById("cadastroForm");
 
-cadastroForm.addEventListener("submit", function (event) {
+    cadastroForm.addEventListener("submit", async function (event) {
   event.preventDefault();
 
   const fullName = document.getElementById("name").value.trim();
@@ -61,10 +61,24 @@ cadastroForm.addEventListener("submit", function (event) {
     return;
   }
 
-  await supabaseClient.auth.signUp(...)
-  console.log({
-    fullName,
+    console.log("Enviando cadastro...");
+
+    const { data, error } = await supabaseClient.auth.signUp({
     email,
-    password,
-  });
-}); 
+    password
+    });
+
+    if (error) {
+    console.error("Erro Supabase:", error.message);
+    alert(error.message);
+    return;
+    }
+
+    console.log("Usuário criado:", data);
+
+    console.log({
+      fullName,
+      email,
+      password,
+    });
+});
