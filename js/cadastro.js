@@ -67,14 +67,14 @@ cadastroForm.addEventListener("submit", async function (event) {
   cadastroBtn.classList.add("loading");
 
     const { data, error } = await supabaseClient.auth.signUp({
-    email,
-    password,
-    options: {
-    emailRedirectTo: "https://verseonline.pt/html/confirmado.html",
-    data: {
+        email,
+        password,
+        options: {
+        emailRedirectTo: "https://verseonline.pt/html/confirmado.html",
+        data: {
       full_name: fullName
         }
-    }
+     }
     });
 
   cadastroBtn.disabled = false;
