@@ -37,17 +37,19 @@ loginForm.addEventListener("submit", async function (event) {
   loginBtn.disabled = false;
   loginBtn.classList.remove("loading");
 
-  if (error) {
-    console.error("Erro no login:", error.message);
+    if (error) {
+  console.error("Erro no login:", error.message);
 
-    if (error.message.includes("Email not confirmed")) {
-      emailError.textContent = "Confirme seu e-mail antes de entrar.";
-    } else {
-      emailError.textContent = "E-mail ou senha inválidos.";
-    }
-
-    return;
+  if (error.message.includes("Email not confirmed")) {
+    emailError.textContent =
+      "Sua conta ainda não foi confirmada. Verifique sua caixa de entrada e clique no link enviado pela Verse.";
+  } else {
+    emailError.textContent =
+      "E-mail ou senha incorretos.";
   }
+
+  return;
+    }
 
   console.log("Login realizado:", data);
 
