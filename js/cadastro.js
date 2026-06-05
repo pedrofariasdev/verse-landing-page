@@ -61,7 +61,7 @@ cadastroForm.addEventListener("submit", function (event) {
     return;
   }
 
-  console.log("Formulário válido!");
+  await supabaseClient.auth.signUp(...)
   console.log({
     fullName,
     email,
