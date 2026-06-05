@@ -1,0 +1,138 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", Arial, sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f8f5, #D7F2BA);
+  color: #2b2b2b;
+}
+
+.confirmado-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.confirmado-card {
+  width: 100%;
+  max-width: 460px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(103, 111, 84, 0.15);
+  border-radius: 30px;
+  padding: 44px 36px;
+  text-align: center;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(10px);
+}
+
+.confirmado-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.confirmado-logo h1 {
+  font-family: "Belleza", sans-serif;
+  font-size: 56px;
+  font-weight: 400;
+  letter-spacing: 6px;
+  color: #79B4A9;
+  line-height: 1;
+}
+
+.confirmado-logo span {
+  width: 135px;
+  height: 4px;
+  background: #D4AF37;
+  border-radius: 999px;
+  margin-top: 10px;
+}
+
+.confirmado-icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  background: #79B4A9;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+  font-weight: 700;
+  box-shadow: 0 12px 25px rgba(121, 180, 169, 0.35);
+}
+
+.confirmado-card h2 {
+  font-family: "Belleza", sans-serif;
+  font-size: 2.3rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: #676F54;
+  margin-bottom: 14px;
+}
+
+.confirmado-card p {
+  color: #4f5f57;
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+.confirmado-btn {
+  display: inline-block;
+  width: 100%;
+  background: #676F54;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 15px 24px;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 700;
+  transition: 0.25s ease;
+  margin-bottom: 18px;
+}
+
+.confirmado-btn:hover {
+  background: #79B4A9;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(121, 180, 169, 0.3);
+}
+
+.confirmado-link {
+  display: inline-block;
+  color: #676F54;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.confirmado-link:hover {
+  color: #79B4A9;
+}
+
+@media (max-width: 480px) {
+  .confirmado-card {
+    padding: 36px 24px;
+    border-radius: 24px;
+  }
+
+  .confirmado-logo h1 {
+    font-size: 44px;
+  }
+
+  .confirmado-card h2 {
+    font-size: 1.9rem;
+  }
+
+  .confirmado-card p {
+    font-size: 0.95rem;
+  }
+}
