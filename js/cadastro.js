@@ -15,12 +15,8 @@ cadastroForm.addEventListener("submit", function (event) {
     .filter(parte => parte.length > 0);
 
   if (partesNome.length < 2) {
-    nameError.innerHTML = "⚠️ Por favor, informe nome e sobrenome.";
-    nameError.style.display = "block";
-    nameError.style.color = "red";
-    nameError.style.fontSize = "14px";
-    nameError.style.marginTop = "8px";
-    
+    nameError.textContent = "Por favor, informe nome e sobrenome.";
+    alert("Erro encontrado!");
     console.log("Erro: nome incompleto");
     return;
   }

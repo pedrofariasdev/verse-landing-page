@@ -250,17 +250,12 @@ body {
 /* Error */
 .error-message {
     display: block;
-    color: #b91c1c;
-    font-size: 0.75rem;
+    color: #c0392b;
+    font-size: 13px;
     font-weight: 500;
     margin-top: 6px;
-    margin-left: 6px;
-    opacity: 0;
-    transform: translateY(-4px);
-    transition: 0.2s ease;
-}
-
-.error-message.show {
+    margin-left: 12px;
+    min-height: 18px;
     opacity: 1;
     transform: translateY(0);
 }
@@ -473,21 +468,6 @@ body {
     font-size: 0.875rem;
 }
 
-/*error messagbe*/
-
-.error-message {
-    display: block;
-    color: #c0392b;
-    font-size: 0.85rem;
-    margin-top: 6px;
-    margin-left: 12px;
-    min-height: 18px;
-}
-
-.error-message:not(:empty) {
-    margin-bottom: 10px;
-}
-
 /* Icons */
 .eye-icon {
     display: block;
@@ -619,10 +599,4 @@ body {
     min-height: 17px !important;
     position: relative !important;
     z-index: 10 !important;
-}
-
-#nameError {
-    background: yellow !important;
-    color: red !important;
-    border: 1px solid red !important;
 }
