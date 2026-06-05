@@ -80,17 +80,28 @@ cadastroForm.addEventListener("submit", async function (event) {
   cadastroBtn.disabled = false;
   cadastroBtn.classList.remove("loading");
 
-  if (error) {
-    console.error("Erro Supabase:", error.message);
+    if (error) {
+  console.error("Erro Supabase:", error.message);
 
-    if (error.message.includes("rate limit")) {
-      emailError.textContent = "Muitas tentativas. Aguarde alguns minutos e tente novamente.";
-    } else {
-      emailError.textContent = error.message;
-    }
+  const errorMessage = error.message.toLowerCase();
 
-    return;
+  if (errorMessage.includes("rate limit")) {
+    emailError.textContent =
+      "Muitas tentativas. Aguarde alguns minutos e tente novamente.";
+  } else if (
+    errorMessage.includes("already registered") ||
+    errorMessage.includes("already exists") ||
+    errorMessage.includes("user already registered")
+  ) {
+    emailError.textContent =
+      "Este e-mail já está cadastrado. Faça login ou recupere sua senha.";
+  } else {
+    emailError.textContent =
+      "Não foi possível criar sua conta. Tente novamente.";
   }
+
+  return;
+    }
 
   console.log("Usuário criado:", data);
 
