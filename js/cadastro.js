@@ -15,10 +15,9 @@ cadastroForm.addEventListener("submit", function (event) {
     .filter(parte => parte.length > 0);
 
   if (partesNome.length < 2) {
-    nameError.textContent = "Por favor, informe nome e sobrenome.";
-    alert("Erro encontrado!");
-    console.log("Erro: nome incompleto");
-    return;
+  nameError.textContent = "Por favor, informe nome e sobrenome.";
+  console.log("Erro: nome incompleto");
+  return;
   }
 
   console.log("Nome válido:", fullName);

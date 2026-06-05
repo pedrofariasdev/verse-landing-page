@@ -180,7 +180,7 @@ body {
     background: #f8f8f5;
     border: 2px solid transparent;
     border-radius: 16px;
-    padding: 16px 18px 10px;
+    padding: 26px 20px 10px;
     color: #2b2b2b;
     font-size: 16px;
     transition: 0.25s ease;
@@ -188,7 +188,7 @@ body {
     outline: none;
 }
 
-.input-wrapper input::placeholder {
+.input-wrapper input::placeholder { 
     color: transparent;
 }
 
