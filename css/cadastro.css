@@ -10,7 +10,7 @@ body {
     font-family: "Inter", Arial, sans-serif;
     background: linear-gradient(135deg, #f8f8f5, #D7F2BA);
     min-height: 100vh;
-
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: right;
@@ -49,9 +49,9 @@ body {
   align-items: center;
   justify-content: center;
 
-  gap: 40px;
+  gap: 35px;
 
-  padding: 20px 40px;
+  padding: 10px 40px;
 }
 
 .page-cadastro-image {
@@ -67,7 +67,7 @@ body {
 
 .page-cadastro-image img {
   width: 100%;
-  max-width: 430px;
+  max-width: 360px;
 
   display: block;
 }
@@ -79,7 +79,7 @@ body {
 
 .quote p {
   font-family: 'Belleza', sans-serif;
-  font-size: 22px;
+  font-size: 19px;
 
   font-style: italic;
   line-height: 1.4;
@@ -101,19 +101,19 @@ body {
 
 .cadastro-container {
   width: 100%;
-  max-width: 420px;
+  max-width: 390px;
 }
 
 .cadastro-logo {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 28px;
+    margin-bottom: 18px;
 }
 
 .cadastro-logo h1 {
     font-family: "Belleza", sans-serif;
-    font-size: 58px;
+    font-size: 48px;
     font-weight: 400;
     letter-spacing: 6px;
     color: #79B4A9;
@@ -129,15 +129,10 @@ body {
     margin-top: 10px;
 }
 
-.cadastro-container {
-    width: 100%;
-    max-width: 420px;
-    
-}
 .cadastro-card {
     background: rgba(255, 255, 255, 0.92);
-    border-radius: 28px;
-    padding: 25px;
+    border-radius: 26px;
+    padding: 22px 25px;
     border: 1px solid rgba(103, 111, 84, 0.15);
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
     backdrop-filter: blur(10px);
@@ -146,12 +141,12 @@ body {
 
 .cadastro-header {
     text-align: center;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
 }
 
 .cadastro-header h2 {
     font-family: "Belleza", sans-serif;
-    font-size: 2.4rem;
+    font-size: 2rem;
     font-weight: 400;
     letter-spacing: 2px;
     color: #676F54;
@@ -166,7 +161,7 @@ body {
 /* Form */
 .form-group {
     width: 100%;
-    margin-bottom: 22px;
+    margin-bottom: 16px;
 }
 
 .input-wrapper {
@@ -180,9 +175,9 @@ body {
     background: #f8f8f5;
     border: 2px solid transparent;
     border-radius: 16px;
-    padding: 26px 20px 10px;
+    padding: 22px 18px 9px;
     color: #2b2b2b;
-    font-size: 16px;
+    font-size: 15px;
     transition: 0.25s ease;
     width: 100%;
     outline: none;
@@ -342,7 +337,7 @@ body {
     background: #676F54;
     border: none;
     border-radius: 999px;
-    padding: 15px 24px;
+    padding: 13px 24px;
 
     color: white;
     font-size: 16px;
@@ -351,7 +346,7 @@ body {
     cursor: pointer;
     transition: 0.25s ease;
     position: relative;
-    margin-bottom: 24px;
+    margin-bottom: 18px;
 }
 
 .cadastro-btn:hover {
