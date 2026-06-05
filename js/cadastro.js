@@ -20,6 +20,7 @@ cadastroForm.addEventListener("submit", function (event) {
     nameError.style.color = "red";
     nameError.style.fontSize = "14px";
     nameError.style.marginTop = "8px";
+    
     console.log("Erro: nome incompleto");
     return;
   }
