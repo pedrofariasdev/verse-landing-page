@@ -471,6 +471,16 @@ body {
     font-size: 0.875rem;
 }
 
+/*error messagbe*/
+
+.error-message {
+  display: block;
+  color: #c0392b;
+  font-size: 0.85rem;
+  margin-top: 6px;
+  margin-left: 12px;
+}
+
 /* Icons */
 .eye-icon {
     display: block;
