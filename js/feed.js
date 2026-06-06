@@ -117,10 +117,17 @@ async function carregarPosts() {
 
   postsContainer.innerHTML = "";
 
-  const { data: posts, error } = await supabaseClient
-    .from("posts")
-    .select("*")
-    .order("created_at", { ascending: false });
+const { data: posts, error } = await supabaseClient
+  .from("posts")
+  .select(`
+    *,
+    profiles (
+      full_name,
+      username,
+      avatar_url
+    )
+  `)
+  .order("created_at", { ascending: false });
 
   if (error) {
     console.error("Erro ao carregar posts:", error.message);
@@ -136,13 +143,11 @@ async function carregarPosts() {
   posts.forEach(function (post) {
     const isMyPost = post.user_id === usuarioLogado.id;
 
-    const postAuthorName = isMyPost
-      ? perfilLogado.full_name
-      : "Usuário Verse";
+    const postAuthorName =
+  post.profiles?.full_name || "Usuário Verse";
 
-    const postAuthorUsername = isMyPost
-      ? perfilLogado.username
-      : "usuario";
+    const postAuthorUsername =
+  post.profiles?.username || "usuario";
 
     const postAuthorInitial = postAuthorName.charAt(0).toUpperCase();
 
