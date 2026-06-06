@@ -108,6 +108,38 @@ cadastroForm.addEventListener("submit", async function (event) {
 
   console.log("Usuário criado:", data);
 
+  const user = data.user;
+
+  if (user) {
+    const usernameBase = fullName
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9\s]/g, "")
+      .trim()
+      .replace(/\s+/g, ".");
+
+    const username = usernameBase || "usuario.verse";
+
+    const { error: profileError } = await supabaseClient
+      .from("profiles")
+      .insert([
+        {
+          id: user.id,
+          full_name: fullName,
+          username: username,
+          bio: "",
+          avatar_url: ""
+        }
+      ]);
+
+    if (profileError) {
+      console.error("Erro ao criar profile:", profileError.message);
+    } else {
+      console.log("Profile criado com sucesso!");
+    }
+  }
+
   cadastroForm.style.display = "none";
   successMessage.classList.add("show");
 });

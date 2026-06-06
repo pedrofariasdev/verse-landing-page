@@ -53,16 +53,13 @@
 
     <div class="nav-actions">
 
-      <button class="notification-btn">
-        🔔
-      </button>
+        <button class="notification-btn">
+            🔔
+        </button>
 
-      <div class="profile-btn">
-        <a href="../html/profile.html">
-          <img src="../assets/profile.png" alt="Foto do perfil">
+        <a href="../html/profile.html" class="profile-btn">
+            <div class="nav-avatar" id="navAvatar">V</div>
         </a>
-
-      </div>
 
     </div>
 
@@ -74,6 +71,14 @@
 
     <aside class="sidebar-left">
         <h2>Menu</h2>
+        <div class="logged-user-card">
+            <div class="logged-avatar" id="userAvatar">V</div>
+
+            <div class="logged-user-info">
+                <strong id="userName">Usuário Verse</strong>
+                <p id="userEmail">email@verse.com</p>
+            </div>
+        </div>
 
         <nav class="side-menu">
             <a href="../html/profile.html">Perfil</a>
@@ -94,12 +99,14 @@
 
     <section class="feed-main">
         <h2>Feed</h2>
+        
         <div class="create-post-card">
 
             <div class="create-post">
-                <img src="profile.png" alt="Foto do perfil">
-                <textarea placeholder="O que você está lendo?"></textarea>
+                <div class="create-avatar" id="createAvatar">V</div>
+                <textarea id="postContent" placeholder="O que você está lendo?"></textarea>
             </div>
+            
 
             <div class="createpost-actions">
                 <button>📖 Lendo</button>
@@ -110,91 +117,13 @@
             </div>
 
             <div class="publish-area">
-                <button class="post-btn">Publicar</button>
+                <button class="post-btn" id="publishBtn">Publicar</button>
             </div>
+            <div id="postsContainer"></div>
 
         </div>
 
-        <article class="post-card">
 
-            <div class="post-header">
-
-                    <img src="profile.png" alt="Foto do autor">
-
-                <div class="post-user-info">
-                    <h3>Caio Martins</h3>
-                    <span>@caiomartins · há 12 min</span>
-                </div>
-
-            </div>
-
-            <p class="post-status">
-                Caio Martins publicou uma citação
-            </p>
-
-            <div class="quote-post">
-                <p>
-                    “Algumas histórias não começam quando abrimos um livro, mas quando finalmente temos coragem de escrever a primeira linha.”
-                </p>
-            </div>
-
-            <div class="post-actions">
-
-                <button>♡ Curtir</button>
-
-                <button>💬 Comentar</button>
-
-                <button>↻ Repostar</button>
-
-                <button>❝ Citar</button>
-
-                <button>↗ Compartilhar</button>
-
-            </div>
-
-
-        
-        </article>
-
-        <article class="post-card">
-
-            <div class="post-header">
-
-                    <img src="profile.png" alt="Foto do autor">
-
-                <div class="post-user-info">
-                    <h3>Caio Martins</h3>
-                    <span>@caiomartins · há 12 min</span>
-                </div>
-
-            </div>
-            <p class="post-status">
-                Caio Martins está lendo <strong>“Duna”</strong>
-            </p>
-
-            <p class="post-text">
-                Estou completamente preso nesse universo. A construção política e a atmosfera do livro são absurdas até agora.
-            </p>
-
-            <div class="post-image">
-                <img src="../assets/post.png" alt="Imagem da postagem">
-            </div>
-
-            <div class="post-actions">
-
-                <button>♡ Curtir</button>
-
-                <button>💬 Comentar</button>
-
-                <button>↻ Repostar</button>
-
-                <button>❝ Citar</button>
-
-                <button>↗ Compartilhar</button>
-
-            </div>
-
-        </article>
     </section>
 
     <aside class="sidebar-right">
@@ -225,7 +154,9 @@
 
   </main>
 
-  <script src="../js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabaseClient.js"></script>
+  <script src="../js/feed.js"></script>
 
 </body>
 
