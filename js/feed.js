@@ -1,6 +1,7 @@
 console.log("Feed.js carregado!");
 
 let usuarioLogado = null;
+let perfilLogado = null;
 
 async function carregarUsuarioLogado() {
   const { data, error } = await supabaseClient.auth.getUser();
@@ -13,13 +14,24 @@ async function carregarUsuarioLogado() {
 
   usuarioLogado = data.user;
 
-  console.log("Usuário logado:", usuarioLogado);
+  const { data: profile, error: profileError } = await supabaseClient
+    .from("profiles")
+    .select("*")
+    .eq("id", usuarioLogado.id)
+    .single();
 
-  const fullName =
-    usuarioLogado.user_metadata?.full_name || "Usuário Verse";
+  if (profileError) {
+    console.error("Erro ao carregar profile:", profileError.message);
+    return;
+  }
 
-  const email =
-    usuarioLogado.email || "";
+  perfilLogado = profile;
+
+  console.log("Profile logado:", perfilLogado);
+
+  const fullName = perfilLogado.full_name || "Usuário Verse";
+  const username = perfilLogado.username || "usuario";
+  const email = usuarioLogado.email || "";
 
   const userName = document.getElementById("userName");
   const userEmail = document.getElementById("userEmail");
@@ -28,13 +40,30 @@ async function carregarUsuarioLogado() {
   const createAvatar = document.getElementById("createAvatar");
 
   if (userName) userName.textContent = fullName;
-  if (userEmail) userEmail.textContent = email;
+  if (userEmail) userEmail.textContent = `@${username}`;
 
   const firstLetter = fullName.charAt(0).toUpperCase();
 
   if (userAvatar) userAvatar.textContent = firstLetter;
   if (navAvatar) navAvatar.textContent = firstLetter;
   if (createAvatar) createAvatar.textContent = firstLetter;
+}
+
+function formatarTempo(dataPost) {
+  const agora = new Date();
+  const data = new Date(dataPost);
+
+  const diferencaMs = agora - data;
+  const segundos = Math.floor(diferencaMs / 1000);
+  const minutos = Math.floor(segundos / 60);
+  const horas = Math.floor(minutos / 60);
+  const dias = Math.floor(horas / 24);
+
+  if (segundos < 60) return "há poucos segundos";
+  if (minutos < 60) return `há ${minutos} min`;
+  if (horas < 24) return `há ${horas} h`;
+
+  return `há ${dias} d`;
 }
 
 async function carregarPosts() {
@@ -67,8 +96,12 @@ async function carregarPosts() {
     const isMyPost = post.user_id === usuarioLogado.id;
 
     const postAuthorName = isMyPost
-      ? usuarioLogado.user_metadata?.full_name || "Usuário Verse"
+      ? perfilLogado.full_name
       : "Usuário Verse";
+
+    const postAuthorUsername = isMyPost
+      ? perfilLogado.username
+      : "usuario";
 
     const postAuthorInitial = postAuthorName.charAt(0).toUpperCase();
 
@@ -81,7 +114,7 @@ async function carregarPosts() {
 
         <div class="post-user-info">
           <h3>${postAuthorName}</h3>
-          <span>@usuario · agora</span>
+          <span>@${postAuthorUsername} · ${formatarTempo(post.created_at)}</span>
         </div>
       </div>
 
@@ -157,4 +190,4 @@ async function iniciarFeed() {
   }
 }
 
-iniciarFeed();  
+iniciarFeed();
