@@ -163,53 +163,53 @@ async function carregarPosts() {
     return;
   }
 
-  posts.forEach(function (post) {
-    const postAuthorName =
-      post.profiles?.full_name || "Usuário Verse";
+posts.forEach(function (post) {
+  const postAuthorName =
+    post.profiles?.full_name || "Usuário Verse";
 
-    const postAuthorUsername =
-      post.profiles?.username || "usuario";
+  const postAuthorUsername =
+    post.profiles?.username || "usuario";
 
-    const avatarUrl =
-      console.log("Avatar do post:", avatarUrl);
+  const avatarUrl =
+    post.profiles?.avatar_url || null;
 
-    const postAuthorInitial =
-      postAuthorName.charAt(0).toUpperCase();
+  const postAuthorInitial =
+    postAuthorName.charAt(0).toUpperCase();
 
-    const avatarStyle = avatarUrl
-      ? "background-image: url('" + avatarUrl + "'); background-size: cover; background-position: center; color: transparent;"
-      : "";
+  const avatarStyle = avatarUrl
+    ? "background-image: url('" + avatarUrl + "'); background-size: cover; background-position: center; color: transparent;"
+    : "";
 
-    const postCard = document.createElement("article");
-    postCard.classList.add("post-card");
+  const postCard = document.createElement("article");
+  postCard.classList.add("post-card");
 
-    postCard.innerHTML = `
-      <div class="post-header">
+  postCard.innerHTML = `
+    <div class="post-header">
 
-        <div class="post-avatar" style="${avatarStyle}">
-          ${postAuthorInitial}
-        </div>
-
-        <div class="post-user-info">
-          <h3>${postAuthorName}</h3>
-          <span>@${postAuthorUsername} · ${formatarTempo(post.created_at)}</span>
-        </div>
-
+      <div class="post-avatar" style="${avatarStyle}">
+        ${postAuthorInitial}
       </div>
 
-      <p class="post-text">${post.content}</p>
-
-      <div class="post-actions">
-        <button>♡ Curtir</button>
-        <button>💬 Comentar</button>
-        <button>↻ Repostar</button>
-        <button>❝ Citar</button>
-        <button>↗ Compartilhar</button>
+      <div class="post-user-info">
+        <h3>${postAuthorName}</h3>
+        <span>@${postAuthorUsername} · ${formatarTempo(post.created_at)}</span>
       </div>
-    `;
 
-    postsContainer.appendChild(postCard);
-  });
+    </div>
+
+    <p class="post-text">${post.content}</p>
+
+    <div class="post-actions">
+      <button>♡ Curtir</button>
+      <button>💬 Comentar</button>
+      <button>↻ Repostar</button>
+      <button>❝ Citar</button>
+      <button>↗ Compartilhar</button>
+    </div>
+  `;
+
+  postsContainer.appendChild(postCard);
+});
 }
 
 async function criarPost() {
