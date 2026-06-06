@@ -15,64 +15,58 @@ async function carregarUsuarioLogado() {
   usuarioLogado = data.user;
 
   let { data: profiles, error: profileError } = await supabaseClient
-  .from("profiles")
-  .select("*")
-  .eq("id", usuarioLogado.id)
-  .limit(1);
-
-if (profileError) {
-  console.error("Erro ao carregar profile:", profileError.message);
-  return;
-}
-
-let profile = profiles && profiles.length > 0 ? profiles[0] : null;
-
-if (profileError) {
-  console.error("Erro ao carregar profile:", profileError.message);
-  return;
-}
-
-if (!profile) {
-  const fullName =
-    usuarioLogado.user_metadata?.full_name || "Usuário Verse";
-
-  const username = fullName
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9\s]/g, "")
-    .trim()
-    .replace(/\s+/g, ".");
-
-  const { data: newProfile, error: createProfileError } = await supabaseClient
     .from("profiles")
-    .insert([
-      {
-        id: usuarioLogado.id,
-        full_name: fullName,
-        username: username || "usuario.verse",
-        bio: "",
-        avatar_url: ""
-      }
-    ])
-    .select()
-    .single();
+    .select("*")
+    .eq("id", usuarioLogado.id)
+    .limit(1);
 
-  if (createProfileError) {
-    console.error("Erro ao criar profile:", createProfileError.message);
+  if (profileError) {
+    console.error("Erro ao carregar profile:", profileError.message);
     return;
   }
 
-  profile = newProfile;
-}
+  let profile = profiles && profiles.length > 0 ? profiles[0] : null;
 
-perfilLogado = profile;
+  if (!profile) {
+    const fullName =
+      usuarioLogado.user_metadata?.full_name || "Usuário Verse";
+
+    const username = fullName
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9\s]/g, "")
+      .trim()
+      .replace(/\s+/g, ".");
+
+    const { data: newProfile, error: createProfileError } = await supabaseClient
+      .from("profiles")
+      .insert([
+        {
+          id: usuarioLogado.id,
+          full_name: fullName,
+          username: username || "usuario.verse",
+          bio: "",
+          avatar_url: ""
+        }
+      ])
+      .select()
+      .single();
+
+    if (createProfileError) {
+      console.error("Erro ao criar profile:", createProfileError.message);
+      return;
+    }
+
+    profile = newProfile;
+  }
+
+  perfilLogado = profile;
 
   console.log("Profile logado:", perfilLogado);
 
   const fullName = perfilLogado.full_name || "Usuário Verse";
   const username = perfilLogado.username || "usuario";
-  const email = usuarioLogado.email || "";
 
   const userName = document.getElementById("userName");
   const userEmail = document.getElementById("userEmail");
@@ -85,9 +79,38 @@ perfilLogado = profile;
 
   const firstLetter = fullName.charAt(0).toUpperCase();
 
-  if (userAvatar) userAvatar.textContent = firstLetter;
-  if (navAvatar) navAvatar.textContent = firstLetter;
-  if (createAvatar) createAvatar.textContent = firstLetter;
+  if (userAvatar) {
+    userAvatar.textContent = firstLetter;
+  }
+
+  if (navAvatar) {
+    navAvatar.textContent = firstLetter;
+  }
+
+  if (createAvatar) {
+    createAvatar.textContent = firstLetter;
+  }
+
+  if (perfilLogado.avatar_url) {
+    mostrarAvatarNaTela(perfilLogado.avatar_url);
+  }
+}
+
+function mostrarAvatarNaTela(avatarUrl) {
+  const userAvatar = document.getElementById("userAvatar");
+  const navAvatar = document.getElementById("navAvatar");
+  const createAvatar = document.getElementById("createAvatar");
+
+  const elements = [userAvatar, navAvatar, createAvatar];
+
+  elements.forEach(function (element) {
+    if (element) {
+      element.style.backgroundImage = `url(${avatarUrl})`;
+      element.style.backgroundSize = "cover";
+      element.style.backgroundPosition = "center";
+      element.style.color = "transparent";
+    }
+  });
 }
 
 function formatarTempo(dataPost) {
@@ -117,17 +140,17 @@ async function carregarPosts() {
 
   postsContainer.innerHTML = "";
 
-const { data: posts, error } = await supabaseClient
-  .from("posts")
-  .select(`
-    *,
-    profiles (
-      full_name,
-      username,
-      avatar_url
-    )
-  `)
-  .order("created_at", { ascending: false });
+  const { data: posts, error } = await supabaseClient
+    .from("posts")
+    .select(`
+      *,
+      profiles (
+        full_name,
+        username,
+        avatar_url
+      )
+    `)
+    .order("created_at", { ascending: false });
 
   if (error) {
     console.error("Erro ao carregar posts:", error.message);
@@ -141,27 +164,37 @@ const { data: posts, error } = await supabaseClient
   }
 
   posts.forEach(function (post) {
-    const isMyPost = post.user_id === usuarioLogado.id;
-
     const postAuthorName =
-  post.profiles?.full_name || "Usuário Verse";
+      post.profiles?.full_name || "Usuário Verse";
 
     const postAuthorUsername =
-  post.profiles?.username || "usuario";
+      post.profiles?.username || "usuario";
 
-    const postAuthorInitial = postAuthorName.charAt(0).toUpperCase();
+    const avatarUrl =
+      post.profiles?.avatar_url || null;
+
+    const postAuthorInitial =
+      postAuthorName.charAt(0).toUpperCase();
+
+    const avatarStyle = avatarUrl
+      ? "background-image: url('" + avatarUrl + "'); background-size: cover; background-position: center; color: transparent;"
+      : "";
 
     const postCard = document.createElement("article");
     postCard.classList.add("post-card");
 
     postCard.innerHTML = `
       <div class="post-header">
-        <div class="post-avatar">${postAuthorInitial}</div>
+
+        <div class="post-avatar" style="${avatarStyle}">
+          ${postAuthorInitial}
+        </div>
 
         <div class="post-user-info">
           <h3>${postAuthorName}</h3>
           <span>@${postAuthorUsername} · ${formatarTempo(post.created_at)}</span>
         </div>
+
       </div>
 
       <p class="post-text">${post.content}</p>
