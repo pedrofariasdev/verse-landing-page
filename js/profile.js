@@ -50,9 +50,14 @@ async function carregarPerfil() {
   if (profileName) profileName.textContent = fullName;
   if (profileUsername) profileUsername.textContent = `@${username}`;
   if (profileBio) profileBio.textContent = bio;
+
   if (perfilLogado.avatar_url) {
-  mostrarAvatarNaTela(perfilLogado.avatar_url);
-}
+    mostrarAvatarNaTela(perfilLogado.avatar_url);
+  }
+
+  if (perfilLogado.banner_url) {
+    mostrarBannerNaTela(perfilLogado.banner_url);
+  }
 }
 
 function formatarTempo(dataPost) {
@@ -136,25 +141,6 @@ async function carregarPostsDoPerfil() {
   });
 }
 
-async function iniciarPerfil() {
-  await carregarPerfil();
-  await carregarPostsDoPerfil();
-  await carregarSugestoes();
-
-  const editAvatarBtn = document.getElementById("editAvatarBtn");
-  const avatarInput = document.getElementById("avatarInput");
-
-  if (editAvatarBtn && avatarInput) {
-    editAvatarBtn.addEventListener("click", function () {
-      avatarInput.click();
-    });
-
-    avatarInput.addEventListener("change", atualizarAvatar);
-  }
-}
-
-iniciarPerfil();
-
 async function atualizarAvatar(event) {
   const file = event.target.files[0];
 
@@ -226,8 +212,69 @@ function mostrarAvatarNaTela(avatarUrl) {
   }
 }
 
-async function carregarSugestoes() {
+async function atualizarBanner(event) {
+  const file = event.target.files[0];
 
+  if (!file) return;
+
+  if (!usuarioLogado || !perfilLogado) {
+    alert("Usuário não carregado.");
+    return;
+  }
+
+  const fileExt = file.name.split(".").pop();
+  const fileName = `${usuarioLogado.id}.${fileExt}`;
+  const filePath = `profile/${fileName}`;
+
+  const { error: uploadError } = await supabaseClient.storage
+    .from("banners")
+    .upload(filePath, file, {
+      upsert: true
+    });
+
+  if (uploadError) {
+    console.error("Erro ao enviar banner:", uploadError.message);
+    alert("Não foi possível enviar o banner.");
+    return;
+  }
+
+  const { data: publicUrlData } = supabaseClient.storage
+    .from("banners")
+    .getPublicUrl(filePath);
+
+  const bannerUrl = publicUrlData.publicUrl;
+
+  const { error: updateError } = await supabaseClient
+    .from("profiles")
+    .update({
+      banner_url: bannerUrl
+    })
+    .eq("id", usuarioLogado.id);
+
+  if (updateError) {
+    console.error("Erro ao salvar banner:", updateError.message);
+    alert("Banner enviado, mas não foi possível salvar no perfil.");
+    return;
+  }
+
+  perfilLogado.banner_url = bannerUrl;
+
+  mostrarBannerNaTela(bannerUrl);
+
+  alert("Banner atualizado!");
+}
+
+function mostrarBannerNaTela(bannerUrl) {
+  const profileBanner = document.getElementById("profileBanner");
+
+  if (profileBanner) {
+    profileBanner.style.backgroundImage = `url(${bannerUrl})`;
+    profileBanner.style.backgroundSize = "cover";
+    profileBanner.style.backgroundPosition = "center";
+  }
+}
+
+async function carregarSugestoes() {
   const suggestionsContainer =
     document.getElementById("suggestionsContainer");
 
@@ -253,7 +300,6 @@ async function carregarSugestoes() {
   }
 
   users.forEach(user => {
-
     const firstLetter =
       (user.full_name || "U").charAt(0).toUpperCase();
 
@@ -279,3 +325,33 @@ async function carregarSugestoes() {
     suggestionsContainer.appendChild(card);
   });
 }
+
+async function iniciarPerfil() {
+  await carregarPerfil();
+  await carregarPostsDoPerfil();
+  await carregarSugestoes();
+
+  const editAvatarBtn = document.getElementById("editAvatarBtn");
+  const avatarInput = document.getElementById("avatarInput");
+
+  if (editAvatarBtn && avatarInput) {
+    editAvatarBtn.addEventListener("click", function () {
+      avatarInput.click();
+    });
+
+    avatarInput.addEventListener("change", atualizarAvatar);
+  }
+
+  const editBannerBtn = document.getElementById("editBannerBtn");
+  const bannerInput = document.getElementById("bannerInput");
+
+  if (editBannerBtn && bannerInput) {
+    editBannerBtn.addEventListener("click", function () {
+      bannerInput.click();
+    });
+
+    bannerInput.addEventListener("change", atualizarBanner);
+  }
+}
+
+iniciarPerfil();
