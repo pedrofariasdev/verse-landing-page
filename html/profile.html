@@ -75,7 +75,17 @@
 
         <div class="profile-avatar" id="profileAvatar">
           V
-          <button class="edit-avatar-btn">📷</button>
+
+          <button class="edit-avatar-btn" id="editAvatarBtn" type="button">
+            📷
+          </button>
+
+          <input
+            type="file"
+            id="avatarInput"
+            accept="image/*"
+            hidden
+          >
         </div>
 
         <div class="profile-info">

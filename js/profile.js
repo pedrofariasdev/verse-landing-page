@@ -50,6 +50,9 @@ async function carregarPerfil() {
   if (profileName) profileName.textContent = fullName;
   if (profileUsername) profileUsername.textContent = `@${username}`;
   if (profileBio) profileBio.textContent = bio;
+  if (perfilLogado.avatar_url) {
+  mostrarAvatarNaTela(perfilLogado.avatar_url);
+}
 }
 
 function formatarTempo(dataPost) {
@@ -137,9 +140,91 @@ async function iniciarPerfil() {
   await carregarPerfil();
   await carregarPostsDoPerfil();
   await carregarSugestoes();
+
+  const editAvatarBtn = document.getElementById("editAvatarBtn");
+  const avatarInput = document.getElementById("avatarInput");
+
+  if (editAvatarBtn && avatarInput) {
+    editAvatarBtn.addEventListener("click", function () {
+      avatarInput.click();
+    });
+
+    avatarInput.addEventListener("change", atualizarAvatar);
+  }
 }
 
 iniciarPerfil();
+
+async function atualizarAvatar(event) {
+  const file = event.target.files[0];
+
+  if (!file) return;
+
+  if (!usuarioLogado || !perfilLogado) {
+    alert("Usuário não carregado.");
+    return;
+  }
+
+  const fileExt = file.name.split(".").pop();
+  const fileName = `${usuarioLogado.id}.${fileExt}`;
+  const filePath = `profile/${fileName}`;
+
+  const { error: uploadError } = await supabaseClient.storage
+    .from("avatars")
+    .upload(filePath, file, {
+      upsert: true
+    });
+
+  if (uploadError) {
+    console.error("Erro ao enviar avatar:", uploadError.message);
+    alert("Não foi possível enviar a imagem.");
+    return;
+  }
+
+  const { data: publicUrlData } = supabaseClient.storage
+    .from("avatars")
+    .getPublicUrl(filePath);
+
+  const avatarUrl = publicUrlData.publicUrl;
+
+  const { error: updateError } = await supabaseClient
+    .from("profiles")
+    .update({
+      avatar_url: avatarUrl
+    })
+    .eq("id", usuarioLogado.id);
+
+  if (updateError) {
+    console.error("Erro ao salvar avatar:", updateError.message);
+    alert("Imagem enviada, mas não foi possível salvar no perfil.");
+    return;
+  }
+
+  perfilLogado.avatar_url = avatarUrl;
+
+  mostrarAvatarNaTela(avatarUrl);
+
+  alert("Foto de perfil atualizada!");
+}
+
+function mostrarAvatarNaTela(avatarUrl) {
+  const profileAvatar = document.getElementById("profileAvatar");
+  const navAvatar = document.getElementById("navAvatar");
+
+  if (profileAvatar) {
+    profileAvatar.style.backgroundImage = `url(${avatarUrl})`;
+    profileAvatar.style.backgroundSize = "cover";
+    profileAvatar.style.backgroundPosition = "center";
+    profileAvatar.style.color = "transparent";
+  }
+
+  if (navAvatar) {
+    navAvatar.style.backgroundImage = `url(${avatarUrl})`;
+    navAvatar.style.backgroundSize = "cover";
+    navAvatar.style.backgroundPosition = "center";
+    navAvatar.style.color = "transparent";
+  }
+}
 
 async function carregarSugestoes() {
 
