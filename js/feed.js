@@ -142,14 +142,7 @@ async function carregarPosts() {
 
   const { data: posts, error } = await supabaseClient
     .from("posts")
-    .select(`
-      *,
-      profiles (
-        full_name,
-        username,
-        avatar_url
-      )
-    `)
+    .select("*")
     .order("created_at", { ascending: false });
 
   if (error) {
@@ -163,53 +156,68 @@ async function carregarPosts() {
     return;
   }
 
-posts.forEach(function (post) {
-  const postAuthorName =
-    post.profiles?.full_name || "Usuário Verse";
+  const userIds = [...new Set(posts.map(post => post.user_id))];
 
-  const postAuthorUsername =
-    post.profiles?.username || "usuario";
+  const { data: profiles, error: profilesError } = await supabaseClient
+    .from("profiles")
+    .select("*")
+    .in("id", userIds);
 
-  const avatarUrl =
-    post.profiles?.avatar_url || null;
+  if (profilesError) {
+    console.error("Erro ao carregar profiles dos posts:", profilesError.message);
+    postsContainer.innerHTML = "<p>Não foi possível carregar os autores dos posts.</p>";
+    return;
+  }
 
-  const postAuthorInitial =
-    postAuthorName.charAt(0).toUpperCase();
+  posts.forEach(function (post) {
+    const authorProfile = profiles.find(profile => profile.id === post.user_id);
 
-  const avatarStyle = avatarUrl
-    ? "background-image: url('" + avatarUrl + "'); background-size: cover; background-position: center; color: transparent;"
-    : "";
+    const postAuthorName =
+      authorProfile?.full_name || "Usuário Verse";
 
-  const postCard = document.createElement("article");
-  postCard.classList.add("post-card");
+    const postAuthorUsername =
+      authorProfile?.username || "usuario";
 
-  postCard.innerHTML = `
-    <div class="post-header">
+    const avatarUrl =
+      authorProfile?.avatar_url || null;
 
-      <div class="post-avatar" style="${avatarStyle}">
-        ${postAuthorInitial}
+    const postAuthorInitial =
+      postAuthorName.charAt(0).toUpperCase();
+
+    const avatarStyle = avatarUrl
+      ? "background-image: url('" + avatarUrl + "'); background-size: cover; background-position: center; color: transparent;"
+      : "";
+
+    const postCard = document.createElement("article");
+    postCard.classList.add("post-card");
+
+    postCard.innerHTML = `
+      <div class="post-header">
+
+        <div class="post-avatar" style="${avatarStyle}">
+          ${postAuthorInitial}
+        </div>
+
+        <div class="post-user-info">
+          <h3>${postAuthorName}</h3>
+          <span>@${postAuthorUsername} · ${formatarTempo(post.created_at)}</span>
+        </div>
+
       </div>
 
-      <div class="post-user-info">
-        <h3>${postAuthorName}</h3>
-        <span>@${postAuthorUsername} · ${formatarTempo(post.created_at)}</span>
+      <p class="post-text">${post.content}</p>
+
+      <div class="post-actions">
+        <button>♡ Curtir</button>
+        <button>💬 Comentar</button>
+        <button>↻ Repostar</button>
+        <button>❝ Citar</button>
+        <button>↗ Compartilhar</button>
       </div>
+    `;
 
-    </div>
-
-    <p class="post-text">${post.content}</p>
-
-    <div class="post-actions">
-      <button>♡ Curtir</button>
-      <button>💬 Comentar</button>
-      <button>↻ Repostar</button>
-      <button>❝ Citar</button>
-      <button>↗ Compartilhar</button>
-    </div>
-  `;
-
-  postsContainer.appendChild(postCard);
-});
+    postsContainer.appendChild(postCard);
+  });
 }
 
 async function criarPost() {
