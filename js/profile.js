@@ -115,10 +115,12 @@ async function carregarPostsDoPerfil() {
 
     const postCard = document.createElement("article");
     postCard.classList.add("post-card");
-
+    const avatarStyle = perfilLogado.avatar_url
+        ? "background-image: url('" + perfilLogado.avatar_url + "'); background-size: cover; background-position: center; color: transparent;"
+        : "";
     postCard.innerHTML = `
       <div class="post-header">
-        <div class="post-avatar">${firstLetter}</div>
+        <div class="post-avatar" style="${avatarStyle}">${firstLetter}</div>
 
         <div class="post-user-info">
           <h3>${fullName}</h3>
@@ -354,4 +356,4 @@ async function iniciarPerfil() {
   }
 }
 
-iniciarPerfil();
+iniciarPerfil();    
