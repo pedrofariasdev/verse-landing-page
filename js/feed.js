@@ -14,18 +14,52 @@ async function carregarUsuarioLogado() {
 
   usuarioLogado = data.user;
 
-  const { data: profile, error: profileError } = await supabaseClient
+  let { data: profile, error: profileError } = await supabaseClient
+  .from("profiles")
+  .select("*")
+  .eq("id", usuarioLogado.id)
+  .maybeSingle();
+
+if (profileError) {
+  console.error("Erro ao carregar profile:", profileError.message);
+  return;
+}
+
+if (!profile) {
+  const fullName =
+    usuarioLogado.user_metadata?.full_name || "Usuário Verse";
+
+  const username = fullName
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9\s]/g, "")
+    .trim()
+    .replace(/\s+/g, ".");
+
+  const { data: newProfile, error: createProfileError } = await supabaseClient
     .from("profiles")
-    .select("*")
-    .eq("id", usuarioLogado.id)
+    .insert([
+      {
+        id: usuarioLogado.id,
+        full_name: fullName,
+        username: username || "usuario.verse",
+        bio: "",
+        avatar_url: ""
+      }
+    ])
+    .select()
     .single();
 
-  if (profileError) {
-    console.error("Erro ao carregar profile:", profileError.message);
+  if (createProfileError) {
+    console.error("Erro ao criar profile:", createProfileError.message);
     return;
   }
 
-  perfilLogado = profile;
+  profile = newProfile;
+}
+
+perfilLogado = profile;
 
   console.log("Profile logado:", perfilLogado);
 
