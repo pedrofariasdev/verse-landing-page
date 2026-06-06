@@ -1,173 +1,166 @@
 <!DOCTYPE html>
 <html lang="pt">
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Verse - Perfil</title>
+  <title>Verse - Perfil</title>
 
-    <link rel="stylesheet" href="../css/profile.css">
+  <link rel="stylesheet" href="../css/profile.css">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Belleza&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  </head>
+  <link href="https://fonts.googleapis.com/css2?family=Belleza&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
 
-  <body>
+<body>
 
-    <nav class="navbar">
+  <nav class="navbar">
 
-      <div class="logo">
-        <a href="../html/feed.html" class="logo-link">
-          <h1>VERSE</h1>
-          <div class="logo-line"></div>
-        </a>
+    <div class="logo">
+      <a href="../html/feed.html" class="logo-link">
+        <h1>VERSE</h1>
+        <div class="logo-line"></div>
+      </a>
+    </div>
+
+    <div class="search-area">
+      <input type="text" placeholder="Pesquisar na Verse...">
+    </div>
+
+    <div class="nav-actions">
+
+      <button class="notification-btn">
+        🔔
+      </button>
+
+      <a href="../html/profile.html" class="profile-btn">
+        <div class="nav-avatar" id="navAvatar">V</div>
+      </a>
+
+    </div>
+
+  </nav>
+
+  <main class="app-layout">
+
+    <aside class="sidebar-left">
+
+      <h2>Perfil</h2>
+
+      <nav class="side-menu">
+        <a href="../html/profile.html">Meu Perfil</a>
+        <a href="../html/publications.html">Publicações</a>
+        <a href="../html/stories.html">Histórias</a>
+        <a href="../html/books.html">Livros</a>
+        <a href="../html/comunities.html">Comunidades</a>
+        <a href="../html/settings.html">Configurações</a>
+      </nav>
+
+    </aside>
+
+    <section class="feed-main">
+
+      <a href="../html/feed.html" class="back-btn">
+        ← Voltar
+      </a>
+
+      <div class="profile-banner">
+        <button class="edit-banner-btn">📷</button>
       </div>
 
-      <div class="search-area">
-        <input type="text" placeholder="Pesquisar na Verse...">
-      </div>
+      <div class="profile-info-card">
 
-      <div class="nav-actions">
-
-        <p>Caio Martins</p>
-
-        <a href="../html/profile.html" class="profile-btn">
-          <img src="../assets/profile.png" alt="Foto do perfil">
-        </a>
-
-        <button class="notification-btn">
-          🔔
-        </button>
-
-      </div>
-
-    </nav>
-
-    <main class="app-layout">
-
-      <aside class="sidebar-left">
-
-        <h2>Perfil</h2>
-
-        <nav class="side-menu">
-          <a href="../html/profile.html">Editar Perfil</a>
-          <a href="../html/publications.html">Publicações</a>
-          <a href="../html/stories.html">Histórias</a>
-          <a href="../html/books.html">Livros</a>
-          <a href="../html/comunities.html">Comunidades</a>
-        </nav>
-
-      </aside>
-
-      <section class="feed-main">
-          <a href="../html/feed.html" class="back-btn">
-              ← Voltar
-          </a>
-
-        <div class="profile-banner">
-          <button class="edit-banner-btn">📷</button>
+        <div class="profile-avatar" id="profileAvatar">
+          V
+          <button class="edit-avatar-btn">📷</button>
         </div>
 
-        <div class="profile-info-card">
+        <div class="profile-info">
 
-          <div class="profile-avatar">
-            <img src="https://i.pravatar.cc/300" alt="Foto do perfil">
-            <button class="edit-avatar-btn">📷</button>
-          </div>
+          <h2 id="profileName">Usuário Verse</h2>
 
-          <div class="profile-info">
+          <span class="profile-username" id="profileUsername">
+            @usuario
+          </span>
 
-            <h2>Caio Martins</h2>
+          <p class="profile-bio" id="profileBio">
+            Este usuário ainda não adicionou uma bio.
+          </p>
 
-            <span class="profile-tags">
-              escritor · leitor · designer
-            </span>
+          <div class="profile-stats">
 
-            <p class="profile-bio">
-              “Algumas histórias não começam quando abrimos um livro, mas quando finalmente temos coragem de escrever a primeira linha.”
-            </p>
+            <div class="stat-box">
+              <strong id="profilePostsCount">0</strong>
+              <span>Publicações</span>
+            </div>
 
-            <div class="profile-stats">
+            <div class="stat-box">
+              <strong>0</strong>
+              <span>Histórias</span>
+            </div>
 
-              <div class="stat-box">
-                <strong>24</strong>
-                <span>Publicações</span>
-              </div>
+            <div class="stat-box">
+              <strong>0</strong>
+              <span>Livros</span>
+            </div>
 
-              <div class="stat-box">
-                <strong>8</strong>
-                <span>Histórias</span>
-              </div>
+            <div class="stat-box">
+              <strong>0</strong>
+              <span>Seguidores</span>
+            </div>
 
-              <div class="stat-box">
-                <strong>12</strong>
-                <span>Livros</span>
-              </div>
-
-              <div class="stat-box">
-                <strong>180</strong>
-                <span>Seguidores</span>
-              </div>
-
-              <div class="stat-box">
-                <strong>5</strong>
-                <span>Comunidades</span>
-              </div>
-
+            <div class="stat-box">
+              <strong>0</strong>
+              <span>Comunidades</span>
             </div>
 
           </div>
 
         </div>
 
-        <div class="create-post-card">
+      </div>
 
-          <div class="create-post">
-            <img src="https://i.pravatar.cc/300" alt="Foto do perfil">
-            <textarea placeholder="O que você está lendo?"></textarea>
-          </div>
+      <div class="profile-actions">
+        <button class="edit-profile-btn" id="editProfileBtn">
+          Editar Perfil
+        </button>
+      </div>
 
-          <div class="createpost-actions">
-            <button>📖 Lendo</button>
-            <button>✍️ Escrevendo</button>
-            <button>⭐ Recomendando</button>
-            <button>📷 Foto</button>
-            <button>📎 Anexo</button>
-          </div>
+      <div class="profile-posts-section">
+        <h2>Publicações</h2>
 
-          <div class="publish-area">
-            <button class="post-btn">Publicar</button>
-          </div>
+        <div id="profilePostsContainer"></div>
+      </div>
 
-        </div>
+    </section>
 
-      </section>
+    <aside class="sidebar-right">
 
-      <aside class="sidebar-right">
+      <h2>Sugestões</h2>
 
-        <h2>Amigos</h2>
+      <div class="trend-card">
+        <div class="suggestion-avatar">V</div>
 
-          <div class="trend-card">
-              <img src="https://i.pravatar.cc/300" alt="Foto do perfil">
+        <span>Comunidade Verse</span>
 
-              <span>Caio Martins</span>
+        <p class="friend-tags">
+          leitores · escritores · histórias
+        </p>
 
-              <p class="friend-tags">
-                  leitor · writer · designer · ...
-              </p>
+        <button>Explorar</button>
+      </div>
 
-              <button>+ Adicionar</button>
-          </div>
+    </aside>
 
-      </aside>
+  </main>
 
-    </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabaseClient.js"></script>
+  <script src="../js/profile.js"></script>
 
-    <script src="../js/script.js"></script>
-
-  </body>
+</body>
 
 </html>
