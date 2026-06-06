@@ -67,8 +67,22 @@
         ← Voltar
       </a>
 
-      <div class="profile-banner">
-        <button class="edit-banner-btn">📷</button>
+      <div class="profile-banner" id="profileBanner">
+
+        <button
+          class="edit-banner-btn"
+          id="editBannerBtn"
+          type="button">
+          📷
+        </button>
+
+        <input
+          type="file"
+          id="bannerInput"
+          accept="image/*"
+          hidden
+        >
+
       </div>
 
       <div class="profile-info-card">
