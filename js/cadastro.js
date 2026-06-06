@@ -66,42 +66,45 @@ cadastroForm.addEventListener("submit", async function (event) {
   cadastroBtn.disabled = true;
   cadastroBtn.classList.add("loading");
 
-    const { data, error } = await supabaseClient.auth.signUp({
-        email,
-        password,
-        options: {
-        emailRedirectTo: "https://www.verseonline.pt/html/login.html",
-        data: {
-      full_name: fullName
-        }
-     }
-    });
+  const { data, error } = await supabaseClient.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: "https://verseonline.pt/html/confirmado.html",
+      data: {
+        full_name: fullName
+      }
+    }
+  });
 
   cadastroBtn.disabled = false;
   cadastroBtn.classList.remove("loading");
 
-    if (error) {
-  console.error("Erro Supabase:", error.message);
+  if (error) {
+    console.error("Erro Supabase:", error.message);
 
-  const errorMessage = error.message.toLowerCase();
+    const errorMessage = error.message.toLowerCase();
 
-  if (errorMessage.includes("rate limit")) {
-    emailError.textContent =
-      "Muitas tentativas. Aguarde alguns minutos e tente novamente.";
-  } else if (
-    errorMessage.includes("already registered") ||
-    errorMessage.includes("already exists") ||
-    errorMessage.includes("user already registered")
-  ) {
-    emailError.textContent =
-      "Este e-mail já está cadastrado. Faça login ou recupere sua senha.";
-  } else {
-    emailError.textContent =
-      "Não foi possível criar sua conta. Tente novamente.";
-  }
-
-  return;
+    if (errorMessage.includes("rate limit")) {
+      emailError.textContent =
+        "Muitas tentativas. Aguarde alguns minutos e tente novamente.";
+    } else if (errorMessage.includes("sending confirmation email")) {
+      emailError.textContent =
+        "Não foi possível enviar o e-mail de confirmação. Tente novamente em alguns minutos.";
+    } else if (
+      errorMessage.includes("already registered") ||
+      errorMessage.includes("already exists") ||
+      errorMessage.includes("user already registered")
+    ) {
+      emailError.textContent =
+        "Este e-mail já está cadastrado. Faça login ou recupere sua senha.";
+    } else {
+      emailError.textContent =
+        "Não foi possível criar sua conta. Tente novamente.";
     }
+
+    return;
+  }
 
   console.log("Usuário criado:", data);
 
