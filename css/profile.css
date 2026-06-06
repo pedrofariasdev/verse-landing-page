@@ -1101,3 +1101,77 @@ body {
     width: 100%;
   }
 }
+
+/* =========================
+   SUGESTÕES
+========================= */
+
+#suggestionsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.suggestion-card {
+
+  background: #f8f8f5;
+
+  border-radius: 18px;
+
+  padding: 14px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.suggestion-avatar {
+
+  width: 50px;
+  height: 50px;
+
+  border-radius: 50%;
+
+  background: #79B4A9;
+  color: white;
+
+  border: 2px solid #d4af37;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+}
+
+.suggestion-info strong {
+  display: block;
+  color: #2b2b2b;
+}
+
+.suggestion-info span {
+  color: #676F54;
+  font-size: 13px;
+}
+
+.follow-btn {
+
+  border: none;
+
+  background: #79B4A9;
+  color: white;
+
+  padding: 10px;
+
+  border-radius: 999px;
+
+  cursor: pointer;
+  font-weight: 700;
+
+  transition: 0.3s ease;
+}
+
+.follow-btn:hover {
+  background: #676F54;
+}

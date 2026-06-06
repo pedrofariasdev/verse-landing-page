@@ -136,6 +136,61 @@ async function carregarPostsDoPerfil() {
 async function iniciarPerfil() {
   await carregarPerfil();
   await carregarPostsDoPerfil();
+  await carregarSugestoes();
 }
 
 iniciarPerfil();
+
+async function carregarSugestoes() {
+
+  const suggestionsContainer =
+    document.getElementById("suggestionsContainer");
+
+  if (!suggestionsContainer) return;
+
+  const { data: users, error } = await supabaseClient
+    .from("profiles")
+    .select("*")
+    .neq("id", usuarioLogado.id)
+    .limit(5);
+
+  if (error) {
+    console.error("Erro ao carregar sugestões:", error.message);
+    return;
+  }
+
+  suggestionsContainer.innerHTML = "";
+
+  if (!users || users.length === 0) {
+    suggestionsContainer.innerHTML =
+      "<p>Nenhuma sugestão disponível.</p>";
+    return;
+  }
+
+  users.forEach(user => {
+
+    const firstLetter =
+      (user.full_name || "U").charAt(0).toUpperCase();
+
+    const card = document.createElement("div");
+
+    card.classList.add("suggestion-card");
+
+    card.innerHTML = `
+      <div class="suggestion-avatar">
+        ${firstLetter}
+      </div>
+
+      <div class="suggestion-info">
+        <strong>${user.full_name}</strong>
+        <span>@${user.username}</span>
+      </div>
+
+      <button class="follow-btn">
+        Adicionar
+      </button>
+    `;
+
+    suggestionsContainer.appendChild(card);
+  });
+}
