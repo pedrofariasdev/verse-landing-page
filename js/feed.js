@@ -63,7 +63,7 @@ async function carregarUsuarioLogado() {
 
   perfilLogado = profile;
 
-  console.log("Profile logado:", perfilLogado);
+  console.log("Avatar URL do perfil:", perfilLogado.avatar_url);
 
   const fullName = perfilLogado.full_name || "Usuário Verse";
   const username = perfilLogado.username || "usuario";
@@ -171,7 +171,7 @@ async function carregarPosts() {
       post.profiles?.username || "usuario";
 
     const avatarUrl =
-      post.profiles?.avatar_url || null;
+      console.log("Avatar do post:", avatarUrl);
 
     const postAuthorInitial =
       postAuthorName.charAt(0).toUpperCase();
