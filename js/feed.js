@@ -14,11 +14,18 @@ async function carregarUsuarioLogado() {
 
   usuarioLogado = data.user;
 
-  let { data: profile, error: profileError } = await supabaseClient
+  let { data: profiles, error: profileError } = await supabaseClient
   .from("profiles")
   .select("*")
   .eq("id", usuarioLogado.id)
-  .maybeSingle();
+  .limit(1);
+
+if (profileError) {
+  console.error("Erro ao carregar profile:", profileError.message);
+  return;
+}
+
+let profile = profiles && profiles.length > 0 ? profiles[0] : null;
 
 if (profileError) {
   console.error("Erro ao carregar profile:", profileError.message);
