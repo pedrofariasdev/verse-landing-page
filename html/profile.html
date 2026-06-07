@@ -20,29 +20,62 @@
 
     <div class="modal-content">
 
-      <h2>Editar Perfil</h2>
+      <div class="modal-header">
+        <h2>Editar Perfil</h2>
+        <button id="closeModalBtn" class="modal-close-btn" type="button">×</button>
+      </div>
 
-      <input
-        type="text"
-        id="editFullName"
-        placeholder="Nome completo">
+      <div class="form-group">
+        <label for="editFullName">Nome completo</label>
+        <input
+          type="text"
+          id="editFullName"
+          placeholder="Ex: Pedro Farias">
+      </div>
 
-      <input
-        type="text"
-        id="editUsername"
-        placeholder="Nome de usuário">
+      <div class="form-group">
+        <label for="editUsername">Nome de usuário</label>
+        <input
+          type="text"
+          id="editUsername"
+          placeholder="Ex: pedro.farias">
+        <small>Use apenas letras, números, ponto ou underline.</small>
+      </div>
 
-      <textarea
-        id="editBio"
-        placeholder="Sua bio"></textarea>
+      <div class="form-group">
+        <label for="editBio">Bio</label>
+        <textarea
+          id="editBio"
+          maxlength="160"
+          placeholder="Conte um pouco sobre você..."></textarea>
+
+        <small>
+          <span id="bioCounter">0</span>/160 caracteres
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label>Tags do perfil</label>
+
+        <div class="tag-options">
+          <button type="button" class="tag-option" data-tag="leitor">📖 Leitor</button>
+          <button type="button" class="tag-option" data-tag="escritor">✍️ Escritor</button>
+          <button type="button" class="tag-option" data-tag="capista">🎨 Capista</button>
+          <button type="button" class="tag-option" data-tag="designer">🖌️ Designer</button>
+          <button type="button" class="tag-option" data-tag="roteirista">🎬 Roteirista</button>
+          <button type="button" class="tag-option" data-tag="editor">📝 Editor</button>
+        </div>
+
+        <small>Escolha até 3 tags.</small>
+      </div>
 
       <div class="modal-actions">
-        <button id="saveProfileBtn">
-          Salvar
+        <button id="closeModalBtn2" class="cancel-profile-btn" type="button">
+          Cancelar
         </button>
 
-        <button id="closeModalBtn">
-          Cancelar
+        <button id="saveProfileBtn" class="save-profile-btn" type="button">
+          Salvar alterações
         </button>
       </div>
 

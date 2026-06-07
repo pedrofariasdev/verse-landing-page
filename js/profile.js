@@ -143,20 +143,19 @@ async function carregarPostsDoPerfil() {
   });
 }
 
+let tagsSelecionadas = [];
+
 function configurarModalPerfil() {
-
-  const editBtn =
-    document.getElementById("editProfileBtn");
-
-  const modal =
-    document.getElementById("editProfileModal");
-
-  const closeBtn =
-    document.getElementById("closeModalBtn");
+  const editBtn = document.getElementById("editProfileBtn");
+  const modal = document.getElementById("editProfileModal");
+  const closeBtn = document.getElementById("closeModalBtn");
+  const closeBtn2 = document.getElementById("closeModalBtn2");
+  const bioInput = document.getElementById("editBio");
+  const bioCounter = document.getElementById("bioCounter");
+  const tagButtons = document.querySelectorAll(".tag-option");
 
   if (editBtn) {
     editBtn.addEventListener("click", () => {
-
       document.getElementById("editFullName").value =
         perfilLogado.full_name || "";
 
@@ -166,40 +165,100 @@ function configurarModalPerfil() {
       document.getElementById("editBio").value =
         perfilLogado.bio || "";
 
+      tagsSelecionadas = perfilLogado.tags || [];
+
+      tagButtons.forEach(button => {
+        const tag = button.dataset.tag;
+
+        if (tagsSelecionadas.includes(tag)) {
+          button.classList.add("active");
+        } else {
+          button.classList.remove("active");
+        }
+      });
+
+      if (bioCounter) {
+        bioCounter.textContent = bioInput.value.length;
+      }
+
       modal.classList.add("show");
     });
   }
 
-  if (closeBtn) {
-    closeBtn.addEventListener("click", () => {
-      modal.classList.remove("show");
+  tagButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      const tag = button.dataset.tag;
+
+      if (tagsSelecionadas.includes(tag)) {
+        tagsSelecionadas = tagsSelecionadas.filter(item => item !== tag);
+        button.classList.remove("active");
+        return;
+      }
+
+      if (tagsSelecionadas.length >= 3) {
+        alert("Você pode escolher no máximo 3 tags.");
+        return;
+      }
+
+      tagsSelecionadas.push(tag);
+      button.classList.add("active");
+    });
+  });
+
+  if (bioInput && bioCounter) {
+    bioInput.addEventListener("input", () => {
+      bioCounter.textContent = bioInput.value.length;
     });
   }
+
+  function fecharModal() {
+    modal.classList.remove("show");
+  }
+
+  if (closeBtn) closeBtn.addEventListener("click", fecharModal);
+  if (closeBtn2) closeBtn2.addEventListener("click", fecharModal);
 }
 
 async function salvarPerfil() {
+  const fullName = document.getElementById("editFullName").value.trim();
+  const username = document.getElementById("editUsername").value.trim();
+  const bio = document.getElementById("editBio").value.trim();
 
-  const fullName =
-    document.getElementById("editFullName").value.trim();
+  if (!fullName) {
+    alert("O nome completo é obrigatório.");
+    return;
+  }
 
-  const username =
-    document.getElementById("editUsername").value.trim();
+  if (!username) {
+    alert("O username é obrigatório.");
+    return;
+  }
 
-  const bio =
-    document.getElementById("editBio").value.trim();
+  if (bio.length > 160) {
+    alert("A bio deve ter no máximo 160 caracteres.");
+    return;
+  }
+
+  const usernameRegex = /^[a-zA-Z0-9._]+$/;
+
+  if (!usernameRegex.test(username)) {
+    alert("O username só pode ter letras, números, ponto e underline.");
+    return;
+  }
 
   const { error } = await supabaseClient
     .from("profiles")
     .update({
       full_name: fullName,
-      username: username,
-      bio: bio
+      username: username.toLowerCase(),
+      bio: bio,
+      tags: tagsSelecionadas
     })
     .eq("id", usuarioLogado.id);
 
   if (error) {
     console.error(error);
-    alert("Erro ao salvar.");
+    alert("Erro ao salvar perfil.");
     return;
   }
 
