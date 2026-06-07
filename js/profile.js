@@ -40,6 +40,7 @@ async function carregarPerfil() {
   const profileName = document.getElementById("profileName");
   const profileUsername = document.getElementById("profileUsername");
   const profileBio = document.getElementById("profileBio");
+  const profileTags = document.getElementById("profileTags");
 
   if (navAvatar) navAvatar.textContent = firstLetter;
 
@@ -50,6 +51,24 @@ async function carregarPerfil() {
   if (profileName) profileName.textContent = fullName;
   if (profileUsername) profileUsername.textContent = `@${username}`;
   if (profileBio) profileBio.textContent = bio;
+
+  if (profileTags) {
+  profileTags.innerHTML = "";
+
+  if (perfilLogado.tags && perfilLogado.tags.length > 0) {
+
+    perfilLogado.tags.forEach(tag => {
+
+      const tagElement = document.createElement("span");
+
+      tagElement.classList.add("profile-tag");
+
+      tagElement.textContent = tag;
+
+      profileTags.appendChild(tagElement);
+    });
+  }
+}
 
   if (perfilLogado.avatar_url) {
     mostrarAvatarNaTela(perfilLogado.avatar_url);

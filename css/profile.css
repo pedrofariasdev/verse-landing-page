@@ -194,6 +194,22 @@ body {
   background: #676F54;
 }
 
+.profile-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.profile-tag {
+  background: #eef7eb;
+  color: #676F54;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
 /* NAVBAR */
 
 .navbar {
