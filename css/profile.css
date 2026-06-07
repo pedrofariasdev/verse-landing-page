@@ -148,7 +148,7 @@ body {
   border: none;
   background: #f8f8f5;
   color: #676F54;
-  padding: 10px 14px;
+  padding: 8px 14px;
   border-radius: 999px;
   font-weight: 700;
   cursor: pointer;
@@ -199,6 +199,11 @@ body {
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 15px;
+}
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .profile-tag {
