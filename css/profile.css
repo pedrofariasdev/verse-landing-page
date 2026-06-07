@@ -210,6 +210,32 @@ body {
   font-weight: 600;
 }
 
+.profile-details {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.detail-item {
+  background: #f8f8f5;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid #ececec;
+}
+
+.detail-item strong {
+  display: block;
+  font-size: 13px;
+  color: #676F54;
+  margin-bottom: 6px;
+}
+
+.detail-item span {
+  font-size: 15px;
+  color: #2b2b2b;
+}
+
 /* NAVBAR */
 
 .navbar {
