@@ -645,6 +645,66 @@ body {
     font-weight: 700;
 }
 
+.profile-menu-wrapper {
+  position: relative;
+}
+
+.profile-menu-btn {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 64px;
+  right: 0;
+
+  width: 220px;
+  background: #ffffff;
+  border: 1px solid #ececec;
+  border-radius: 18px;
+
+  padding: 10px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+
+  z-index: 2000;
+}
+
+.profile-dropdown.show {
+  display: flex;
+}
+
+.profile-dropdown a,
+.profile-dropdown button {
+  width: 100%;
+  border: none;
+  background: transparent;
+
+  text-align: left;
+  text-decoration: none;
+
+  color: #2b2b2b;
+  font-size: 14px;
+  font-weight: 600;
+
+  padding: 12px 14px;
+  border-radius: 12px;
+
+  cursor: pointer;
+}
+
+.profile-dropdown a:hover,
+.profile-dropdown button:hover {
+  background: #f8f8f5;
+  color: #676F54;
+}
+
 /* =========================
    RESPONSIVO - FEED
 ========================= */
