@@ -400,25 +400,6 @@ async function iniciarPerfil() {
 
   const editAvatarBtn = document.getElementById("editAvatarBtn");
   const avatarInput = document.getElementById("avatarInput");
-  const editBannerBtn = document.getElementById("editBannerBtn");
-  const bannerInput = document.getElementById("bannerInput");
-
-  if (editBannerBtn && bannerInput) {
-    editBannerBtn.addEventListener("click", function () {
-      bannerInput.click();
-    });
-
-    bannerInput.addEventListener("change", atualizarBanner);
-  }
-
-  configurarModalPerfil();
-
-  const saveProfileBtn = document.getElementById("saveProfileBtn");
-
-  if (saveProfileBtn) {
-    saveProfileBtn.addEventListener("click", salvarPerfil);
-  }
-
 
   if (editAvatarBtn && avatarInput) {
     editAvatarBtn.addEventListener("click", function () {
@@ -438,6 +419,14 @@ async function iniciarPerfil() {
 
     bannerInput.addEventListener("change", atualizarBanner);
   }
+
+  configurarModalPerfil();
+
+  const saveProfileBtn = document.getElementById("saveProfileBtn");
+
+  if (saveProfileBtn) {
+    saveProfileBtn.addEventListener("click", salvarPerfil);
+  }
 }
 
-iniciarPerfil();    
+iniciarPerfil();
