@@ -13,6 +13,61 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0,0,0,.45);
+
+  display: none;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 9999;
+}
+
+.modal-overlay.show {
+  display: flex;
+}
+
+.modal-content {
+  width: 500px;
+  max-width: 90%;
+
+  background: white;
+
+  border-radius: 20px;
+
+  padding: 30px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.modal-content input,
+.modal-content textarea {
+  width: 100%;
+
+  padding: 12px;
+
+  border: 1px solid #ddd;
+  border-radius: 12px;
+
+  font-size: 15px;
+}
+
+.modal-content textarea {
+  min-height: 120px;
+  resize: none;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
 /* NAVBAR */
 
 .navbar {

@@ -143,6 +143,71 @@ async function carregarPostsDoPerfil() {
   });
 }
 
+function configurarModalPerfil() {
+
+  const editBtn =
+    document.getElementById("editProfileBtn");
+
+  const modal =
+    document.getElementById("editProfileModal");
+
+  const closeBtn =
+    document.getElementById("closeModalBtn");
+
+  if (editBtn) {
+    editBtn.addEventListener("click", () => {
+
+      document.getElementById("editFullName").value =
+        perfilLogado.full_name || "";
+
+      document.getElementById("editUsername").value =
+        perfilLogado.username || "";
+
+      document.getElementById("editBio").value =
+        perfilLogado.bio || "";
+
+      modal.classList.add("show");
+    });
+  }
+
+  if (closeBtn) {
+    closeBtn.addEventListener("click", () => {
+      modal.classList.remove("show");
+    });
+  }
+}
+
+async function salvarPerfil() {
+
+  const fullName =
+    document.getElementById("editFullName").value.trim();
+
+  const username =
+    document.getElementById("editUsername").value.trim();
+
+  const bio =
+    document.getElementById("editBio").value.trim();
+
+  const { error } = await supabaseClient
+    .from("profiles")
+    .update({
+      full_name: fullName,
+      username: username,
+      bio: bio
+    })
+    .eq("id", usuarioLogado.id);
+
+  if (error) {
+    console.error(error);
+    alert("Erro ao salvar.");
+    return;
+  }
+
+  alert("Perfil atualizado!");
+
+  location.reload();
+}
+
 async function atualizarAvatar(event) {
   const file = event.target.files[0];
 
@@ -335,6 +400,25 @@ async function iniciarPerfil() {
 
   const editAvatarBtn = document.getElementById("editAvatarBtn");
   const avatarInput = document.getElementById("avatarInput");
+  const editBannerBtn = document.getElementById("editBannerBtn");
+  const bannerInput = document.getElementById("bannerInput");
+
+  if (editBannerBtn && bannerInput) {
+    editBannerBtn.addEventListener("click", function () {
+      bannerInput.click();
+    });
+
+    bannerInput.addEventListener("change", atualizarBanner);
+  }
+
+  configurarModalPerfil();
+
+  const saveProfileBtn = document.getElementById("saveProfileBtn");
+
+  if (saveProfileBtn) {
+    saveProfileBtn.addEventListener("click", salvarPerfil);
+  }
+
 
   if (editAvatarBtn && avatarInput) {
     editAvatarBtn.addEventListener("click", function () {
