@@ -1594,3 +1594,18 @@ body {
   color: #2b2b2b;
   line-height: 1.4;
 }
+
+.profile-content-row {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+.profile-summary-card {
+  background: #f8f8f5;
+  border: 1px solid #ececec;
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 20px;
+}

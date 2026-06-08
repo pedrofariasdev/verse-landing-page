@@ -16,6 +16,7 @@
 </head>
 
 <body>
+
   <div class="modal-overlay" id="editProfileModal">
 
     <div class="modal-content">
@@ -173,8 +174,7 @@
           type="file"
           id="bannerInput"
           accept="image/*"
-          hidden
-        >
+          hidden>
 
       </div>
 
@@ -191,52 +191,51 @@
             type="file"
             id="avatarInput"
             accept="image/*"
-            hidden
-          >
+            hidden>
         </div>
 
         <div class="profile-content-row">
 
-        <div class="profile-info">
+          <div class="profile-info">
 
-          <h2 id="profileName">Usuário Verse</h2>
+            <h2 id="profileName">Usuário Verse</h2>
 
-          <span class="profile-username" id="profileUsername">
-            @usuario
-          </span>
+            <span class="profile-username" id="profileUsername">
+              @usuario
+            </span>
 
-          <p class="profile-bio" id="profileBio">
-            Este usuário ainda não adicionou uma bio.
-          </p>
+            <p class="profile-bio" id="profileBio">
+              Este usuário ainda não adicionou uma bio.
+            </p>
 
-          <div id="profileTags" class="profile-tags"></div>
+            <div id="profileTags" class="profile-tags"></div>
+
+          </div>
+
+          <div class="profile-summary-card">
+
+            <div class="summary-item">
+              <strong>📚 Gêneros favoritos</strong>
+              <span id="profileGenres">Não informado</span>
+            </div>
+
+            <div class="summary-item">
+              <strong>📍 Localização</strong>
+              <span id="profileLocation">Não informado</span>
+            </div>
+
+            <div class="summary-item">
+              <strong>📅 Membro desde</strong>
+              <span id="profileMemberSince">Não informado</span>
+            </div>
+
+          </div>
 
         </div>
 
-        <div class="profile-summary-card">
+        <div class="profile-stats">
 
-          <div class="summary-item">
-            <strong>📚 Gêneros favoritos</strong>
-            <span id="profileGenres">Não informado</span>
-          </div>
-
-          <div class="summary-item">
-            <strong>📍 Localização</strong>
-            <span id="profileLocation">Não informado</span>
-          </div>
-
-          <div class="summary-item">
-            <strong>📅 Membro desde</strong>
-            <span id="profileMemberSince">Não informado</span>
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class="profile-stats">
-
-        <div class="stat-box">
+          <div class="stat-box">
             <strong id="profilePostsCount">0</strong>
             <span>Publicações</span>
           </div>
@@ -263,41 +262,10 @@
 
         </div>
 
-          <div class="profile-stats">
-
-            <div class="stat-box">
-              <strong id="profilePostsCount">0</strong>
-              <span>Publicações</span>
-            </div>
-
-            <div class="stat-box">
-              <strong>0</strong>
-              <span>Histórias</span>
-            </div>
-
-            <div class="stat-box">
-              <strong>0</strong>
-              <span>Livros</span>
-            </div>
-
-            <div class="stat-box">
-              <strong>0</strong>
-              <span>Seguidores</span>
-            </div>
-
-            <div class="stat-box">
-              <strong>0</strong>
-              <span>Comunidades</span>
-            </div>
-
-          </div>
-
-        </div>
-
       </div>
 
       <div class="profile-actions">
-        <button class="edit-profile-btn" id="editProfileBtn">
+        <button class="edit-profile-btn" id="editProfileBtn" type="button">
           Editar Perfil
         </button>
       </div>
@@ -313,6 +281,7 @@
     <aside class="sidebar-right">
 
       <h2>Sugestões</h2>
+
       <div id="suggestionsContainer"></div>
 
       <div class="trend-card">
@@ -324,7 +293,7 @@
           leitores · escritores · histórias
         </p>
 
-        <button>Explorar</button>
+        <button type="button">Explorar</button>
       </div>
 
     </aside>
