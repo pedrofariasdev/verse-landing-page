@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Verse - Perfil Público</title>
+
+  <link rel="stylesheet" href="../css/profile.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Belleza&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <nav class="navbar">
+
+    <div class="logo">
+      <a href="../html/feed.html" class="logo-link">
+        <h1>VERSE</h1>
+        <div class="logo-line"></div>
+      </a>
+    </div>
+
+    <div class="search-area">
+      <input type="text" placeholder="Pesquisar na Verse...">
+    </div>
+
+    <div class="nav-actions">
+
+      <button class="notification-btn" type="button">
+        🔔
+      </button>
+
+      <a href="../html/profile.html" class="profile-btn">
+        <div class="nav-avatar" id="navAvatar">V</div>
+      </a>
+
+    </div>
+
+  </nav>
+
+  <main class="app-layout">
+
+    <aside class="sidebar-left">
+
+      <h2>Menu</h2>
+
+      <nav class="side-menu">
+        <a href="../html/profile.html">Meu Perfil</a>
+        <a href="../html/publications.html">Publicações</a>
+        <a href="../html/stories.html">Histórias</a>
+        <a href="../html/books.html">Livros</a>
+        <a href="../html/comunities.html">Comunidades</a>
+        <a href="../html/messages.html">Mensagens</a>
+        <a href="../html/settings.html">Configurações</a>
+      </nav>
+
+    </aside>
+
+    <section class="feed-main">
+
+      <a href="../html/feed.html" class="back-btn">
+        ← Voltar ao Feed
+      </a>
+
+      <div class="profile-banner" id="publicProfileBanner"></div>
+
+      <div class="profile-info-card">
+
+        <div class="profile-avatar" id="publicProfileAvatar">
+          V
+        </div>
+
+        <div class="profile-content-row">
+
+          <div class="profile-info">
+
+            <h2 id="publicProfileName">Usuário Verse</h2>
+
+            <span class="profile-username" id="publicProfileUsername">
+              @usuario
+            </span>
+
+            <p class="profile-bio" id="publicProfileBio">
+              Este usuário ainda não adicionou uma bio.
+            </p>
+
+            <div id="publicProfileTags" class="profile-tags"></div>
+
+            <div class="public-profile-actions">
+
+              <button id="followBtn" class="follow-profile-btn" type="button">
+                Seguir
+              </button>
+
+              <button id="messageBtn" class="message-profile-btn" type="button">
+                Mensagem
+              </button>
+
+            </div>
+
+          </div>
+
+          <div class="profile-summary-card">
+
+            <div class="summary-item">
+              <strong>📚 Gêneros favoritos</strong>
+              <span id="publicProfileGenres">Não informado</span>
+            </div>
+
+            <div class="summary-item">
+              <strong>📍 Localização</strong>
+              <span id="publicProfileLocation">Não informado</span>
+            </div>
+
+            <div class="summary-item">
+              <strong>📅 Membro desde</strong>
+              <span id="publicProfileMemberSince">Não informado</span>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="profile-stats">
+
+          <div class="stat-box">
+            <strong id="publicProfilePostsCount">0</strong>
+            <span>Publicações</span>
+          </div>
+
+          <div class="stat-box">
+            <strong>0</strong>
+            <span>Histórias</span>
+          </div>
+
+          <div class="stat-box">
+            <strong>0</strong>
+            <span>Livros</span>
+          </div>
+
+          <div class="stat-box">
+            <strong id="publicProfileFollowersCount">0</strong>
+            <span>Seguidores</span>
+          </div>
+
+          <div class="stat-box">
+            <strong id="publicProfileFollowingCount">0</strong>
+            <span>Seguindo</span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="profile-posts-section">
+
+        <h2>Publicações</h2>
+
+        <div id="publicProfilePostsContainer"></div>
+
+      </div>
+
+    </section>
+
+    <aside class="sidebar-right">
+
+      <h2>Sugestões</h2>
+
+      <div class="trend-card">
+        <div class="suggestion-avatar">V</div>
+
+        <span>Comunidade Verse</span>
+
+        <p class="friend-tags">
+          leitores · escritores · histórias
+        </p>
+
+        <button type="button">
+          Explorar
+        </button>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabaseClient.js"></script>
+  <script src="../js/public-profile.js"></script>
+
+</body>
+
+</html>

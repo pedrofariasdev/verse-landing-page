@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Verse - Configurações</title>
+
+  <link rel="stylesheet" href="../css/settings.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Belleza&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+
+  <nav class="navbar">
+
+    <div class="logo">
+      <a href="../html/feed.html" class="logo-link">
+        <h1>VERSE</h1>
+        <div class="logo-line"></div>
+      </a>
+    </div>
+
+    <div class="search-area">
+      <input type="text" placeholder="Pesquisar na Verse...">
+    </div>
+
+    <div class="nav-actions">
+
+      <button class="notification-btn">
+        🔔
+      </button>
+
+      <a href="../html/profile.html" class="profile-btn">
+        <div class="nav-avatar" id="navAvatar">
+          V
+        </div>
+      </a>
+
+    </div>
+
+  </nav>
+
+  <!-- LAYOUT -->
+
+  <main class="app-layout">
+
+    <!-- MENU ESQUERDO -->
+
+    <aside class="sidebar-left">
+
+      <h2>Configurações</h2>
+
+      <nav class="side-menu">
+
+        <a href="#conta">Conta</a>
+
+        <a href="#perfil">Perfil</a>
+
+        <a href="#notificacoes">Notificações</a>
+
+        <a href="#aparencia">Aparência</a>
+
+      </nav>
+
+    </aside>
+
+    <!-- CONTEÚDO -->
+
+    <section class="settings-main">
+
+      <a href="../html/profile.html" class="back-btn">
+        ← Voltar ao Perfil
+      </a>
+
+      <h1>Configurações</h1>
+
+      <!-- CONTA -->
+
+      <div class="settings-card" id="conta">
+
+        <h2>Conta</h2>
+
+        <div class="setting-item">
+
+          <label>Email</label>
+
+          <input
+            type="email"
+            id="userEmail"
+            placeholder="email@exemplo.com">
+
+        </div>
+
+        <div class="setting-item">
+
+          <label>Alterar Senha</label>
+
+          <button class="action-btn">
+            Alterar Senha
+          </button>
+
+        </div>
+
+        <div class="setting-item danger-zone">
+
+          <label>Excluir Conta</label>
+
+          <button class="danger-btn">
+            Excluir Conta
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- PERFIL -->
+
+      <div class="settings-card" id="perfil">
+
+        <h2>Perfil</h2>
+
+        <div class="setting-toggle">
+
+          <span>Perfil Privado</span>
+
+          <input type="checkbox" id="privateProfile">
+
+        </div>
+
+        <div class="setting-toggle">
+
+          <span>Mostrar Localização</span>
+
+          <input type="checkbox" id="showLocation">
+
+        </div>
+
+        <div class="setting-toggle">
+
+          <span>Mostrar Gêneros Favoritos</span>
+
+          <input type="checkbox" id="showGenres">
+
+        </div>
+
+        <div class="setting-toggle">
+
+          <span>Mostrar Data de Entrada</span>
+
+          <input type="checkbox" id="showMemberSince">
+
+        </div>
+
+      </div>
+
+      <!-- NOTIFICAÇÕES -->
+
+      <div class="settings-card" id="notificacoes">
+
+        <h2>Notificações</h2>
+
+        <div class="setting-toggle">
+
+          <span>Curtidas</span>
+
+          <input type="checkbox" id="notifyLikes">
+
+        </div>
+
+        <div class="setting-toggle">
+
+          <span>Comentários</span>
+
+          <input type="checkbox" id="notifyComments">
+
+        </div>
+
+        <div class="setting-toggle">
+
+          <span>Seguidores</span>
+
+          <input type="checkbox" id="notifyFollowers">
+
+        </div>
+
+        <div class="setting-toggle">
+
+          <span>Mensagens</span>
+
+          <input type="checkbox" id="notifyMessages">
+
+        </div>
+
+      </div>
+
+      <!-- APARÊNCIA -->
+
+      <div class="settings-card" id="aparencia">
+
+        <h2>Aparência</h2>
+
+        <div class="setting-item">
+
+          <label>Tema</label>
+
+          <select id="themeSelect">
+
+            <option value="light">Claro</option>
+
+            <option value="dark">Escuro</option>
+
+            <option value="auto">Automático</option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+      <div class="save-area">
+
+        <button id="saveSettingsBtn" class="save-btn">
+          Salvar Configurações
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabaseClient.js"></script>
+  <script src="../js/settings.js"></script>
+
+</body>
+
+</html>
