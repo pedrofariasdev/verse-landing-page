@@ -2,6 +2,8 @@ console.log("Profile.js carregado!");
 
 let usuarioLogado = null;
 let perfilLogado = null;
+let tagsSelecionadas = [];
+let generosSelecionados = [];
 
 async function carregarPerfil() {
   const { data, error } = await supabaseClient.auth.getUser();
@@ -32,7 +34,6 @@ async function carregarPerfil() {
   const fullName = perfilLogado.full_name || "Usuário Verse";
   const username = perfilLogado.username || "usuario";
   const bio = perfilLogado.bio || "Este usuário ainda não adicionou uma bio.";
-
   const firstLetter = fullName.charAt(0).toUpperCase();
 
   const navAvatar = document.getElementById("navAvatar");
@@ -41,6 +42,9 @@ async function carregarPerfil() {
   const profileUsername = document.getElementById("profileUsername");
   const profileBio = document.getElementById("profileBio");
   const profileTags = document.getElementById("profileTags");
+  const profileGenres = document.getElementById("profileGenres");
+  const profileLocation = document.getElementById("profileLocation");
+  const profileMemberSince = document.getElementById("profileMemberSince");
 
   if (navAvatar) navAvatar.textContent = firstLetter;
 
@@ -53,22 +57,38 @@ async function carregarPerfil() {
   if (profileBio) profileBio.textContent = bio;
 
   if (profileTags) {
-  profileTags.innerHTML = "";
+    profileTags.innerHTML = "";
 
-  if (perfilLogado.tags && perfilLogado.tags.length > 0) {
+    if (perfilLogado.tags && perfilLogado.tags.length > 0) {
+      perfilLogado.tags.forEach(function (tag) {
+        const tagElement = document.createElement("span");
+        tagElement.classList.add("profile-tag");
+        tagElement.textContent = tag;
+        profileTags.appendChild(tagElement);
+      });
+    }
+  }
 
-    perfilLogado.tags.forEach(tag => {
+  if (profileGenres) {
+    if (perfilLogado.favorite_genres && perfilLogado.favorite_genres.length > 0) {
+      profileGenres.textContent = perfilLogado.favorite_genres.join(" · ");
+    } else {
+      profileGenres.textContent = "Não informado";
+    }
+  }
 
-      const tagElement = document.createElement("span");
+  if (profileLocation) {
+    profileLocation.textContent = perfilLogado.location || "Não informado";
+  }
 
-      tagElement.classList.add("profile-tag");
+  if (profileMemberSince && perfilLogado.created_at) {
+    const dataCriacao = new Date(perfilLogado.created_at);
 
-      tagElement.textContent = tag;
-
-      profileTags.appendChild(tagElement);
+    profileMemberSince.textContent = dataCriacao.toLocaleDateString("pt-PT", {
+      month: "long",
+      year: "numeric"
     });
   }
-}
 
   if (perfilLogado.avatar_url) {
     mostrarAvatarNaTela(perfilLogado.avatar_url);
@@ -132,14 +152,18 @@ async function carregarPostsDoPerfil() {
     const username = perfilLogado.username || "usuario";
     const firstLetter = fullName.charAt(0).toUpperCase();
 
+    const avatarStyle = perfilLogado.avatar_url
+      ? "background-image: url('" + perfilLogado.avatar_url + "'); background-size: cover; background-position: center; color: transparent;"
+      : "";
+
     const postCard = document.createElement("article");
     postCard.classList.add("post-card");
-    const avatarStyle = perfilLogado.avatar_url
-        ? "background-image: url('" + perfilLogado.avatar_url + "'); background-size: cover; background-position: center; color: transparent;"
-        : "";
+
     postCard.innerHTML = `
       <div class="post-header">
-        <div class="post-avatar" style="${avatarStyle}">${firstLetter}</div>
+        <div class="post-avatar" style="${avatarStyle}">
+          ${firstLetter}
+        </div>
 
         <div class="post-user-info">
           <h3>${fullName}</h3>
@@ -162,8 +186,6 @@ async function carregarPostsDoPerfil() {
   });
 }
 
-let tagsSelecionadas = [];
-
 function configurarModalPerfil() {
   const editBtn = document.getElementById("editProfileBtn");
   const modal = document.getElementById("editProfileModal");
@@ -172,9 +194,10 @@ function configurarModalPerfil() {
   const bioInput = document.getElementById("editBio");
   const bioCounter = document.getElementById("bioCounter");
   const tagButtons = document.querySelectorAll(".tag-option");
+  const genreButtons = document.querySelectorAll(".genre-option");
 
   if (editBtn) {
-    editBtn.addEventListener("click", () => {
+    editBtn.addEventListener("click", function () {
       document.getElementById("editFullName").value =
         perfilLogado.full_name || "";
 
@@ -184,9 +207,13 @@ function configurarModalPerfil() {
       document.getElementById("editBio").value =
         perfilLogado.bio || "";
 
-      tagsSelecionadas = perfilLogado.tags || [];
+      document.getElementById("editLocation").value =
+        perfilLogado.location || "";
 
-      tagButtons.forEach(button => {
+      tagsSelecionadas = perfilLogado.tags || [];
+      generosSelecionados = perfilLogado.favorite_genres || [];
+
+      tagButtons.forEach(function (button) {
         const tag = button.dataset.tag;
 
         if (tagsSelecionadas.includes(tag)) {
@@ -196,7 +223,17 @@ function configurarModalPerfil() {
         }
       });
 
-      if (bioCounter) {
+      genreButtons.forEach(function (button) {
+        const genre = button.dataset.genre;
+
+        if (generosSelecionados.includes(genre)) {
+          button.classList.add("active");
+        } else {
+          button.classList.remove("active");
+        }
+      });
+
+      if (bioCounter && bioInput) {
         bioCounter.textContent = bioInput.value.length;
       }
 
@@ -204,12 +241,15 @@ function configurarModalPerfil() {
     });
   }
 
-  tagButtons.forEach(button => {
-    button.addEventListener("click", () => {
+  tagButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
       const tag = button.dataset.tag;
 
       if (tagsSelecionadas.includes(tag)) {
-        tagsSelecionadas = tagsSelecionadas.filter(item => item !== tag);
+        tagsSelecionadas = tagsSelecionadas.filter(function (item) {
+          return item !== tag;
+        });
+
         button.classList.remove("active");
         return;
       }
@@ -224,8 +264,31 @@ function configurarModalPerfil() {
     });
   });
 
+  genreButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      const genre = button.dataset.genre;
+
+      if (generosSelecionados.includes(genre)) {
+        generosSelecionados = generosSelecionados.filter(function (item) {
+          return item !== genre;
+        });
+
+        button.classList.remove("active");
+        return;
+      }
+
+      if (generosSelecionados.length >= 3) {
+        alert("Você pode escolher no máximo 3 gêneros.");
+        return;
+      }
+
+      generosSelecionados.push(genre);
+      button.classList.add("active");
+    });
+  });
+
   if (bioInput && bioCounter) {
-    bioInput.addEventListener("input", () => {
+    bioInput.addEventListener("input", function () {
       bioCounter.textContent = bioInput.value.length;
     });
   }
@@ -242,6 +305,7 @@ async function salvarPerfil() {
   const fullName = document.getElementById("editFullName").value.trim();
   const username = document.getElementById("editUsername").value.trim();
   const bio = document.getElementById("editBio").value.trim();
+  const locationValue = document.getElementById("editLocation").value.trim();
 
   if (!fullName) {
     alert("O nome completo é obrigatório.");
@@ -271,7 +335,9 @@ async function salvarPerfil() {
       full_name: fullName,
       username: username.toLowerCase(),
       bio: bio,
-      tags: tagsSelecionadas
+      tags: tagsSelecionadas,
+      favorite_genres: generosSelecionados,
+      location: locationValue
     })
     .eq("id", usuarioLogado.id);
 
@@ -282,8 +348,7 @@ async function salvarPerfil() {
   }
 
   alert("Perfil atualizado!");
-
-  location.reload();
+  window.location.reload();
 }
 
 async function atualizarAvatar(event) {
@@ -444,7 +509,7 @@ async function carregarSugestoes() {
     return;
   }
 
-  users.forEach(user => {
+  users.forEach(function (user) {
     const firstLetter =
       (user.full_name || "U").charAt(0).toUpperCase();
 
