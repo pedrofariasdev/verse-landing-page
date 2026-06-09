@@ -32,13 +32,46 @@
 
     <div class="nav-actions">
 
-      <button class="notification-btn" type="button">
-        🔔
-      </button>
+        <div class="notification-wrapper">
 
-      <a href="../html/profile.html" class="profile-btn">
-        <div class="nav-avatar" id="navAvatar">V</div>
-      </a>
+            <button id="notificationBtn" class="notification-btn" type="button">
+                🔔
+                <span id="notificationBadge" class="notification-badge">0</span>
+            </button>
+
+            <div id="notificationDropdown" class="notification-dropdown">
+
+                <div class="notification-header">
+                <h3>Notificações</h3>
+                </div>
+
+                <div id="notificationList" class="notification-list">
+                <p class="empty-notifications">Nenhuma notificação ainda.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="profile-menu-wrapper">
+
+            <button class="profile-menu-btn" id="profileMenuBtn" type="button">
+                <div class="nav-avatar" id="navAvatar">V</div>
+            </button>
+
+            <div class="profile-dropdown" id="profileDropdown">
+
+                <a href="../html/profile.html">👤 Meu perfil</a>
+                <a href="../html/messages.html">💬 Mensagens</a>
+                <a href="../html/settings.html">⚙️ Configurações</a>
+
+                <button id="logoutBtn" type="button">
+                🚪 Sair
+                </button>
+
+            </div>
+
+        </div>
 
     </div>
 

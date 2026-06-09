@@ -1,0 +1,556 @@
+console.log("Public Profile carregado!");
+
+let usuarioLogado = null;
+let usuarioPerfil = null;
+let jaSegue = false;
+
+function obterIdDaUrl() {
+  const params = new URLSearchParams(window.location.search);
+
+  return params.get("id");
+}
+
+async function carregarUsuarioLogado() {
+  const { data, error } = await supabaseClient.auth.getUser();
+
+  if (error || !data.user) {
+    window.location.href = "../html/login.html";
+    return;
+  }
+
+  usuarioLogado = data.user;
+
+  const { data: meuPerfil, error: meuPerfilError } = await supabaseClient
+    .from("profiles")
+    .select("*")
+    .eq("id", usuarioLogado.id)
+    .single();
+
+  if (meuPerfilError) {
+    console.error("Erro ao carregar meu perfil:", meuPerfilError.message);
+    return;
+  }
+
+  const navAvatar = document.getElementById("navAvatar");
+  const firstLetter = (meuPerfil.full_name || "U").charAt(0).toUpperCase();
+
+  if (navAvatar) {
+    navAvatar.textContent = firstLetter;
+  }
+
+  if (meuPerfil.avatar_url && navAvatar) {
+    navAvatar.style.backgroundImage = `url(${meuPerfil.avatar_url})`;
+    navAvatar.style.backgroundSize = "cover";
+    navAvatar.style.backgroundPosition = "center";
+    navAvatar.style.color = "transparent";
+  }
+}
+
+async function carregarPerfilPublico() {
+
+  const userId = obterIdDaUrl();
+
+  if (!userId) {
+    alert("Usuário não encontrado.");
+    return;
+  }
+
+  const { data: profile, error } = await supabaseClient
+    .from("profiles")
+    .select("*")
+    .eq("id", userId)
+    .single();
+
+  if (error || !profile) {
+    console.error(error);
+    alert("Perfil não encontrado.");
+    return;
+  }
+
+  usuarioPerfil = profile;
+
+  preencherPerfil();
+  carregarPosts();
+}
+
+function preencherPerfil() {
+
+  const profileName =
+    document.getElementById("publicProfileName");
+
+  const profileUsername =
+    document.getElementById("publicProfileUsername");
+
+  const profileBio =
+    document.getElementById("publicProfileBio");
+
+  const profileGenres =
+    document.getElementById("publicProfileGenres");
+
+  const profileLocation =
+    document.getElementById("publicProfileLocation");
+
+  const profileMemberSince =
+    document.getElementById("publicProfileMemberSince");
+
+  const profileAvatar =
+    document.getElementById("publicProfileAvatar");
+
+  const profileBanner =
+    document.getElementById("publicProfileBanner");
+
+  const profileTags =
+    document.getElementById("publicProfileTags");
+
+  profileName.textContent =
+    usuarioPerfil.full_name || "Usuário Verse";
+
+  profileUsername.textContent =
+    "@" + (usuarioPerfil.username || "usuario");
+
+  profileBio.textContent =
+    usuarioPerfil.bio ||
+    "Este usuário ainda não adicionou uma bio.";
+
+  profileLocation.textContent =
+    usuarioPerfil.location ||
+    "Não informado";
+
+  profileGenres.textContent =
+    usuarioPerfil.favorite_genres?.join(" • ") ||
+    "Não informado";
+
+    const messageBtn =
+  document.getElementById("messageBtn");
+
+    if (messageBtn) {
+
+  messageBtn.onclick = function () {
+
+    window.location.href =
+      `../html/messages.html?receiver=${usuarioPerfil.id}`;
+
+  };
+
+    }
+
+  if (usuarioPerfil.created_at) {
+
+    const data = new Date(usuarioPerfil.created_at);
+
+    profileMemberSince.textContent =
+      data.toLocaleDateString("pt-PT");
+  }
+
+  if (usuarioPerfil.avatar_url) {
+
+    profileAvatar.style.backgroundImage =
+      `url(${usuarioPerfil.avatar_url})`;
+
+    profileAvatar.style.backgroundSize = "cover";
+    profileAvatar.style.backgroundPosition = "center";
+    profileAvatar.style.color = "transparent";
+
+  } else {
+
+    profileAvatar.textContent =
+      usuarioPerfil.full_name
+      .charAt(0)
+      .toUpperCase();
+
+  }
+
+  if (usuarioPerfil.banner_url) {
+
+    profileBanner.style.backgroundImage =
+      `url(${usuarioPerfil.banner_url})`;
+
+    profileBanner.style.backgroundSize = "cover";
+    profileBanner.style.backgroundPosition = "center";
+  }
+
+  profileTags.innerHTML = "";
+
+  if (
+    usuarioPerfil.tags &&
+    usuarioPerfil.tags.length > 0
+  ) {
+
+    usuarioPerfil.tags.forEach(tag => {
+
+      const span =
+        document.createElement("span");
+
+      span.classList.add("profile-tag");
+
+      span.textContent = tag;
+
+      profileTags.appendChild(span);
+
+    });
+
+  }
+
+}
+
+async function verificarSeSegue() {
+  const followBtn = document.getElementById("followBtn");
+
+  if (!followBtn || !usuarioLogado || !usuarioPerfil) return;
+
+  if (usuarioLogado.id === usuarioPerfil.id) {
+    followBtn.style.display = "none";
+
+    const messageBtn = document.getElementById("messageBtn");
+    if (messageBtn) messageBtn.style.display = "none";
+
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("followers")
+    .select("*")
+    .eq("follower_id", usuarioLogado.id)
+    .eq("following_id", usuarioPerfil.id)
+    .maybeSingle();
+
+  if (error) {
+    console.error("Erro ao verificar follow:", error.message);
+    return;
+  }
+
+  jaSegue = !!data;
+
+  atualizarBotaoFollow();
+
+  followBtn.onclick = alternarFollow;
+}
+
+function atualizarBotaoFollow() {
+  const followBtn = document.getElementById("followBtn");
+
+  if (!followBtn) return;
+
+  if (jaSegue) {
+    followBtn.textContent = "Seguindo";
+    followBtn.classList.add("following");
+  } else {
+    followBtn.textContent = "Seguir";
+    followBtn.classList.remove("following");
+  }
+}
+
+async function alternarFollow() {
+  const followBtn = document.getElementById("followBtn");
+
+  if (!usuarioLogado || !usuarioPerfil) return;
+
+  followBtn.disabled = true;
+
+  if (jaSegue) {
+    const { error } = await supabaseClient
+      .from("followers")
+      .delete()
+      .eq("follower_id", usuarioLogado.id)
+      .eq("following_id", usuarioPerfil.id);
+
+    if (error) {
+      console.error("Erro ao deixar de seguir:", error.message);
+      alert("Não foi possível deixar de seguir.");
+      followBtn.disabled = false;
+      return;
+    }
+
+    jaSegue = false;
+  } else {
+    const { error } = await supabaseClient
+      .from("followers")
+      .insert([
+        {
+          follower_id: usuarioLogado.id,
+          following_id: usuarioPerfil.id
+        }
+      ]);
+
+    if (error) {
+      console.error("Erro ao seguir:", error.message);
+      alert("Não foi possível seguir este usuário.");
+      followBtn.disabled = false;
+      return;
+    }
+
+    jaSegue = true;
+  }
+
+  atualizarBotaoFollow();
+  await carregarContadoresFollow();
+  await criarNotificacaoFollow();
+
+  followBtn.disabled = false;
+}
+
+async function criarNotificacaoFollow() {
+  if (!usuarioLogado || !usuarioPerfil) return;
+
+  if (usuarioLogado.id === usuarioPerfil.id) return;
+
+  const { data: meuPerfil } = await supabaseClient
+    .from("profiles")
+    .select("full_name")
+    .eq("id", usuarioLogado.id)
+    .single();
+
+  const nome =
+    meuPerfil?.full_name || "Alguém";
+
+  const { error } = await supabaseClient
+    .from("notifications")
+    .insert([
+      {
+        user_id: usuarioPerfil.id,
+        sender_id: usuarioLogado.id,
+        type: "follow",
+        message: `${nome} começou a seguir você.`,
+        link: `../html/public-profile.html?id=${usuarioLogado.id}`
+      }
+    ]);
+
+  if (error) {
+    console.error("Erro ao criar notificação:", error.message);
+  }
+}
+
+async function carregarContadoresFollow() {
+  if (!usuarioPerfil) return;
+
+  const followersCountEl =
+    document.getElementById("publicProfileFollowersCount");
+
+  const followingCountEl =
+    document.getElementById("publicProfileFollowingCount");
+
+  const { count: followersCount, error: followersError } = await supabaseClient
+    .from("followers")
+    .select("*", { count: "exact", head: true })
+    .eq("following_id", usuarioPerfil.id);
+
+  const { count: followingCount, error: followingError } = await supabaseClient
+    .from("followers")
+    .select("*", { count: "exact", head: true })
+    .eq("follower_id", usuarioPerfil.id);
+
+  if (!followersError && followersCountEl) {
+    followersCountEl.textContent = followersCount || 0;
+  }
+
+  if (!followingError && followingCountEl) {
+    followingCountEl.textContent = followingCount || 0;
+  }
+}
+
+async function carregarPosts() {
+
+  const container =
+    document.getElementById(
+      "publicProfilePostsContainer"
+    );
+
+  const count =
+    document.getElementById(
+      "publicProfilePostsCount"
+    );
+
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  const { data: posts, error } =
+    await supabaseClient
+      .from("posts")
+      .select("*")
+      .eq("user_id", usuarioPerfil.id)
+      .order(
+        "created_at",
+        { ascending: false }
+      );
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  count.textContent =
+    posts ? posts.length : 0;
+
+  if (!posts || posts.length === 0) {
+
+    container.innerHTML =
+      "<p>Este usuário ainda não publicou nada.</p>";
+
+    return;
+  }
+
+  posts.forEach(post => {
+
+    const card =
+      document.createElement("article");
+
+    card.classList.add("post-card");
+
+    card.innerHTML = `
+      <div class="post-header">
+
+        <div class="post-user-info">
+
+          <h3>
+            ${usuarioPerfil.full_name}
+          </h3>
+
+          <span>
+            @${usuarioPerfil.username}
+          </span>
+
+        </div>
+
+      </div>
+
+      <p class="post-text">
+        ${post.content}
+      </p>
+    `;
+
+    container.appendChild(card);
+
+  });
+
+}
+function configurarMenuPerfil() {
+  const profileMenuBtn = document.getElementById("profileMenuBtn");
+  const profileDropdown = document.getElementById("profileDropdown");
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if (profileMenuBtn && profileDropdown) {
+    profileMenuBtn.addEventListener("click", function (event) {
+      event.stopPropagation();
+      profileDropdown.classList.toggle("show");
+    });
+
+    profileDropdown.addEventListener("click", function (event) {
+      event.stopPropagation();
+    });
+
+    document.addEventListener("click", function () {
+      profileDropdown.classList.remove("show");
+    });
+  }
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async function () {
+      await supabaseClient.auth.signOut();
+      window.location.href = "../html/login.html";
+    });
+  }
+}
+
+async function carregarNotificacoes() {
+  const notificationList = document.getElementById("notificationList");
+  const notificationBadge = document.getElementById("notificationBadge");
+
+  if (!notificationList || !notificationBadge || !usuarioLogado) return;
+
+  const { data: notifications, error } = await supabaseClient
+    .from("notifications")
+    .select("*")
+    .eq("user_id", usuarioLogado.id)
+    .order("created_at", { ascending: false })
+    .limit(10);
+
+  if (error) {
+    console.error("Erro ao carregar notificações:", error.message);
+    return;
+  }
+
+  notificationList.innerHTML = "";
+
+  if (!notifications || notifications.length === 0) {
+    notificationList.innerHTML =
+      `<p class="empty-notifications">Nenhuma notificação ainda.</p>`;
+
+    notificationBadge.classList.remove("show");
+    return;
+  }
+
+  const unreadCount = notifications.filter(item => !item.is_read).length;
+
+  if (unreadCount > 0) {
+    notificationBadge.textContent = unreadCount;
+    notificationBadge.classList.add("show");
+  } else {
+    notificationBadge.classList.remove("show");
+  }
+
+  notifications.forEach(notification => {
+    const item = document.createElement("div");
+
+    item.classList.add("notification-item");
+
+    if (!notification.is_read) {
+      item.classList.add("unread");
+    }
+
+    item.innerHTML = `
+      <strong>${notification.message}</strong>
+      <span>${formatarTempo(notification.created_at)}</span>
+    `;
+
+    item.addEventListener("click", async function () {
+      await supabaseClient
+        .from("notifications")
+        .update({ is_read: true })
+        .eq("id", notification.id);
+
+      if (notification.link) {
+        window.location.href = notification.link;
+      } else {
+        carregarNotificacoes();
+      }
+    });
+
+    notificationList.appendChild(item);
+  });
+}
+
+function configurarNotificacoes() {
+  const notificationBtn = document.getElementById("notificationBtn");
+  const notificationDropdown = document.getElementById("notificationDropdown");
+
+  if (notificationBtn && notificationDropdown) {
+    notificationBtn.addEventListener("click", function (event) {
+      event.stopPropagation();
+      notificationDropdown.classList.toggle("show");
+
+      carregarNotificacoes();
+    });
+
+    notificationDropdown.addEventListener("click", function (event) {
+      event.stopPropagation();
+    });
+
+    document.addEventListener("click", function () {
+      notificationDropdown.classList.remove("show");
+    });
+  }
+}
+
+async function iniciarPerfilPublico() {
+  await carregarUsuarioLogado();
+  await carregarPerfilPublico();
+  await verificarSeSegue();
+  await carregarContadoresFollow();
+  await carregarNotificacoes();
+
+  configurarMenuPerfil();
+  configurarNotificacoes();
+}
+
+iniciarPerfilPublico();

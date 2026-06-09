@@ -63,10 +63,9 @@ async function carregarUsuarioLogado() {
 
   perfilLogado = profile;
 
-  console.log("Avatar URL do perfil:", perfilLogado.avatar_url);
-
   const fullName = perfilLogado.full_name || "Usuário Verse";
   const username = perfilLogado.username || "usuario";
+  const firstLetter = fullName.charAt(0).toUpperCase();
 
   const userName = document.getElementById("userName");
   const userEmail = document.getElementById("userEmail");
@@ -77,19 +76,9 @@ async function carregarUsuarioLogado() {
   if (userName) userName.textContent = fullName;
   if (userEmail) userEmail.textContent = `@${username}`;
 
-  const firstLetter = fullName.charAt(0).toUpperCase();
-
-  if (userAvatar) {
-    userAvatar.textContent = firstLetter;
-  }
-
-  if (navAvatar) {
-    navAvatar.textContent = firstLetter;
-  }
-
-  if (createAvatar) {
-    createAvatar.textContent = firstLetter;
-  }
+  if (userAvatar) userAvatar.textContent = firstLetter;
+  if (navAvatar) navAvatar.textContent = firstLetter;
+  if (createAvatar) createAvatar.textContent = firstLetter;
 
   if (perfilLogado.avatar_url) {
     mostrarAvatarNaTela(perfilLogado.avatar_url);
@@ -188,19 +177,33 @@ async function carregarPosts() {
       ? "background-image: url('" + avatarUrl + "'); background-size: cover; background-position: center; color: transparent;"
       : "";
 
+    const profileLink = `../html/public-profile.html?id=${post.user_id}`;
+
     const postCard = document.createElement("article");
     postCard.classList.add("post-card");
 
     postCard.innerHTML = `
       <div class="post-header">
 
-        <div class="post-avatar" style="${avatarStyle}">
-          ${postAuthorInitial}
-        </div>
+        <a href="${profileLink}" class="post-avatar-link">
+          <div class="post-avatar" style="${avatarStyle}">
+            ${postAuthorInitial}
+          </div>
+        </a>
 
         <div class="post-user-info">
-          <h3>${postAuthorName}</h3>
-          <span>@${postAuthorUsername} · ${formatarTempo(post.created_at)}</span>
+          <h3>
+            <a href="${profileLink}" class="post-user-link">
+              ${postAuthorName}
+            </a>
+          </h3>
+
+          <span>
+            <a href="${profileLink}" class="post-user-link muted">
+              @${postAuthorUsername}
+            </a>
+            · ${formatarTempo(post.created_at)}
+          </span>
         </div>
 
       </div>
@@ -294,9 +297,99 @@ function configurarMenuPerfil() {
   }
 }
 
+async function carregarNotificacoes() {
+  const notificationList = document.getElementById("notificationList");
+  const notificationBadge = document.getElementById("notificationBadge");
+
+  if (!notificationList || !notificationBadge || !usuarioLogado) return;
+
+  const { data: notifications, error } = await supabaseClient
+    .from("notifications")
+    .select("*")
+    .eq("user_id", usuarioLogado.id)
+    .order("created_at", { ascending: false })
+    .limit(10);
+
+  if (error) {
+    console.error("Erro ao carregar notificações:", error.message);
+    return;
+  }
+
+  notificationList.innerHTML = "";
+
+  if (!notifications || notifications.length === 0) {
+    notificationList.innerHTML =
+      `<p class="empty-notifications">Nenhuma notificação ainda.</p>`;
+
+    notificationBadge.classList.remove("show");
+    return;
+  }
+
+  const unreadCount = notifications.filter(item => !item.is_read).length;
+
+  if (unreadCount > 0) {
+    notificationBadge.textContent = unreadCount;
+    notificationBadge.classList.add("show");
+  } else {
+    notificationBadge.classList.remove("show");
+  }
+
+  notifications.forEach(notification => {
+    const item = document.createElement("div");
+
+    item.classList.add("notification-item");
+
+    if (!notification.is_read) {
+      item.classList.add("unread");
+    }
+
+    item.innerHTML = `
+      <strong>${notification.message}</strong>
+      <span>${formatarTempo(notification.created_at)}</span>
+    `;
+
+    item.addEventListener("click", async function () {
+      await supabaseClient
+        .from("notifications")
+        .update({ is_read: true })
+        .eq("id", notification.id);
+
+      if (notification.link) {
+        window.location.href = notification.link;
+      } else {
+        carregarNotificacoes();
+      }
+    });
+
+    notificationList.appendChild(item);
+  });
+}
+
+function configurarNotificacoes() {
+  const notificationBtn = document.getElementById("notificationBtn");
+  const notificationDropdown = document.getElementById("notificationDropdown");
+
+  if (notificationBtn && notificationDropdown) {
+    notificationBtn.addEventListener("click", function (event) {
+      event.stopPropagation();
+      notificationDropdown.classList.toggle("show");
+
+      carregarNotificacoes();
+    });
+
+    notificationDropdown.addEventListener("click", function (event) {
+      event.stopPropagation();
+    });
+
+    document.addEventListener("click", function () {
+      notificationDropdown.classList.remove("show");
+    });
+  }
+}
 async function iniciarFeed() {
   await carregarUsuarioLogado();
   await carregarPosts();
+  await carregarNotificacoes();
 
   const publishBtn = document.getElementById("publishBtn");
 
@@ -305,6 +398,7 @@ async function iniciarFeed() {
   }
 
   configurarMenuPerfil();
+  configurarNotificacoes();
 }
 
 iniciarFeed();

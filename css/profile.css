@@ -1226,3 +1226,261 @@ body {
     padding: 22px;
   }
 }
+
+.public-profile-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.follow-profile-btn,
+.message-profile-btn {
+  border: none;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.follow-profile-btn {
+  background-color: #79B4A9;
+  color: white;
+}
+
+.follow-profile-btn:hover {
+  background-color: #676F54;
+  transform: translateY(-2px);
+}
+
+.message-profile-btn {
+  background-color: #f8f8f5;
+  color: #676F54;
+  border: 1px solid #ececec;
+}
+
+.message-profile-btn:hover {
+  background-color: #D7F2BA;
+  color: #2b2b2b;
+  transform: translateY(-2px);
+}
+.profile-menu-wrapper {
+  position: relative;
+}
+
+.profile-menu-btn {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 65px;
+  right: 0;
+
+  width: 220px;
+
+  background: white;
+  border: 1px solid #ececec;
+  border-radius: 18px;
+
+  padding: 12px;
+
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+
+  z-index: 9999;
+}
+
+.profile-dropdown.show {
+  display: flex;
+}
+
+.profile-dropdown a,
+.profile-dropdown button {
+  width: 100%;
+
+  border: none;
+  background: transparent;
+
+  text-align: left;
+  text-decoration: none;
+
+  color: #2b2b2b;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  padding: 12px;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+}
+
+.profile-dropdown a:hover,
+.profile-dropdown button:hover {
+  background-color: #eef7eb;
+  color: #676F54;
+}
+
+.follow-profile-btn.following {
+  background-color: #f8f8f5;
+  color: #676F54;
+  border: 1px solid #ececec;
+}
+
+.follow-profile-btn.following:hover {
+  background-color: #fff1f1;
+  color: #b42318;
+}
+
+/* =========================
+   NOTIFICAÇÕES NAVBAR
+========================= */
+
+.notification-wrapper {
+  position: relative;
+}
+
+.notification-btn {
+  position: relative;
+
+  width: 52px;
+  height: 52px;
+
+  border: 2px solid #79B4A9;
+  border-radius: 50%;
+
+  background-color: white;
+
+  font-size: 22px;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.3s ease;
+}
+
+.notification-btn:hover {
+  background-color: #79B4A9;
+  transform: translateY(-2px);
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+
+  min-width: 20px;
+  height: 20px;
+
+  padding: 0 6px;
+
+  border-radius: 999px;
+
+  background-color: #b42318;
+  color: white;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-badge.show {
+  display: flex;
+}
+
+.notification-dropdown {
+  position: absolute;
+  top: 65px;
+  right: 0;
+
+  width: 330px;
+  max-height: 420px;
+
+  background: white;
+
+  border: 1px solid #ececec;
+  border-radius: 18px;
+
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+
+  display: none;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  z-index: 9999;
+}
+
+.notification-dropdown.show {
+  display: flex;
+}
+
+.notification-header {
+  padding: 16px 18px;
+
+  border-bottom: 1px solid #ececec;
+}
+
+.notification-header h3 {
+  font-size: 17px;
+  color: #2b2b2b;
+}
+
+.notification-list {
+  overflow-y: auto;
+  max-height: 360px;
+}
+
+.empty-notifications {
+  padding: 18px;
+  color: #777;
+  font-size: 14px;
+}
+
+.notification-item {
+  padding: 14px 18px;
+
+  border-bottom: 1px solid #f0f0f0;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.notification-item:hover {
+  background-color: #eef7eb;
+}
+
+.notification-item.unread {
+  background-color: #f4fbf0;
+}
+
+.notification-item strong {
+  display: block;
+
+  font-size: 14px;
+
+  color: #2b2b2b;
+
+  margin-bottom: 4px;
+}
+
+.notification-item span {
+  font-size: 12px;
+  color: #777;
+}

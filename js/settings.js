@@ -171,9 +171,129 @@ function configurarBotoes() {
 }
 
 async function iniciarSettings() {
+  await carregarNotificacoes();
   await carregarUsuario();
   configurarBotoes();
+  configurarMenuPerfil();
+  configurarNotificacoes();
+}
 
+function configurarMenuPerfil() {
+  const profileMenuBtn = document.getElementById("profileMenuBtn");
+  const profileDropdown = document.getElementById("profileDropdown");
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if (profileMenuBtn && profileDropdown) {
+    profileMenuBtn.addEventListener("click", function (event) {
+      event.stopPropagation();
+      profileDropdown.classList.toggle("show");
+    });
+
+    profileDropdown.addEventListener("click", function (event) {
+      event.stopPropagation();
+    });
+
+    document.addEventListener("click", function () {
+      profileDropdown.classList.remove("show");
+    });
+  }
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async function () {
+      await supabaseClient.auth.signOut();
+      window.location.href = "../html/login.html";
+    });
+  }
+}
+
+async function carregarNotificacoes() {
+  const notificationList = document.getElementById("notificationList");
+  const notificationBadge = document.getElementById("notificationBadge");
+
+  if (!notificationList || !notificationBadge || !usuarioLogado) return;
+
+  const { data: notifications, error } = await supabaseClient
+    .from("notifications")
+    .select("*")
+    .eq("user_id", usuarioLogado.id)
+    .order("created_at", { ascending: false })
+    .limit(10);
+
+  if (error) {
+    console.error("Erro ao carregar notificações:", error.message);
+    return;
+  }
+
+  notificationList.innerHTML = "";
+
+  if (!notifications || notifications.length === 0) {
+    notificationList.innerHTML =
+      `<p class="empty-notifications">Nenhuma notificação ainda.</p>`;
+
+    notificationBadge.classList.remove("show");
+    return;
+  }
+
+  const unreadCount = notifications.filter(item => !item.is_read).length;
+
+  if (unreadCount > 0) {
+    notificationBadge.textContent = unreadCount;
+    notificationBadge.classList.add("show");
+  } else {
+    notificationBadge.classList.remove("show");
+  }
+
+  notifications.forEach(notification => {
+    const item = document.createElement("div");
+
+    item.classList.add("notification-item");
+
+    if (!notification.is_read) {
+      item.classList.add("unread");
+    }
+
+    item.innerHTML = `
+      <strong>${notification.message}</strong>
+      <span>${formatarTempo(notification.created_at)}</span>
+    `;
+
+    item.addEventListener("click", async function () {
+      await supabaseClient
+        .from("notifications")
+        .update({ is_read: true })
+        .eq("id", notification.id);
+
+      if (notification.link) {
+        window.location.href = notification.link;
+      } else {
+        carregarNotificacoes();
+      }
+    });
+
+    notificationList.appendChild(item);
+  });
+}
+
+function configurarNotificacoes() {
+  const notificationBtn = document.getElementById("notificationBtn");
+  const notificationDropdown = document.getElementById("notificationDropdown");
+
+  if (notificationBtn && notificationDropdown) {
+    notificationBtn.addEventListener("click", function (event) {
+      event.stopPropagation();
+      notificationDropdown.classList.toggle("show");
+
+      carregarNotificacoes();
+    });
+
+    notificationDropdown.addEventListener("click", function (event) {
+      event.stopPropagation();
+    });
+
+    document.addEventListener("click", function () {
+      notificationDropdown.classList.remove("show");
+    });
+  }
 }
 
 iniciarSettings();

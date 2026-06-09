@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Verse - Mensagens</title>
+
+  <link rel="stylesheet" href="../css/messages.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Belleza&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <nav class="navbar">
+
+    <div class="logo">
+      <a href="../html/feed.html" class="logo-link">
+        <h1>VERSE</h1>
+        <div class="logo-line"></div>
+      </a>
+    </div>
+
+    <div class="search-area">
+      <input type="text" placeholder="Pesquisar na Verse...">
+    </div>
+
+    <div class="nav-actions">
+
+        <div class="notification-wrapper">
+
+            <button id="notificationBtn" class="notification-btn" type="button">
+                🔔
+                <span id="notificationBadge" class="notification-badge">0</span>
+            </button>
+
+            <div id="notificationDropdown" class="notification-dropdown">
+
+                <div class="notification-header">
+                <h3>Notificações</h3>
+                </div>
+
+                <div id="notificationList" class="notification-list">
+                <p class="empty-notifications">Nenhuma notificação ainda.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+      <a href="../html/profile.html" class="profile-btn">
+        <div class="nav-avatar" id="navAvatar">V</div>
+      </a>
+
+    </div>
+
+  </nav>
+
+  <main class="app-layout">
+
+    <aside class="sidebar-left">
+
+      <h2>Menu</h2>
+
+      <nav class="side-menu">
+        <a href="../html/profile.html">Perfil</a>
+        <a href="../html/publications.html">Publicações</a>
+        <a href="../html/stories.html">Histórias</a>
+        <a href="../html/books.html">Livros</a>
+        <a href="../html/projects.html">Projetos</a>
+        <a href="../html/messages.html" class="active">Mensagens</a>
+        <a href="../html/settings.html">Configurações</a>
+      </nav>
+
+    </aside>
+
+    <section class="messages-main">
+
+      <div class="messages-header">
+        <div>
+          <a href="../html/feed.html" class="back-btn">
+            ← Voltar ao Feed
+          </a>
+
+          <h1>Mensagens</h1>
+          <p>Converse com leitores, escritores e criadores da Verse.</p>
+        </div>
+      </div>
+
+      <div class="messages-layout">
+
+        <aside class="conversations-panel">
+
+          <div class="panel-header">
+            <h2>Conversas</h2>
+          </div>
+
+          <div class="conversation-search">
+            <input
+              type="text"
+              id="conversationSearch"
+              placeholder="Pesquisar conversa...">
+          </div>
+
+          <div id="conversationsList" class="conversations-list">
+
+            <div class="empty-conversations">
+              Nenhuma conversa ainda.
+            </div>
+
+          </div>
+
+        </aside>
+
+        <section class="chat-panel">
+
+          <div class="chat-header" id="chatHeader">
+
+            <div class="chat-user-avatar" id="chatUserAvatar">
+              V
+            </div>
+
+            <div>
+              <h2 id="chatUserName">Selecione uma conversa</h2>
+              <span id="chatUserUsername">@usuario</span>
+            </div>
+
+          </div>
+
+          <div class="chat-messages" id="chatMessages">
+
+            <div class="empty-chat">
+              <strong>📨 Nenhuma conversa selecionada</strong>
+              <p>Escolha uma conversa ao lado ou envie mensagem pelo perfil público de alguém.</p>
+            </div>
+
+          </div>
+
+          <div class="chat-input-area">
+
+            <textarea
+              id="messageInput"
+              placeholder="Digite uma mensagem..."
+              disabled></textarea>
+
+            <button
+              id="sendMessageBtn"
+              type="button"
+              disabled>
+              Enviar
+            </button>
+
+          </div>
+
+        </section>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabaseClient.js"></script>
+  <script src="../js/messages.js"></script>
+
+</body>
+
+</html>

@@ -511,25 +511,29 @@ async function carregarSugestoes() {
 
   users.forEach(function (user) {
     const firstLetter =
-      (user.full_name || "U").charAt(0).toUpperCase();
+    (user.full_name || "U").charAt(0).toUpperCase();
+
+    const avatarStyle = user.avatar_url
+    ? `background-image: url('${user.avatar_url}'); background-size: cover; background-position: center; color: transparent;`
+    : "";
 
     const card = document.createElement("div");
 
     card.classList.add("suggestion-card");
 
     card.innerHTML = `
-      <div class="suggestion-avatar">
+    <div class="suggestion-avatar" style="${avatarStyle}">
         ${firstLetter}
-      </div>
+    </div>
 
-      <div class="suggestion-info">
-        <strong>${user.full_name}</strong>
-        <span>@${user.username}</span>
-      </div>
+    <div class="suggestion-info">
+        <strong>${user.full_name || "Usuário Verse"}</strong>
+        <span>@${user.username || "usuario"}</span>
+    </div>
 
-      <button class="follow-btn">
-        Adicionar
-      </button>
+    <button class="follow-btn">
+        Seguir
+    </button>
     `;
 
     suggestionsContainer.appendChild(card);
@@ -540,6 +544,7 @@ async function iniciarPerfil() {
   await carregarPerfil();
   await carregarPostsDoPerfil();
   await carregarSugestoes();
+  await carregarNotificacoes();
 
   const editAvatarBtn = document.getElementById("editAvatarBtn");
   const avatarInput = document.getElementById("avatarInput");
@@ -569,6 +574,134 @@ async function iniciarPerfil() {
 
   if (saveProfileBtn) {
     saveProfileBtn.addEventListener("click", salvarPerfil);
+  }
+
+  configurarMenuPerfil();
+  configurarNotificacoes();
+}
+
+  const saveProfileBtn = document.getElementById("saveProfileBtn");
+
+  if (saveProfileBtn) {
+    saveProfileBtn.addEventListener("click", salvarPerfil);
+  }
+
+
+function configurarMenuPerfil() {
+  const profileMenuBtn = document.getElementById("profileMenuBtn");
+  const profileDropdown = document.getElementById("profileDropdown");
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if (profileMenuBtn && profileDropdown) {
+    profileMenuBtn.addEventListener("click", function (event) {
+      event.stopPropagation();
+      profileDropdown.classList.toggle("show");
+    });
+
+    profileDropdown.addEventListener("click", function (event) {
+      event.stopPropagation();
+    });
+
+    document.addEventListener("click", function () {
+      profileDropdown.classList.remove("show");
+    });
+  }
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async function () {
+      await supabaseClient.auth.signOut();
+      window.location.href = "../html/login.html";
+    });
+  }
+}
+
+async function carregarNotificacoes() {
+  const notificationList = document.getElementById("notificationList");
+  const notificationBadge = document.getElementById("notificationBadge");
+
+  if (!notificationList || !notificationBadge || !usuarioLogado) return;
+
+  const { data: notifications, error } = await supabaseClient
+    .from("notifications")
+    .select("*")
+    .eq("user_id", usuarioLogado.id)
+    .order("created_at", { ascending: false })
+    .limit(10);
+
+  if (error) {
+    console.error("Erro ao carregar notificações:", error.message);
+    return;
+  }
+
+  notificationList.innerHTML = "";
+
+  if (!notifications || notifications.length === 0) {
+    notificationList.innerHTML =
+      `<p class="empty-notifications">Nenhuma notificação ainda.</p>`;
+
+    notificationBadge.classList.remove("show");
+    return;
+  }
+
+  const unreadCount = notifications.filter(item => !item.is_read).length;
+
+  if (unreadCount > 0) {
+    notificationBadge.textContent = unreadCount;
+    notificationBadge.classList.add("show");
+  } else {
+    notificationBadge.classList.remove("show");
+  }
+
+  notifications.forEach(notification => {
+    const item = document.createElement("div");
+
+    item.classList.add("notification-item");
+
+    if (!notification.is_read) {
+      item.classList.add("unread");
+    }
+
+    item.innerHTML = `
+      <strong>${notification.message}</strong>
+      <span>${formatarTempo(notification.created_at)}</span>
+    `;
+
+    item.addEventListener("click", async function () {
+      await supabaseClient
+        .from("notifications")
+        .update({ is_read: true })
+        .eq("id", notification.id);
+
+      if (notification.link) {
+        window.location.href = notification.link;
+      } else {
+        carregarNotificacoes();
+      }
+    });
+
+    notificationList.appendChild(item);
+  });
+}
+
+function configurarNotificacoes() {
+  const notificationBtn = document.getElementById("notificationBtn");
+  const notificationDropdown = document.getElementById("notificationDropdown");
+
+  if (notificationBtn && notificationDropdown) {
+    notificationBtn.addEventListener("click", function (event) {
+      event.stopPropagation();
+      notificationDropdown.classList.toggle("show");
+
+      carregarNotificacoes();
+    });
+
+    notificationDropdown.addEventListener("click", function (event) {
+      event.stopPropagation();
+    });
+
+    document.addEventListener("click", function () {
+      notificationDropdown.classList.remove("show");
+    });
   }
 }
 
