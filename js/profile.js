@@ -171,7 +171,19 @@ async function carregarPostsDoPerfil() {
         </div>
       </div>
 
-      <p class="post-text">${post.content}</p>
+      ${post.content ? `
+      <p class="post-text">
+        ${post.content}
+      </p>
+    ` : ""}
+
+    ${post.image_url ? `
+      <img
+        src="${post.image_url}"
+        class="post-image"
+        alt="Imagem da publicação"
+      >
+    ` : ""}
 
       <div class="post-actions">
         <button>♡ Curtir</button>
@@ -609,6 +621,8 @@ async function alternarFollowSugestao(userId, button) {
 
   button.disabled = false;
 }
+
+
 
 async function iniciarPerfil() {
   await carregarPerfil();

@@ -125,32 +125,29 @@ body {
 }
 
 .menu-icons a {
+  min-width: 52px;
+  height: 52px;
 
-  width: 46px;
-  height: 46px;
+  padding: 0 18px;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
 
-  border-radius: 50%;
+  border-radius: 999px;
 
   background-color: white;
-
   border: 1px solid #dcdcdc;
 
   text-decoration: none;
 
-  font-size: 20px;
+  font-size: 22px;
 
   transition: 0.3s ease;
 }
 
 .menu-icons a:hover {
-
   background-color: #79B4A9;
-
   transform: translateY(-2px);
 }
 
@@ -1100,4 +1097,102 @@ body {
   object-fit: cover;
 
   border: 1px solid #ececec;
+}
+
+#suggestionsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.suggestion-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px;
+
+    background: #ffffff;
+    border: 1px solid #ececec;
+    border-radius: 16px;
+
+    margin-bottom: 12px;
+}
+
+.suggestion-avatar {
+    width: 48px;
+    height: 48px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #7CB8AD;
+    color: white;
+    font-weight: bold;
+
+    flex-shrink: 0;
+}
+
+
+.suggestion-info {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.suggestion-info strong {
+    font-size: 14px;
+}
+
+.suggestion-info span {
+    font-size: 13px;
+    color: #777;
+}
+
+.follow-btn {
+    padding: 8px 14px;
+
+    border: none;
+    border-radius: 999px;
+
+    background-color: #7CB8AD;
+    color: white;
+
+    cursor: pointer;
+}
+
+.follow-btn.following {
+    background-color: #f3f3f3;
+    color: #555;
+}
+
+.nav-icon-btn {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background-color: white;
+  border: 1px solid #dcdcdc;
+
+  text-decoration: none;
+
+  font-size: 22px;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
+}
+
+.nav-icon-btn:hover {
+  background-color: #79B4A9;
+  transform: translateY(-2px);
 }
