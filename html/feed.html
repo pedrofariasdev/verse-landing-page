@@ -21,53 +21,48 @@
 
   <!-- NAVBAR -->
 
-  <nav class="navbar">
+    <nav class="navbar">
 
-    <!-- LOGO -->
-
-    <div class="logo">
-
-      <a href="../html/feed.html" class="logo-link">
-
-        <h1>VERSE</h1>
-
-        <div class="logo-line"></div>
-
-      </a>
-
-    </div>
-
-    <!-- MENU -->
-
-    <div class="search-area">
-        <input type="text" placeholder="Pesquisar na Verse...">
-
-        <div class="menu-icons">
-            <a href="../html/feed.html" title="Feed">🏠</a>
-            <a href="../html/library.html" title="Biblioteca">📚</a>
-            <a href="../html/community.html" title="Comunidade">👥</a>
+        <div class="logo">
+            <a href="../html/feed.html" class="logo-link">
+                <h1>VERSE</h1>
+                <div class="logo-line"></div>
+            </a>
         </div>
-    </div>
 
-    <!-- AÇÕES -->
+        <div class="search-area">
+            <input type="text" placeholder="Pesquisar na Verse...">
+        </div>
 
-    <div class="nav-actions">
+        <div class="nav-actions">
 
-        <div class="notification-wrapper">
+            <a href="../html/feed.html" class="nav-icon-btn" title="Feed">
+                🏠
+            </a>
 
-            <button id="notificationBtn" class="notification-btn" type="button">
-                🔔
-                <span id="notificationBadge" class="notification-badge">0</span>
-            </button>
+            <a href="../html/publications.html" class="nav-icon-btn" title="Publicações">
+                📚
+            </a>
 
-            <div id="notificationDropdown" class="notification-dropdown">
+            <a href="../html/comunities.html" class="nav-icon-btn" title="Comunidades">
+                👥
+            </a>
 
-                <div class="notification-header">
-                <h3>Notificações</h3>
+            <div class="notification-wrapper">
+
+                <button id="notificationBtn" class="notification-btn" type="button">
+                    🔔
+                    <span id="notificationBadge" class="notification-badge">0</span>
+                </button>
+
+                <div id="notificationDropdown" class="notification-dropdown">
+
+                    <div class="notification-header">
+                    <h3>Notificações</h3>
                 </div>
 
                 <div id="notificationList" class="notification-list">
-                <p class="empty-notifications">Nenhuma notificação ainda.</p>
+                    <p class="empty-notifications">Nenhuma notificação ainda.</p>
                 </div>
 
             </div>
@@ -84,14 +79,13 @@
                 <a href="../html/profile.html">👤 Meu perfil</a>
                 <a href="../html/messages.html">💬 Mensagens</a>
                 <a href="../html/settings.html">⚙️ Configurações</a>
-                <button id="logoutBtn">🚪 Sair</button>
+
+                <button id="logoutBtn" type="button">
+                    🚪 Sair
+                </button>
             </div>
-
         </div>
-
-    </div>
-
-  </nav>
+    </nav>
 
   <!-- LAYOUT -->
 
@@ -140,9 +134,48 @@
                 <button>📖 Lendo</button>
                 <button>✍️ Escrevendo</button>
                 <button>⭐ Recomendando</button>
-                <button>📷 Foto</button>
+                <button id="photoPostBtn" type="button">
+                    📷 Foto
+                </button>
+
+                <input
+                    type="file"
+                    id="postImageInput"
+                    accept="image/*"
+                    hidden
+                >
                 <button>📎 Anexo</button>
             </div>
+
+
+            <div
+                id="imagePreviewBox"
+                class="image-preview-box"
+                style="display:none;"
+            >
+
+                <div class="image-preview-thumb">
+
+                    <img
+                        id="imagePreview"
+                        alt="Pré-visualização da imagem"
+                    >
+
+                    <button
+                        id="removeImageBtn"
+                        type="button">
+                        ×
+                    </button>
+
+                </div>
+
+                <div class="image-preview-info">
+                    <strong>Imagem selecionada</strong>
+                    <span>Adicione uma descrição antes de publicar.</span>
+                </div>   
+
+            </div>
+
 
             <div class="publish-area">
                 <button class="post-btn" id="publishBtn">Publicar</button>

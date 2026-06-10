@@ -2,6 +2,7 @@ console.log("Feed.js carregado!");
 
 let usuarioLogado = null;
 let perfilLogado = null;
+let imagemSelecionada = null;
 
 async function carregarUsuarioLogado() {
   const { data, error } = await supabaseClient.auth.getUser();
@@ -208,7 +209,9 @@ async function carregarPosts() {
 
       </div>
 
-      <p class="post-text">${post.content}</p>
+      ${post.content ? `<p class="post-text">${post.content}</p>` : ""}
+
+      ${post.image_url ? `<img src="${post.image_url}" class="post-images" alt="Imagem da publicação">` : ""}
 
       <div class="post-actions">
         <button>♡ Curtir</button>
@@ -223,14 +226,116 @@ async function carregarPosts() {
   });
 }
 
+function configurarUploadImagemPost() {
+  const photoPostBtn = document.getElementById("photoPostBtn");
+  const postImageInput = document.getElementById("postImageInput");
+  const imagePreviewBox = document.getElementById("imagePreviewBox");
+  const imagePreview = document.getElementById("imagePreview");
+  const removeImageBtn = document.getElementById("removeImageBtn");
+
+  if (photoPostBtn && postImageInput) {
+    photoPostBtn.addEventListener("click", function () {
+      postImageInput.click();
+    });
+  }
+
+  if (postImageInput) {
+    postImageInput.addEventListener("change", function (event) {
+      const file = event.target.files[0];
+
+      if (!file) return;
+
+      imagemSelecionada = file;
+
+      const imageUrl = URL.createObjectURL(file);
+
+      if (imagePreview) {
+        imagePreview.src = imageUrl;
+      }
+
+      if (imagePreviewBox) {
+        imagePreviewBox.style.display = "block";
+      }
+    });
+  }
+
+  if (removeImageBtn) {
+    removeImageBtn.addEventListener("click", function () {
+      imagemSelecionada = null;
+
+      if (postImageInput) {
+        postImageInput.value = "";
+      }
+
+      if (imagePreview) {
+        imagePreview.src = "";
+      }
+
+      if (imagePreviewBox) {
+        imagePreviewBox.style.display = "none";
+      }
+    });
+  }
+}
+
+async function uploadImagemPost() {
+  if (!imagemSelecionada || !usuarioLogado) return null;
+
+  const fileExt = imagemSelecionada.name.split(".").pop();
+
+  const fileName =
+    `${usuarioLogado.id}-${Date.now()}.${fileExt}`;
+
+  const filePath =
+    `posts/${fileName}`;
+
+  const { error: uploadError } = await supabaseClient.storage
+    .from("post-images")
+    .upload(filePath, imagemSelecionada, {
+      upsert: false
+    });
+
+  if (uploadError) {
+    console.error("Erro ao enviar imagem:", uploadError.message);
+    alert("Não foi possível enviar a imagem.");
+    return null;
+  }
+
+  const { data: publicUrlData } = supabaseClient.storage
+    .from("post-image")
+    .getPublicUrl(filePath);
+
+  return publicUrlData.publicUrl;
+}
+
+function limparImagemSelecionada() {
+  const postImageInput = document.getElementById("postImageInput");
+  const imagePreviewBox = document.getElementById("imagePreviewBox");
+  const imagePreview = document.getElementById("imagePreview");
+
+  imagemSelecionada = null;
+
+  if (postImageInput) {
+    postImageInput.value = "";
+  }
+
+  if (imagePreview) {
+    imagePreview.src = "";
+  }
+
+  if (imagePreviewBox) {
+    imagePreviewBox.style.display = "none";
+  }
+}
+
 async function criarPost() {
   const postContent = document.getElementById("postContent");
   const publishBtn = document.getElementById("publishBtn");
 
   const content = postContent.value.trim();
 
-  if (!content) {
-    alert("Escreva algo antes de publicar.");
+  if (!content && !imagemSelecionada) {
+    alert("Escreva algo ou selecione uma imagem antes de publicar.");
     return;
   }
 
@@ -242,13 +347,26 @@ async function criarPost() {
   publishBtn.disabled = true;
   publishBtn.textContent = "Publicando...";
 
+  let imageUrl = null;
+
+  if (imagemSelecionada) {
+    imageUrl = await uploadImagemPost();
+
+    if (!imageUrl) {
+      publishBtn.disabled = false;
+      publishBtn.textContent = "Publicar";
+      return;
+    }
+  }
+
   const { data, error } = await supabaseClient
     .from("posts")
     .insert([
       {
         user_id: usuarioLogado.id,
-        content: content,
-        post_type: "text"
+        content: content || "", 
+        post_type: imageUrl ? "image" : "text",
+        image_url: imageUrl
       }
     ])
     .select();
@@ -265,6 +383,8 @@ async function criarPost() {
   console.log("Post criado:", data);
 
   postContent.value = "";
+
+  limparImagemSelecionada();
 
   await carregarPosts();
 }
@@ -399,6 +519,7 @@ async function iniciarFeed() {
 
   configurarMenuPerfil();
   configurarNotificacoes();
+  configurarUploadImagemPost();
 }
 
 iniciarFeed();

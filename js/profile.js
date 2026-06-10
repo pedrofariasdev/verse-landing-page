@@ -545,6 +545,7 @@ async function iniciarPerfil() {
   await carregarPostsDoPerfil();
   await carregarSugestoes();
   await carregarNotificacoes();
+  await carregarContadoresFollowPerfil();
 
   const editAvatarBtn = document.getElementById("editAvatarBtn");
   const avatarInput = document.getElementById("avatarInput");
@@ -612,6 +613,31 @@ function configurarMenuPerfil() {
       await supabaseClient.auth.signOut();
       window.location.href = "../html/login.html";
     });
+  }
+}
+
+async function carregarContadoresFollowPerfil() {
+  const followersCountEl = document.getElementById("profileFollowersCount");
+  const followingCountEl = document.getElementById("profileFollowingCount");
+
+  if (!usuarioLogado) return;
+
+  const { count: followersCount, error: followersError } = await supabaseClient
+    .from("followers")
+    .select("*", { count: "exact", head: true })
+    .eq("following_id", usuarioLogado.id);
+
+  const { count: followingCount, error: followingError } = await supabaseClient
+    .from("followers")
+    .select("*", { count: "exact", head: true })
+    .eq("follower_id", usuarioLogado.id);
+
+  if (!followersError && followersCountEl) {
+    followersCountEl.textContent = followersCount || 0;
+  }
+
+  if (!followingError && followingCountEl) {
+    followingCountEl.textContent = followingCount || 0;
   }
 }
 

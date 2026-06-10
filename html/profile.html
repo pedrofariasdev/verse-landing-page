@@ -126,7 +126,19 @@
 
     <div class="nav-actions">
 
-    <div class="notification-wrapper">
+      <a href="../html/feed.html" class="nav-icon-btn" title="Feed">
+        🏠
+      </a>
+
+      <a href="../html/publications.html" class="nav-icon-btn" title="Publicações">
+        📚
+      </a>
+
+      <a href="../html/comunities.html" class="nav-icon-btn" title="Comunidades">
+        👥
+      </a>
+
+      <div class="notification-wrapper">
 
         <button id="notificationBtn" class="notification-btn" type="button">
           🔔
@@ -154,7 +166,6 @@
         </button>
 
         <div class="profile-dropdown" id="profileDropdown">
-
           <a href="../html/profile.html">👤 Meu perfil</a>
           <a href="../html/messages.html">💬 Mensagens</a>
           <a href="../html/settings.html">⚙️ Configurações</a>
@@ -162,7 +173,6 @@
           <button id="logoutBtn" type="button">
             🚪 Sair
           </button>
-
         </div>
 
       </div>
@@ -284,13 +294,13 @@
           </div>
 
           <div class="stat-box">
-            <strong>0</strong>
+            <strong id="profileFollowersCount">0</strong>
             <span>Seguidores</span>
           </div>
 
           <div class="stat-box">
-            <strong>0</strong>
-            <span>Comunidades</span>
+            <strong id="profileFollowingCount">0</strong>
+            <span>Seguindo</span>
           </div>
 
         </div>
