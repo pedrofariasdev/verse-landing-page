@@ -415,11 +415,70 @@ async function carregarPosts() {
       </div>
 
       <p class="post-text">
-        ${post.content}
+        ${post.content || ""}
       </p>
+
+      ${
+        post.image_url
+          ? `
+          <img
+            src="${post.image_url}"
+            class="post-image"
+            alt="Imagem da publicação">
+          `
+          : ""
+      }
+
+      <div class="post-actions">
+
+        <button
+          class="like-btn"
+          data-post-id="${post.id}">
+          ♡ Curtir
+        </button>
+
+        <button
+          class="comment-btn"
+          data-post-id="${post.id}">
+          💬 Comentar
+        </button>
+
+        <button>↻ Repostar</button>
+
+        <button>❝ Citar</button>
+
+        <button>↗ Compartilhar</button>
+
+      </div>
+
+      <div
+        class="comments-box"
+        id="comments-${post.id}"
+        style="display:none;">
+
+        <input
+          type="text"
+          class="comment-input"
+          id="commentInput-${post.id}"
+          placeholder="Escreva um comentário..."
+        >
+
+        <button
+          class="send-comment-btn"
+          data-post-id="${post.id}">
+          Enviar
+        </button>
+
+        <div
+          class="comments-list"
+          id="commentsList-${post.id}">
+        </div>
+
+      </div>
     `;
 
     container.appendChild(card);
+    configurarAcoesDoPost(post.id);
 
   });
 
@@ -540,6 +599,182 @@ function configurarNotificacoes() {
       notificationDropdown.classList.remove("show");
     });
   }
+}async function configurarAcoesDoPost(postId) {
+  const likeBtn = document.querySelector(`.like-btn[data-post-id="${postId}"]`);
+  const commentBtn = document.querySelector(`.comment-btn[data-post-id="${postId}"]`);
+  const sendCommentBtn = document.querySelector(`.send-comment-btn[data-post-id="${postId}"]`);
+  const commentsBox = document.getElementById(`comments-${postId}`);
+
+  if (likeBtn) {
+    likeBtn.addEventListener("click", async function () {
+      await alternarCurtida(postId, likeBtn);
+    });
+
+    await carregarEstadoCurtida(postId, likeBtn);
+  }
+
+  if (commentBtn && commentsBox) {
+    commentBtn.addEventListener("click", async function () {
+      commentsBox.style.display =
+        commentsBox.style.display === "none" ? "block" : "none";
+
+      await carregarComentarios(postId);
+    });
+  }
+
+  if (sendCommentBtn) {
+    sendCommentBtn.addEventListener("click", async function () {
+      await enviarComentario(postId);
+    });
+  }
+}
+
+async function carregarEstadoCurtida(postId, button) {
+  const { data: like } = await supabaseClient
+    .from("likes")
+    .select("*")
+    .eq("post_id", postId)
+    .eq("user_id", usuarioLogado.id)
+    .maybeSingle();
+
+  const { count } = await supabaseClient
+    .from("likes")
+    .select("*", { count: "exact", head: true })
+    .eq("post_id", postId);
+
+  if (like) {
+    button.textContent = `❤️ Curtido (${count || 0})`;
+    button.classList.add("liked");
+  } else {
+    button.textContent = `♡ Curtir (${count || 0})`;
+    button.classList.remove("liked");
+  }
+}
+
+async function alternarCurtida(postId, button) {
+  const jaCurtiu = button.classList.contains("liked");
+
+  button.disabled = true;
+
+  if (jaCurtiu) {
+    const { error } = await supabaseClient
+      .from("likes")
+      .delete()
+      .eq("post_id", postId)
+      .eq("user_id", usuarioLogado.id);
+
+    if (error) {
+      console.error("Erro ao remover curtida:", error.message);
+      alert("Não foi possível remover a curtida.");
+      button.disabled = false;
+      return;
+    }
+  } else {
+    const { error } = await supabaseClient
+      .from("likes")
+      .insert([
+        {
+          post_id: postId,
+          user_id: usuarioLogado.id
+        }
+      ]);
+
+    if (error) {
+      console.error("Erro ao curtir:", error.message);
+      alert("Não foi possível curtir.");
+      button.disabled = false;
+      return;
+    }
+  }
+
+  await carregarEstadoCurtida(postId, button);
+
+  button.disabled = false;
+}
+
+async function enviarComentario(postId) {
+  const input = document.getElementById(`commentInput-${postId}`);
+
+  if (!input) return;
+
+  const content = input.value.trim();
+
+  if (!content) {
+    alert("Escreva um comentário antes de enviar.");
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("comments")
+    .insert([
+      {
+        post_id: postId,
+        user_id: usuarioLogado.id,
+        content: content
+      }
+    ]);
+
+  if (error) {
+    console.error("Erro ao comentar:", error.message);
+    alert("Não foi possível comentar.");
+    return;
+  }
+
+  input.value = "";
+
+  await carregarComentarios(postId);
+}
+
+async function carregarComentarios(postId) {
+  const commentsList = document.getElementById(`commentsList-${postId}`);
+
+  if (!commentsList) return;
+
+  const { data: comments, error } = await supabaseClient
+    .from("comments")
+    .select("*")
+    .eq("post_id", postId)
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    console.error("Erro ao carregar comentários:", error.message);
+    return;
+  }
+
+  commentsList.innerHTML = "";
+
+  if (!comments || comments.length === 0) {
+    commentsList.innerHTML =
+      "<p class='empty-comments'>Nenhum comentário ainda.</p>";
+    return;
+  }
+
+  const userIds = [...new Set(comments.map(comment => comment.user_id))];
+
+  const { data: profiles, error: profilesError } = await supabaseClient
+    .from("profiles")
+    .select("*")
+    .in("id", userIds);
+
+  if (profilesError) {
+    console.error("Erro ao carregar autores dos comentários:", profilesError.message);
+    return;
+  }
+
+  comments.forEach(comment => {
+    const author = profiles.find(profile => profile.id === comment.user_id);
+
+    const div = document.createElement("div");
+    div.classList.add("comment-item");
+
+    div.innerHTML = `
+      <strong>${author?.full_name || "Usuário Verse"}</strong>
+      <span>@${author?.username || "usuario"}</span>
+      <p>${comment.content}</p>
+    `;
+
+    commentsList.appendChild(div);
+  });
 }
 
 async function iniciarPerfilPublico() {

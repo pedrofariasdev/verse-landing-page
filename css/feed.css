@@ -1196,3 +1196,52 @@ body {
   background-color: #79B4A9;
   transform: translateY(-2px);
 }
+
+.like-btn.liked {
+  color: #b42318;
+  font-weight: 700;
+}
+
+.comments-box {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid #ececec;
+}
+
+.comment-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ececec;
+  border-radius: 999px;
+  margin-bottom: 10px;
+}
+
+.send-comment-btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 999px;
+  background-color: #79B4A9;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.comment-item {
+  margin-top: 12px;
+  padding: 12px;
+  background-color: #f8f8f5;
+  border-radius: 14px;
+}
+
+.comment-item strong {
+  display: block;
+}
+
+.comment-item span {
+  font-size: 12px;
+  color: #777;
+}
+
+.comment-item p {
+  margin-top: 6px;
+}
