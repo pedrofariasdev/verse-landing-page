@@ -1484,3 +1484,14 @@ body {
   font-size: 12px;
   color: #777;
 }
+
+.follow-btn.following {
+  background-color: #f8f8f5;
+  color: #676F54;
+  border: 1px solid #ececec;
+}
+
+.follow-btn.following:hover {
+  background-color: #fff1f1;
+  color: #b42318;
+}
