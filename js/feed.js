@@ -271,6 +271,7 @@ async function configurarAcoesDoPost(postId) {
         commentsBox.style.display === "none" ? "block" : "none";
 
       await carregarComentarios(postId);
+      await carregarContadorComentarios(postId, commentBtn);
     });
   }
 
@@ -279,6 +280,20 @@ async function configurarAcoesDoPost(postId) {
       await enviarComentario(postId);
     });
   }
+}
+
+async function carregarContadorComentarios(postId, button) {
+  const { count, error } = await supabaseClient
+    .from("comments")
+    .select("*", { count: "exact", head: true })
+    .eq("post_id", postId);
+
+  if (error) {
+    console.error("Erro ao contar comentários:", error.message);
+    return;
+  }
+
+  button.textContent = `💬 Comentar (${count || 0})`;
 }
 
 async function carregarEstadoCurtida(postId, button) {
@@ -361,6 +376,10 @@ async function enviarComentario(postId) {
   input.value = "";
 
   await carregarComentarios(postId);
+  const commentBtn = document.querySelector(`.comment-btn[data-post-id="${postId}"]`);
+  if (commentBtn) {
+  await carregarContadorComentarios(postId, commentBtn);
+}
 }
 
 async function carregarComentarios(postId) {
