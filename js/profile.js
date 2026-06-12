@@ -194,7 +194,9 @@ async function carregarPostsDoPerfil() {
         </button>
         <button>↻ Repostar</button>
         <button>❝ Citar</button>
-        <button>↗ Compartilhar</button>
+        <button class="share-btn" data-post-id="${post.id}">
+          ↗ Compartilhar
+        </button>
       </div>
 
       <div class="comments-box" id="comments-${post.id}" style="display:none;">
@@ -663,12 +665,17 @@ async function configurarAcoesDoPost(postId) {
     await carregarEstadoCurtida(postId, likeBtn);
   }
 
+  if (commentBtn) {
+    await carregarContadorComentarios(postId, commentBtn);
+  }
+
   if (commentBtn && commentsBox) {
     commentBtn.addEventListener("click", async function () {
       commentsBox.style.display =
         commentsBox.style.display === "none" ? "block" : "none";
 
       await carregarComentarios(postId);
+      await carregarContadorComentarios(postId, commentBtn);
     });
   }
 
@@ -677,6 +684,20 @@ async function configurarAcoesDoPost(postId) {
       await enviarComentario(postId);
     });
   }
+}
+
+async function carregarContadorComentarios(postId, button) {
+  const { count, error } = await supabaseClient
+    .from("comments")
+    .select("*", { count: "exact", head: true })
+    .eq("post_id", postId);
+
+  if (error) {
+    console.error("Erro ao contar comentários:", error.message);
+    return;
+  }
+
+  button.textContent = `💬 Comentar (${count || 0})`;
 }
 
 async function carregarEstadoCurtida(postId, button) {
@@ -851,6 +872,11 @@ async function iniciarPerfil() {
 
   configurarMenuPerfil();
   configurarNotificacoes();
+  configurarMenuPerfil();
+  configurarNotificacoes();
+  configurarUploadImagemPost();
+  configurarPesquisaGlobal();
+  configurarCompartilhamentoPost();
 }
 
   const saveProfileBtn = document.getElementById("saveProfileBtn");
@@ -858,6 +884,7 @@ async function iniciarPerfil() {
   if (saveProfileBtn) {
     saveProfileBtn.addEventListener("click", salvarPerfil);
   }
+
 
 
 function configurarMenuPerfil() {

@@ -222,7 +222,9 @@ async function carregarPosts() {
         </button>
         <button>↻ Repostar</button>
         <button>❝ Citar</button>
-        <button>↗ Compartilhar</button>
+        <button class="share-btn" data-post-id="${post.id}">
+          ↗ Compartilhar
+        </button>
       </div>
           <div class="comments-box" id="comments-${post.id}" style="display:none;">
       <input
@@ -264,6 +266,10 @@ async function configurarAcoesDoPost(postId) {
 
     await carregarEstadoCurtida(postId, likeBtn);
   }
+
+  if (commentBtn) {
+  await carregarContadorComentarios(postId, commentBtn);
+}
 
   if (commentBtn && commentsBox) {
     commentBtn.addEventListener("click", async function () {
@@ -999,6 +1005,7 @@ async function iniciarFeed() {
   configurarNotificacoes();
   configurarUploadImagemPost();
   configurarPesquisaGlobal();
+  configurarCompartilhamentoPost();
   
 }
 

@@ -159,6 +159,10 @@ async function configurarAcoesDoPost(postId) {
     await carregarEstadoCurtida(postId, likeBtn);
   }
 
+  if (commentBtn) {
+  await carregarContadorComentarios(postId, commentBtn);
+}
+
   if (commentBtn && commentsBox) {
     commentBtn.addEventListener("click", async function () {
       commentsBox.style.display =
@@ -360,9 +364,18 @@ async function carregarComentarios(postId) {
   });
 }
 
+
 async function iniciarPost() {
   await carregarUsuarioLogado();
   await carregarPost();
+
+  configurarMenuPerfil();
+  configurarNotificacoes();
+  configurarUploadImagemPost();
+  configurarPesquisaGlobal();
+  configurarCompartilhamentoPost();
+
+
 }
 
 iniciarPost();

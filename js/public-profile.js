@@ -447,7 +447,9 @@ async function carregarPosts() {
 
         <button>❝ Citar</button>
 
-        <button>↗ Compartilhar</button>
+        <button class="share-btn" data-post-id="${post.id}">
+          ↗ Compartilhar
+        </button>
 
       </div>
 
@@ -599,7 +601,9 @@ function configurarNotificacoes() {
       notificationDropdown.classList.remove("show");
     });
   }
-}async function configurarAcoesDoPost(postId) {
+}
+
+async function configurarAcoesDoPost(postId) {
   const likeBtn = document.querySelector(`.like-btn[data-post-id="${postId}"]`);
   const commentBtn = document.querySelector(`.comment-btn[data-post-id="${postId}"]`);
   const sendCommentBtn = document.querySelector(`.send-comment-btn[data-post-id="${postId}"]`);
@@ -613,12 +617,17 @@ function configurarNotificacoes() {
     await carregarEstadoCurtida(postId, likeBtn);
   }
 
+  if (commentBtn) {
+    await carregarContadorComentarios(postId, commentBtn);
+  }
+
   if (commentBtn && commentsBox) {
     commentBtn.addEventListener("click", async function () {
       commentsBox.style.display =
         commentsBox.style.display === "none" ? "block" : "none";
 
       await carregarComentarios(postId);
+      await carregarContadorComentarios(postId, commentBtn);
     });
   }
 
@@ -627,6 +636,20 @@ function configurarNotificacoes() {
       await enviarComentario(postId);
     });
   }
+}
+
+async function carregarContadorComentarios(postId, button) {
+  const { count, error } = await supabaseClient
+    .from("comments")
+    .select("*", { count: "exact", head: true })
+    .eq("post_id", postId);
+
+  if (error) {
+    console.error("Erro ao contar comentários:", error.message);
+    return;
+  }
+
+  button.textContent = `💬 Comentar (${count || 0})`;
 }
 
 async function carregarEstadoCurtida(postId, button) {
@@ -774,6 +797,7 @@ async function carregarComentarios(postId) {
     `;
 
     commentsList.appendChild(div);
+
   });
 }
 
@@ -879,6 +903,8 @@ async function buscarUsuarios(term) {
   searchResults.classList.add("show");
 }
 
+
+
 async function iniciarPerfilPublico() {
   await carregarUsuarioLogado();
   await carregarPerfilPublico();
@@ -888,8 +914,10 @@ async function iniciarPerfilPublico() {
   await carregarBadgeMensagens();
 
   configurarMenuPerfil();
-  configurarPesquisaGlobal();
   configurarNotificacoes();
+  configurarUploadImagemPost();
+  configurarPesquisaGlobal();
+  configurarCompartilhamentoPost();
 }
 
 iniciarPerfilPublico();
