@@ -30,8 +30,20 @@
             </a>
         </div>
 
-        <div class="search-area">
-            <input type="text" placeholder="Pesquisar na Verse...">
+        <div class="search-wrapper">
+
+        <input
+            type="text"
+            id="globalSearchInput"
+            placeholder="Pesquisar na Verse..."
+            autocomplete="off"
+        >
+
+        <div
+            id="globalSearchResults"
+            class="global-search-results">
+        </div>
+
         </div>
 
         <div class="nav-actions">
@@ -77,7 +89,10 @@
 
             <div class="profile-dropdown" id="profileDropdown">
                 <a href="../html/profile.html">👤 Meu perfil</a>
-                <a href="../html/messages.html">💬 Mensagens</a>
+                <a href="../html/messages.html" class="dropdown-message-link">
+                    💬 Mensagens
+                    <span id="dropdownMessagesBadge" class="message-dot"></span>
+                </a>
                 <a href="../html/settings.html">⚙️ Configurações</a>
 
                 <button id="logoutBtn" type="button">
@@ -108,7 +123,10 @@
             <a href="../html/stories.html">Histórias</a>
             <a href="../html/books.html">Livros</a>
             <a href="../html/projects.html">Projetos</a>
-            <a href="../html/messages.html">Mensagens</a>
+            <a href="../html/messages.html" class="sidebar-link message-link">
+                Mensagens
+                <span id="sidebarMessagesBadge" class="message-dot"></span>
+            </a>
             <a href="../html/partnerships.html">Parcerias</a>
             <a href="../html/events.html">Eventos</a>
             <a href="../html/settings.html">Configurações</a>
@@ -216,6 +234,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../js/supabaseClient.js"></script>
   <script src="../js/feed.js"></script>
+  <script src="../js/global.js"></script>
 
 </body>
 

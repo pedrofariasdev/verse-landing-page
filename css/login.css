@@ -115,10 +115,14 @@ body {
     background: #f8f8f5;
     border: 2px solid transparent;
     border-radius: 16px;
-    padding: 16px 18px 10px;
+
+    padding: 24px 18px 10px;
+
     color: #2b2b2b;
     font-size: 16px;
+
     transition: 0.25s ease;
+
     width: 100%;
     outline: none;
 }
@@ -130,9 +134,13 @@ body {
 .input-wrapper label {
     position: absolute;
     left: 18px;
-    top: 14px;
-    color: #676F54;
-    font-size: 15px;
+    top: 8px;
+
+    color: #79B4A9;
+
+    font-size: 12px;
+    font-weight: 600;
+
     transition: 0.25s ease;
     pointer-events: none;
     transform-origin: left top;
@@ -583,4 +591,6 @@ body {
         font-size: 0.8rem;
     }
 }
+
+
 

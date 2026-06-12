@@ -108,13 +108,21 @@ async function carregarConversas() {
       );
     });
 
+    const unreadCount = messages.filter(message => {
+      return (
+        message.sender_id === userId &&
+        message.receiver_id === usuarioLogado.id &&
+        message.is_read === false
+      );
+    }).length;
+
     if (!userProfile) return;
 
-    criarItemConversa(userProfile, lastMessage);
+    criarItemConversa(userProfile, lastMessage, unreadCount);
   });
 }
 
-function criarItemConversa(userProfile, lastMessage) {
+function criarItemConversa(userProfile, lastMessage, unreadCount = 0) {
   const conversationsList = document.getElementById("conversationsList");
 
   const firstLetter =
@@ -137,6 +145,12 @@ function criarItemConversa(userProfile, lastMessage) {
       <strong>${userProfile.full_name || "Usuário Verse"}</strong>
       <span>${lastMessage?.content || "Nova conversa"}</span>
     </div>
+
+    ${unreadCount > 0 ? `
+    <span class="conversation-unread-badge">
+      ${unreadCount}
+    </span>
+    ` : ""}
   `;
 
   item.addEventListener("click", function () {
@@ -149,9 +163,15 @@ function criarItemConversa(userProfile, lastMessage) {
 async function abrirConversa(userProfile) {
   conversaSelecionada = userProfile;
 
+  await marcarMensagensComoLidas(conversaSelecionada.id);
+  await carregarConversas();
+  await carregarBadgeMensagens();
+
   document.querySelectorAll(".conversation-item").forEach(item => {
     item.classList.remove("active");
+  });
 
+  document.querySelectorAll(".conversation-item").forEach(item => {
     if (item.dataset.userId === userProfile.id) {
       item.classList.add("active");
     }
@@ -463,15 +483,139 @@ function configurarNotificacoes() {
   }
 }
 
+function configurarPesquisaGlobal() {
+  const searchInput = document.getElementById("globalSearchInput");
+  const searchResults = document.getElementById("globalSearchResults");
+
+  if (!searchInput || !searchResults) return;
+
+  let searchTimeout = null;
+
+  searchInput.addEventListener("input", function () {
+    const term = searchInput.value.trim();
+
+    clearTimeout(searchTimeout);
+
+    if (term.length < 2) {
+      searchResults.classList.remove("show");
+      searchResults.innerHTML = "";
+      return;
+    }
+
+    searchTimeout = setTimeout(function () {
+      buscarUsuarios(term);
+    }, 400);
+  });
+
+  document.addEventListener("click", function (event) {
+    if (!event.target.closest(".search-wrapper")) {
+      searchResults.classList.remove("show");
+    }
+  });
+}
+
+async function buscarUsuarios(term) {
+  const searchResults = document.getElementById("globalSearchResults");
+
+  if (!searchResults) return;
+
+  const { data: users, error } = await supabaseClient
+    .from("profiles")
+    .select("*")
+    .or(`full_name.ilike.%${term}%,username.ilike.%${term}%`)
+    .limit(6);
+
+  if (error) {
+    console.error("Erro ao pesquisar usuários:", error.message);
+    return;
+  }
+
+  searchResults.innerHTML = "";
+
+  if (!users || users.length === 0) {
+    searchResults.innerHTML = `
+      <p class="search-empty">
+        Nenhum usuário encontrado.
+      </p>
+    `;
+
+    searchResults.classList.add("show");
+    return;
+  }
+
+  searchResults.innerHTML = `
+    <div class="search-section-title">
+      Usuários
+    </div>
+  `;
+
+  users.forEach(function (user) {
+    const firstLetter =
+      (user.full_name || "U").charAt(0).toUpperCase();
+
+    const avatarStyle = user.avatar_url
+      ? `background-image: url('${user.avatar_url}'); background-size: cover; background-position: center; color: transparent;`
+      : "";
+
+    const item = document.createElement("div");
+
+    item.classList.add("search-result-item");
+
+    item.innerHTML = `
+      <div
+        class="search-result-avatar"
+        style="${avatarStyle}">
+        ${firstLetter}
+      </div>
+
+      <div class="search-result-info">
+        <strong>${user.full_name || "Usuário Verse"}</strong>
+        <span>@${user.username || "usuario"}</span>
+      </div>
+    `;
+
+    item.addEventListener("click", function () {
+      window.location.href =
+        `../html/public-profile.html?id=${user.id}`;
+    });
+
+    searchResults.appendChild(item);
+  });
+
+  searchResults.classList.add("show");
+}
+
+async function marcarMensagensComoLidas(usuarioId) {
+  if (!usuarioId || !usuarioLogado) return;
+
+  const { error } = await supabaseClient
+    .from("messages")
+    .update({
+      is_read: true
+    })
+    .eq("sender_id", usuarioId)
+    .eq("receiver_id", usuarioLogado.id)
+    .eq("is_read", false);
+
+  if (error) {
+    console.error("Erro ao marcar mensagens como lidas:", error.message);
+  }
+
+  await carregarBadgeMensagens();
+}
+
 async function iniciarMessages() {
   await carregarUsuarioLogado();
   await carregarConversas();
   await abrirConversaPelaUrl();
   await carregarNotificacoes();
+  await carregarBadgeMensagens();
+
 
   configurarEventos();
   configurarMenuPerfil();
   configurarNotificacoes();
+  configurarPesquisaGlobal();
 }
 
 iniciarMessages();
