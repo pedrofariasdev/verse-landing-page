@@ -86,6 +86,73 @@ async function carregarUsuarioLogado() {
   }
 }
 
+function configurarSugestoesHashtags() {
+  console.log("Função de sugestões chamada");
+  const postContent = document.getElementById("postContent");
+  const suggestionsBox = document.getElementById("hashtagSuggestions");
+  console.log("postContent:", postContent);
+  console.log("suggestionsBox:", suggestionsBox);
+
+  if (!postContent || !suggestionsBox) return;
+
+  postContent.addEventListener("input", async function () {
+    console.log("Digitando:", postContent.value);
+    const texto = postContent.value;
+    const match = texto.match(/(?:^|\s)#([\p{L}0-9_]*)$/u);
+
+    if (!match) {
+      suggestionsBox.innerHTML = "";
+      suggestionsBox.classList.remove("show");
+      return;
+    }
+
+    const termo = match[1].toLowerCase();
+
+    if (termo.length < 1) {
+      suggestionsBox.innerHTML = "";
+      suggestionsBox.classList.remove("show");
+      return;
+    }
+
+    const { data, error } = await supabaseClient
+      .from("hashtags")
+      .select("name")
+      .ilike("name", `${termo}%`)
+      .limit(5);
+
+      console.log("Sugestões encontradas:", data, error);
+
+    if (error || !data || data.length === 0) {
+      suggestionsBox.innerHTML = "";
+      suggestionsBox.classList.remove("show");
+      return;
+    }
+
+    suggestionsBox.innerHTML = "";
+
+    data.forEach(function (item) {
+      const div = document.createElement("div");
+      div.classList.add("hashtag-suggestion-item");
+      div.textContent = `#${item.name}`;
+
+      div.addEventListener("click", function () {
+        postContent.value = postContent.value.replace(
+          /(?:^|\s)#([\p{L}0-9_]*)$/u,
+          `#${item.name} `
+        );
+
+        suggestionsBox.innerHTML = "";
+        suggestionsBox.classList.remove("show");
+        postContent.focus();
+      });
+
+      suggestionsBox.appendChild(div);
+    });
+
+    suggestionsBox.classList.add("show");
+  });
+}
+
 function mostrarAvatarNaTela(avatarUrl) {
   const userAvatar = document.getElementById("userAvatar");
   const navAvatar = document.getElementById("navAvatar");
@@ -118,6 +185,14 @@ function formatarTempo(dataPost) {
   if (horas < 24) return `há ${horas} h`;
 
   return `há ${dias} d`;
+}
+
+function transformarHashtagsEmLinks(texto) {
+  if (!texto) return "";
+
+  return texto.replace(/#([\p{L}0-9_]+)/gu, function (match, tag) {
+    return `<a href="../html/hashtag.html?tag=${encodeURIComponent(tag.toLowerCase())}" class="hashtag-link">${match}</a>`;
+  });
 }
 
 async function carregarPosts() {
@@ -209,7 +284,7 @@ async function carregarPosts() {
 
       </div>
 
-      ${post.content ? `<p class="post-text">${post.content}</p>` : ""}
+      ${post.content ? `<p class="post-text">${transformarHashtagsEmLinks(post.content)}</p>` : ""}
 
       ${post.image_url ? `<img src="${post.image_url}" class="post-images" alt="Imagem da publicação">` : ""}
 
@@ -574,6 +649,60 @@ function limparImagemSelecionada() {
   }
 }
 
+function extrairHashtags(texto) {
+  if (!texto) return [];
+
+  const regex = /#([\p{L}0-9_]+)/gu;
+  const matches = texto.match(regex);
+
+  if (!matches) return [];
+
+  return [...new Set(
+    matches.map(tag =>
+      tag
+        .replace("#", "")
+        .toLowerCase()
+        .trim()
+    )
+  )];
+}
+
+async function salvarHashtagsDoPost(postId, content) {
+  const hashtags = extrairHashtags(content);
+
+  if (hashtags.length === 0) return;
+
+  for (const hashtagName of hashtags) {
+    const { data: hashtag, error: hashtagError } = await supabaseClient
+      .from("hashtags")
+      .upsert(
+        { name: hashtagName },
+        { onConflict: "name" }
+      )
+      .select()
+      .single();
+
+    if (hashtagError) {
+      console.error("Erro ao salvar hashtag:", hashtagError.message);
+      continue;
+    }
+
+    const { error: relationError } = await supabaseClient
+      .from("post_hashtags")
+      .upsert(
+        {
+          post_id: postId,
+          hashtag_id: hashtag.id
+        },
+        { onConflict: "post_id,hashtag_id" }
+      );
+
+    if (relationError) {
+      console.error("Erro ao relacionar hashtag ao post:", relationError.message);
+    }
+  }
+}
+
 async function criarPost() {
   const postContent = document.getElementById("postContent");
   const publishBtn = document.getElementById("publishBtn");
@@ -627,6 +756,10 @@ async function criarPost() {
   }
 
   console.log("Post criado:", data);
+
+  if (data && data.length > 0) {
+    await salvarHashtagsDoPost(data[0].id, content);
+  }
 
   postContent.value = "";
 
@@ -1006,6 +1139,7 @@ async function iniciarFeed() {
   configurarUploadImagemPost();
   configurarPesquisaGlobal();
   configurarCompartilhamentoPost();
+  configurarSugestoesHashtags();
   
 }
 
