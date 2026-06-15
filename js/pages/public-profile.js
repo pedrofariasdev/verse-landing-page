@@ -1,6 +1,6 @@
 console.log("Public Profile carregado!");
 
-let usuarioLogado = null;
+
 let usuarioPerfil = null;
 let jaSegue = false;
 

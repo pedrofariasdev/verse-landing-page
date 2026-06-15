@@ -1741,3 +1741,13 @@ body {
 
     font-size: 15px;
 }
+
+.hashtag-link {
+  color: #3b82f6;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.hashtag-link:hover {
+  text-decoration: underline;
+}

@@ -106,3 +106,30 @@ function configurarNotificacoes() {
     notificationDropdown.classList.remove("show");
   });
 }
+
+async function criarNotificacao(userId, senderId, type, message, link = null) {
+  if (!userId || !senderId || !type || !message) {
+    return;
+  }
+
+  if (userId === senderId) {
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("notifications")
+    .insert([
+      {
+        user_id: userId,
+        sender_id: senderId,
+        type: type,
+        message: message,
+        link: link,
+        is_read: false
+      }
+    ]);
+
+  if (error) {
+    console.error("Erro ao criar notificação:", error.message);
+  }
+}

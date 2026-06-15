@@ -1,7 +1,7 @@
 console.log("Profile.js carregado!");
 
-let usuarioLogado = null;
-let perfilLogado = null;
+
+
 let tagsSelecionadas = [];
 let generosSelecionados = [];
 
@@ -173,7 +173,7 @@ async function carregarPostsDoPerfil() {
 
       ${post.content ? `
       <p class="post-text">
-        ${post.content}
+        ${transformarHashtagsEmLinks(post.content || "")}
       </p>
     ` : ""}
 

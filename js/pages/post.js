@@ -1,5 +1,5 @@
-let usuarioLogado = null;
-let perfilLogado = null;
+
+
 
 async function carregarUsuarioLogado() {
   const { data, error } = await supabaseClient.auth.getUser();

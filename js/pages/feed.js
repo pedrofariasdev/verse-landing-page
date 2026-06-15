@@ -1,7 +1,7 @@
 console.log("Feed.js carregado!");
 
-let usuarioLogado = null;
-let perfilLogado = null;
+
+
 let imagemSelecionada = null;
 
 
