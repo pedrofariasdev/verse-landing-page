@@ -1086,6 +1086,15 @@ body {
   color: #777;
 }
 
+.post-images {
+  width: 100%;
+  max-height: 600px;
+  object-fit: contain;
+  border-radius: 16px;
+  margin-top: 14px;
+  display: block;
+}
+
 .post-image {
   width: 100%;
   max-height: 500px;
@@ -1422,4 +1431,23 @@ body {
 
 .hashtag-suggestion-item:hover {
   background: #f3f4f6;
+}
+
+.trending-box {
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  margin-top: 20px;
+}
+
+.trending-item {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.trending-item a {
+  text-decoration: none;
+  color: #3b82f6;
+  font-weight: 600;
 }

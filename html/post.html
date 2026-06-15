@@ -18,6 +18,87 @@
 
 <body>
 
+  <nav class="navbar">
+
+        <div class="logo">
+            <a href="../html/feed.html" class="logo-link">
+                <h1>VERSE</h1>
+                <div class="logo-line"></div>
+            </a>
+        </div>
+
+        <div class="search-wrapper">
+
+        <input
+            type="text"
+            id="globalSearchInput"
+            placeholder="Pesquisar na Verse..."
+            autocomplete="off"
+        >
+
+        <div
+            id="globalSearchResults"
+            class="global-search-results">
+        </div>
+
+        </div>
+
+        <div class="nav-actions">
+
+            <a href="../html/feed.html" class="nav-icon-btn" title="Feed">
+                🏠
+            </a>
+
+            <a href="../html/publications.html" class="nav-icon-btn" title="Publicações">
+                📚
+            </a>
+
+            <a href="../html/comunities.html" class="nav-icon-btn" title="Comunidades">
+                👥
+            </a>
+
+            <div class="notification-wrapper">
+
+                <button id="notificationBtn" class="notification-btn" type="button">
+                    🔔
+                    <span id="notificationBadge" class="notification-badge">0</span>
+                </button>
+
+                <div id="notificationDropdown" class="notification-dropdown">
+
+                    <div class="notification-header">
+                    <h3>Notificações</h3>
+                </div>
+
+                <div id="notificationList" class="notification-list">
+                    <p class="empty-notifications">Nenhuma notificação ainda.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="profile-menu-wrapper">
+
+            <button class="profile-menu-btn" id="profileMenuBtn" type="button">
+                <div class="nav-avatar" id="navAvatar">V</div>
+            </button>
+
+            <div class="profile-dropdown" id="profileDropdown">
+                <a href="../html/profile.html">👤 Meu perfil</a>
+                <a href="../html/messages.html" class="dropdown-message-link">
+                    💬 Mensagens
+                    <span id="dropdownMessagesBadge" class="message-dot"></span>
+                </a>
+                <a href="../html/settings.html">⚙️ Configurações</a>
+
+                <button id="logoutBtn" type="button">
+                    🚪 Sair
+                </button>
+            </div>
+        </div>
+  </nav>
+
   <main class="post-page-main">
 
     <a href="../html/feed.html" class="back-btn">
@@ -34,10 +115,21 @@
 
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../js/supabaseClient.js"></script>
-  <script src="../js/global.js"></script>
-  <script src="../js/post.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabaseClient.js"></script>
+    <script src="../js/global.js"></script>
+
+    <script src="../js/modules/utils.js"></script>
+    <script src="../js/modules/search.js"></script>
+    <script src="../js/modules/avatar.js"></script>
+    <script src="../js/modules/menu.js"></script>
+    <script src="../js/modules/notifications.js"></script>
+    <script src="../js/modules/hashtags.js"></script>
+    <script src="../js/modules/likes.js"></script>
+    <script src="../js/modules/comments.js"></script>
+    <script src="../js/modules/share.js"></script>
+
+    <script src="../js/pages/post.js"></script>
 
 </body>
 </html>

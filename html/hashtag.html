@@ -8,7 +8,7 @@
 
   <title>Verse Feed</title>
 
-  <link rel="stylesheet" href="../css/feed.css">
+  <link rel="stylesheet" href="../css/hashtag.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -131,81 +131,18 @@
             <a href="../html/events.html">Eventos</a>
             <a href="../html/settings.html">Configurações</a>
         </nav>
-
-
-
-
     </aside>
 
-    <section class="feed-main">
-        <h2>Feed</h2>
-        
-        <div class="create-post-card">
+    <main class="main-content">
+      <section class="hashtag-header">
+        <h1 id="hashtagTitle">#hashtag</h1>
+        <p id="hashtagCount">Carregando publicações...</p>
+      </section>
 
-            <div class="create-post">
-                <div class="create-avatar" id="createAvatar">V</div>
-                <textarea id="postContent" placeholder="O que você está lendo?"></textarea>
-
-                <div id="hashtagSuggestions" class="hashtag-suggestions"></div>
-            </div>
-            
-
-            <div class="createpost-actions">
-                <button>📖 Lendo</button>
-                <button>✍️ Escrevendo</button>
-                <button>⭐ Recomendando</button>
-                <button id="photoPostBtn" type="button">
-                    📷 Foto
-                </button>
-
-                <input
-                    type="file"
-                    id="postImageInput"
-                    accept="image/*"
-                    hidden
-                >
-                <button>📎 Anexo</button>
-            </div>
-
-
-            <div
-                id="imagePreviewBox"
-                class="image-preview-box"
-                style="display:none;"
-            >
-
-                <div class="image-preview-thumb">
-
-                    <img
-                        id="imagePreview"
-                        alt="Pré-visualização da imagem"
-                    >
-
-                    <button
-                        id="removeImageBtn"
-                        type="button">
-                        ×
-                    </button>
-
-                </div>
-
-                <div class="image-preview-info">
-                    <strong>Imagem selecionada</strong>
-                    <span>Adicione uma descrição antes de publicar.</span>
-                </div>   
-
-            </div>
-
-
-            <div class="publish-area">
-                <button class="post-btn" id="publishBtn">Publicar</button>
-            </div>
-            <div id="postsContainer"></div>
-
-        </div>
-
-
-    </section>
+      <section id="hashtagPostsContainer">
+        <p>Carregando posts...</p>
+      </section>
+    </main>
 
     <aside class="sidebar-right">
 
@@ -229,13 +166,13 @@
         </button>
       </div>
 
-        <div class="trending-box">
-            <h3>📖 Em Alta na Verse</h3>
+      <div class="trending-box">
+        <h3>📖 Em Alta na Verse</h3>
 
-            <div id="trendingHashtags">
-                Carregando...
-            </div>
+        <div id="trendingHashtags">
+          Carregando...
         </div>
+      </div>
 
     </aside>
 
@@ -249,13 +186,9 @@
     <script src="../js/modules/avatar.js"></script>
     <script src="../js/modules/menu.js"></script>
     <script src="../js/modules/notifications.js"></script>
-    <script src="../js/modules/hashtags.js"></script>
-    <script src="../js/modules/comments.js"></script>
-    <script src="../js/modules/likes.js"></script>
-    <script src="../js/modules/posts.js"></script>
 
     <script src="../js/global.js"></script>
-    <script src="../js/pages/feed.js"></script>
+    <script src="../js/modules/hashtags.js"></script>
 
 </body>
 
