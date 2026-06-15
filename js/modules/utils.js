@@ -14,3 +14,6 @@ function formatarTempo(dataPost) {
 
   return `há ${dias} d`;
 }
+
+const slides = document.querySelectorAll(".slide");
+

@@ -872,9 +872,6 @@ async function iniciarPerfil() {
 
   configurarMenuPerfil();
   configurarNotificacoes();
-  configurarMenuPerfil();
-  configurarNotificacoes();
-  configurarUploadImagemPost();
   configurarPesquisaGlobal();
   configurarCompartilhamentoPost();
 }

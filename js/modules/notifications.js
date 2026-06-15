@@ -77,18 +77,30 @@ function configurarNotificacoes() {
   const notificationBtn = document.getElementById("notificationBtn");
   const notificationDropdown = document.getElementById("notificationDropdown");
 
-  if (!notificationBtn || !notificationDropdown) return;
+  if (!notificationBtn || !notificationDropdown) {
+    console.warn("Notificações não encontradas.");
+    return;
+  }
 
-  notificationBtn.addEventListener("click", function (event) {
+  notificationBtn.onclick = function (event) {
+    event.preventDefault();
     event.stopPropagation();
+
     notificationDropdown.classList.toggle("show");
 
-    carregarNotificacoes();
-  });
+    const profileDropdown =
+      document.getElementById("profileDropdown");
 
-  notificationDropdown.addEventListener("click", function (event) {
+    if (profileDropdown) {
+      profileDropdown.classList.remove("show");
+    }
+
+    carregarNotificacoes();
+  };
+
+  notificationDropdown.onclick = function (event) {
     event.stopPropagation();
-  });
+  };
 
   document.addEventListener("click", function () {
     notificationDropdown.classList.remove("show");
