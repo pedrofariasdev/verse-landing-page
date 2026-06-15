@@ -223,7 +223,90 @@ console.log("hashtag.js carregado!");
 const params = new URLSearchParams(window.location.search);
 const tag = params.get("tag");
 
+async function carregarPaginaHashtag() {
+  const hashtagTitle = document.getElementById("hashtagTitle");
+  const hashtagCount = document.getElementById("hashtagCount");
+  const postsContainer = document.getElementById("hashtagPostsContainer");
 
+  if (!hashtagTitle || !hashtagCount || !postsContainer) return;
+
+  if (!tag) {
+    hashtagTitle.textContent = "#hashtag";
+    hashtagCount.textContent = "Hashtag não encontrada.";
+    postsContainer.innerHTML = "";
+    return;
+  }
+
+  hashtagTitle.textContent = `#${tag}`;
+  hashtagCount.textContent = "Carregando publicações...";
+  postsContainer.innerHTML = "<p>Carregando posts...</p>";
+
+  const { data: hashtag, error: hashtagError } = await supabaseClient
+    .from("hashtags")
+    .select("*")
+    .eq("name", tag)
+    .single();
+
+  if (hashtagError || !hashtag) {
+    hashtagCount.textContent = "0 publicações";
+    postsContainer.innerHTML = "<p>Nenhuma publicação encontrada.</p>";
+    return;
+  }
+
+  const { data: relations, error: relationsError } = await supabaseClient
+    .from("post_hashtags")
+    .select("post_id")
+    .eq("hashtag_id", hashtag.id);
+
+  if (relationsError || !relations || relations.length === 0) {
+    hashtagCount.textContent = "0 publicações";
+    postsContainer.innerHTML = "<p>Nenhuma publicação encontrada.</p>";
+    return;
+  }
+
+  const postIds = relations.map(item => item.post_id);
+
+  hashtagCount.textContent = `${postIds.length} publicações`;
+
+  const { data: posts, error: postsError } = await supabaseClient
+    .from("posts")
+    .select("*")
+    .in("id", postIds)
+    .order("created_at", { ascending: false });
+
+  if (postsError || !posts) {
+    postsContainer.innerHTML = "<p>Erro ao carregar publicações.</p>";
+    return;
+  }
+
+  postsContainer.innerHTML = "";
+
+  posts.forEach(function (post) {
+    const postCard = document.createElement("article");
+
+    postCard.classList.add("hashtag-post-card");
+
+    postCard.innerHTML = `
+      <div class="hashtag-post-content">
+        <p class="post-text">
+          ${transformarHashtagsEmLinks(post.content || "")}
+        </p>
+
+        ${
+          post.image_url
+            ? `<img src="${post.image_url}" class="post-image" alt="Imagem da publicação">`
+            : ""
+        }
+
+        <a class="post-open-text" href="../html/post.html?id=${post.id}">
+          Ver publicação completa →
+        </a>
+      </div>
+    `;
+
+    postsContainer.appendChild(postCard);
+  });
+}
 
 async function iniciarHashtag() {
   await carregarUsuarioLogado();
@@ -235,3 +318,5 @@ async function iniciarHashtag() {
   configurarMenuPerfil();
   configurarNotificacoes();
 }
+
+iniciarHashtag();
