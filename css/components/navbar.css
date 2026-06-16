@@ -1,0 +1,90 @@
+/* =========================
+   COMPONENT: APP NAVBAR
+========================= */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 90px;
+
+  padding: 0 40px;
+
+  background: #f8f8f5;
+  border-bottom: 1px solid #e4e4e4;
+
+  display: grid;
+  grid-template-columns: 260px 1fr auto;
+  align-items: center;
+  gap: 32px;
+
+  z-index: 1000;
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.logo-link {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  text-decoration: none;
+}
+
+.logo-link h1 {
+  color: #79B4A9;
+
+  font-family: "Belleza", sans-serif;
+  font-size: 44px;
+  font-weight: 400;
+  letter-spacing: 4px;
+}
+
+.logo-line {
+  width: 100%;
+  height: 4px;
+
+  margin-top: 4px;
+
+  background: #d4af37;
+  border-radius: 999px;
+}
+
+/* =========================
+   NAV ACTIONS
+========================= */
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nav-icon-btn {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+  border: 1px solid #dcdcdc;
+
+  font-size: 22px;
+  text-decoration: none;
+
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.nav-icon-btn:hover {
+  background: #79B4A9;
+  transform: translateY(-2px);
+}

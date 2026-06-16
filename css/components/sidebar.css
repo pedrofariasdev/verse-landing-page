@@ -1,0 +1,125 @@
+/* SIDEBARS */
+
+.sidebar-left,
+.sidebar-right {
+
+  background-color: white;
+
+  border-radius: 24px;
+
+  padding: 24px;
+
+  min-height: 700px;
+
+  border: 1px solid #ececec;
+}
+
+.side-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 25px;
+}
+
+.side-menu a {
+  text-decoration: none;
+  color: #676F54;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: 14px;
+  transition: 0.3s ease;
+}
+
+.side-menu a:hover {
+  background-color: #D7F2BA;
+  color: #2b2b2b;
+}
+
+/* Card do usuário logado na sidebar */
+
+.logged-user-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 14px;
+  margin: 18px 0 24px 0;
+
+  background: #f8f8f5;
+  border: 1px solid rgba(103, 111, 84, 0.12);
+  border-radius: 18px;
+}
+
+.logged-user-card strong {
+  display: block;
+  color: #2b2b2b;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.logged-user-card p {
+  margin: 3px 0 0 0;
+  color: #6b6b6b;
+  font-size: 12px;
+  word-break: break-all;
+}
+
+/* =========================
+   COMMUNITY / TREND CARD
+========================= */
+
+.trend-card {
+  padding: 16px;
+  margin-top: 18px;
+
+  background: #f8f8f5;
+
+  border-radius: 18px;
+}
+
+.trend-card .suggestion-avatar {
+  width: 50px;
+  height: 50px;
+
+  margin-bottom: 10px;
+}
+
+.trend-card span {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #2b2b2b;
+
+  font-weight: 700;
+}
+
+.friend-tags {
+  margin-bottom: 12px;
+
+  color: #676F54;
+
+  font-size: 13px;
+  font-style: italic;
+}
+
+.trend-card button {
+  padding: 10px 16px;
+
+  border: none;
+  border-radius: 999px;
+
+  background: #79B4A9;
+  color: #ffffff;
+
+  font-weight: 700;
+
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.trend-card button:hover {
+  background: #676F54;
+  transform: translateY(-2px);
+}

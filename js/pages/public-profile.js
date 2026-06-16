@@ -4,6 +4,14 @@ console.log("Public Profile carregado!");
 let usuarioPerfil = null;
 let jaSegue = false;
 
+function formatarHashtags(texto) {
+  if (!texto) return "";
+
+  return texto.replace(/#([\wÀ-ÿ]+)/g, function (match, tag) {
+    return `<a href="../html/hashtag.html?tag=${encodeURIComponent(tag.toLowerCase())}" class="hashtag-link">#${tag}</a>`;
+  });
+}
+
 function obterIdDaUrl() {
   const params = new URLSearchParams(window.location.search);
 
@@ -415,7 +423,7 @@ async function carregarPosts() {
       </div>
 
       <p class="post-text">
-        ${post.content || ""}
+        ${formatarHashtags(post.content || "")}
       </p>
 
       ${
@@ -911,11 +919,11 @@ async function iniciarPerfilPublico() {
   await verificarSeSegue();
   await carregarContadoresFollow();
   await carregarNotificacoes();
-  await carregarBadgeMensagens();
+  //await carregarBadgeMensagens();
 
   configurarMenuPerfil();
   configurarNotificacoes();
-  configurarUploadImagemPost();
+  //configurarUploadImagemPost();
   configurarPesquisaGlobal();
   configurarCompartilhamentoPost();
 }

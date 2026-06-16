@@ -1,0 +1,73 @@
+/* =========================
+   COMPONENT: AUTH BUTTON
+========================= */
+
+.cadastro-btn {
+  width: 100%;
+  margin-bottom: 18px;
+  padding: 13px 24px;
+
+  position: relative;
+
+  border: none;
+  border-radius: 999px;
+
+  background: #676F54;
+  color: #ffffff;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.cadastro-btn:hover {
+  background: #79B4A9;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(121, 180, 169, 0.3);
+}
+
+.cadastro-btn:active {
+  transform: translateY(0);
+}
+
+/* =========================
+   LOADING STATE
+========================= */
+
+.cadastro-btn.loading {
+  pointer-events: none;
+  background: #9CC69B;
+}
+
+.btn-text {
+  transition: opacity 0.2s ease;
+}
+
+.btn-loader {
+  width: 16px;
+  height: 16px;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  border: 2px solid transparent;
+  border-top: 2px solid #ffffff;
+  border-radius: 50%;
+
+  opacity: 0;
+
+  transform: translate(-50%, -50%);
+  animation: spin 1s linear infinite;
+  transition: opacity 0.2s ease;
+}
+
+.cadastro-btn.loading .btn-text {
+  opacity: 0;
+}
+
+.cadastro-btn.loading .btn-loader {
+  opacity: 1;
+}

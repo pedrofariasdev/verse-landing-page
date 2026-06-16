@@ -1,0 +1,165 @@
+/* =========================
+   COMPONENT: NOTIFICATIONS
+========================= */
+
+.notification-wrapper {
+  position: relative;
+}
+
+/* =========================
+   NOTIFICATION BUTTON
+========================= */
+
+.notification-btn {
+  position: relative;
+
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid #79B4A9;
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  font-size: 22px;
+
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.notification-btn:hover {
+  background: #79B4A9;
+  transform: translateY(-2px);
+}
+
+/* =========================
+   BADGE
+========================= */
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+
+  min-width: 20px;
+  height: 20px;
+
+  padding: 0 6px;
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+
+  background: #b42318;
+  color: #ffffff;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.notification-badge.show {
+  display: flex;
+}
+
+/* =========================
+   DROPDOWN
+========================= */
+
+.notification-dropdown {
+  position: absolute;
+  top: 65px;
+  right: 0;
+
+  width: 330px;
+  max-height: 420px;
+
+  display: none;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid #ececec;
+  border-radius: 18px;
+
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+
+  z-index: 9999;
+}
+
+.notification-dropdown.show {
+  display: flex;
+}
+
+/* =========================
+   DROPDOWN HEADER
+========================= */
+
+.notification-header {
+  padding: 16px 18px;
+
+  border-bottom: 1px solid #ececec;
+}
+
+.notification-header h3 {
+  color: #2b2b2b;
+
+  font-size: 17px;
+}
+
+/* =========================
+   NOTIFICATION LIST
+========================= */
+
+.notification-list {
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.empty-notifications {
+  padding: 18px;
+
+  color: #777777;
+
+  font-size: 14px;
+}
+
+.notification-item {
+  padding: 14px 18px;
+
+  border-bottom: 1px solid #f0f0f0;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.notification-item:hover {
+  background: #eef7eb;
+}
+
+.notification-item.unread {
+  background: #f4fbf0;
+}
+
+.notification-item strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #2b2b2b;
+
+  font-size: 14px;
+}
+
+.notification-item span {
+  color: #777777;
+
+  font-size: 12px;
+}

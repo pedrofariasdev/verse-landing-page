@@ -1,0 +1,111 @@
+/* =========================
+   AVATAR BASE
+========================= */
+
+.nav-avatar,
+.create-avatar,
+.logged-avatar,
+.post-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #79B4A9;
+  color: #ffffff;
+
+  border: 2px solid #D4AF37;
+
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+
+  box-shadow: 0 8px 20px rgba(121, 180, 169, 0.25);
+}
+
+/* =========================
+   NAVBAR AVATAR
+========================= */
+
+.nav-avatar {
+  width: 56px;
+  height: 56px;
+
+  font-size: 24px;
+}
+
+/* =========================
+   CREATE POST AVATAR
+========================= */
+
+.create-avatar {
+  width: 52px;
+  height: 52px;
+
+  font-size: 21px;
+}
+
+/* =========================
+   SIDEBAR AVATAR
+========================= */
+
+.logged-avatar {
+  width: 56px;
+  height: 56px;
+
+  font-size: 22px;
+}
+
+/* =========================
+   POST AVATAR
+========================= */
+
+.post-avatar {
+  width: 50px;
+  height: 50px;
+
+  font-size: 20px;
+}
+
+/* =========================
+   PROFILE BUTTON
+========================= */
+
+.profile-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-decoration: none;
+}
+
+.profile-btn a {
+  text-decoration: none;
+}
+
+/* =========================
+   PROFILE IMAGE AVATAR
+========================= */
+
+.profile-btn img {
+  width: 52px;
+  height: 52px;
+
+  display: block;
+
+  object-fit: cover;
+
+  border-radius: 50%;
+  border: 2px solid #79B4A9;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
+}
+
+.profile-btn img:hover {
+  transform: scale(1.05);
+  border-color: #676F54;
+}

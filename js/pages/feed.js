@@ -173,7 +173,7 @@ async function iniciarFeed() {
   await carregarPosts();
   await carregarSugestoes();
   await carregarNotificacoes();
-  await carregarBadgeMensagens();
+  //await carregarBadgeMensagens();
 
   const publishBtn = document.getElementById("publishBtn");
 

@@ -1,0 +1,39 @@
+/* =========================
+   COMPONENT: AUTH SUCCESS
+========================= */
+
+.success-message {
+  display: none !important;
+  text-align: center;
+  padding: 32px 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 0.3s ease;
+}
+
+.success-message.show {
+  display: block !important;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.success-icon {
+  width: 52px;
+  height: 52px;
+  background: #79B4A9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: white;
+  margin: 0 auto 16px;
+}
+
+.success-message {
+  display: none !important;
+}
+
+.success-message.show {
+  display: block !important;
+}

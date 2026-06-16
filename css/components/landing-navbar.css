@@ -1,0 +1,143 @@
+/* =========================
+   COMPONENT: LANDING NAVBAR
+========================= */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 90px;
+
+  padding: 0 40px;
+
+  background: #f8f8f5;
+  border-bottom: 1px solid #e4e4e4;
+
+  display: grid;
+  grid-template-columns: 260px 1fr auto;
+  align-items: center;
+  gap: 32px;
+
+  z-index: 1000;
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-self: start;
+
+  font-weight: 100;
+}
+
+.logo-link {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  text-decoration: none;
+}
+
+.logo-link h1 {
+  color: #79B4A9;
+
+  font-family: "Belleza", sans-serif;
+  font-size: 44px;
+  font-weight: 400;
+  letter-spacing: 4px;
+}
+
+.logo-line {
+  width: 100%;
+  height: 4px;
+
+  margin-top: 4px;
+
+  background: #d4af37;
+  border-radius: 999px;
+}
+
+.logo img {
+  width: 220px;
+  display: block;
+}
+
+/* =========================
+   CENTER MENU
+========================= */
+
+.menu-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+
+  gap: 15px;
+
+  font-weight: 700;
+}
+
+.btn,
+.btn2 {
+  padding: 12px 22px;
+
+  border-radius: 30px;
+
+  font-size: 16px;
+  text-decoration: none;
+
+  transition: 0.3s ease;
+}
+
+.btn-home,
+.btn-about,
+.btn-feat {
+  color: #676F54;
+}
+
+.btn-home {
+  font-family: "Poppins", sans-serif;
+}
+
+.btn-home:hover,
+.btn-about:hover,
+.btn-feat:hover {
+  background: #79B4A9;
+  color: #000000;
+}
+
+/* =========================
+   RIGHT BUTTONS
+========================= */
+
+.nav-buttons {
+  display: flex;
+  justify-self: end;
+
+  gap: 15px;
+}
+
+.btn-primary {
+  background: #79B4A9;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: #676F54;
+}
+
+.btn-secondary {
+  border: 2px solid #79B4A9;
+  color: #676F54;
+}
+
+.btn-secondary:hover {
+  background: #79B4A9;
+  color: #ffffff;
+}

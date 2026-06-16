@@ -4,6 +4,12 @@ function configurarPesquisaGlobal() {
 
   if (!searchInput || !searchResults) return;
 
+  if (searchInput.dataset.searchConfigured === "true") {
+    return;
+  }
+
+  searchInput.dataset.searchConfigured = "true";
+
   let searchTimeout = null;
 
   searchInput.addEventListener("input", function () {

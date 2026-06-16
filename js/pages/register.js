@@ -2,6 +2,12 @@ console.log("Cadastro.js carregado!");
 
 const cadastroForm = document.getElementById("cadastroForm");
 
+const successMessage = document.getElementById("successMessage");
+
+if (successMessage) {
+  successMessage.classList.remove("show");
+}
+
 cadastroForm.addEventListener("submit", async function (event) {
   event.preventDefault();
 

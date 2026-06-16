@@ -1,0 +1,103 @@
+/* =========================
+   PROFILE DROPDOWN
+========================= */
+
+.profile-menu-wrapper {
+  position: relative;
+}
+
+.profile-menu-btn {
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  cursor: pointer;
+}
+
+/* =========================
+   DROPDOWN CONTAINER
+========================= */
+
+.profile-dropdown {
+  position: absolute;
+  top: 64px;
+  right: 0;
+
+  width: 220px;
+
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+
+  padding: 10px;
+
+  background: #ffffff;
+
+  border: 1px solid #ececec;
+  border-radius: 18px;
+
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+
+  z-index: 2000;
+}
+
+.profile-dropdown.show {
+  display: flex;
+}
+
+/* =========================
+   DROPDOWN ITEMS
+========================= */
+
+.profile-dropdown a,
+.profile-dropdown button {
+  width: 100%;
+
+  padding: 12px 14px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: transparent;
+
+  color: #2b2b2b;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  text-align: left;
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+.profile-dropdown a:hover,
+.profile-dropdown button:hover {
+  background: #f8f8f5;
+  color: #676F54;
+}
+
+/* =========================
+   MESSAGE INDICATOR
+========================= */
+
+.message-link,
+.dropdown-message-link {
+  position: relative;
+}
+
+.message-dot {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+
+  width: 10px;
+  height: 10px;
+
+  display: none;
+
+  border-radius: 50%;
+
+  background: #c0392b;
+}

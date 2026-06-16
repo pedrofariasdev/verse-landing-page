@@ -1,0 +1,239 @@
+/* =========================
+   PAGE: CADASTRO
+========================= */
+
+body {
+  font-family: "Inter", Arial, sans-serif;
+  background: linear-gradient(135deg, #f8f8f5, #D7F2BA);
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  padding: 20px;
+  line-height: 1.6;
+  color: #2b2b2b;
+}
+
+.page-cadastro {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 35px;
+  padding: 10px 40px;
+}
+
+.page-cadastro-image {
+  display: flex;
+  align-items: center;
+}
+
+.left-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.page-cadastro-image img {
+  width: 100%;
+  max-width: 360px;
+  display: block;
+}
+
+.quote {
+  margin-top: -5px;
+  text-align: center;
+}
+
+.quote p {
+  font-family: 'Belleza', sans-serif;
+  font-size: 19px;
+  font-style: italic;
+  line-height: 1.4;
+  color: #676F54;
+}
+
+.quote span {
+  display: block;
+  margin-top: 10px;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: #8A8A8A;
+}
+
+.cadastro-container {
+  width: 100%;
+  max-width: 390px;
+}
+
+.cadastro-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.cadastro-logo h1 {
+  font-family: "Belleza", sans-serif;
+  font-size: 48px;
+  font-weight: 400;
+  letter-spacing: 6px;
+  color: #79B4A9;
+  margin: 0;
+  line-height: 1;
+}
+
+.cadastro-logo .logo-line {
+  width: 140px;
+  height: 4px;
+  background: #D4AF37;
+  border-radius: 999px;
+  margin-top: 10px;
+}
+
+.cadastro-card {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 26px;
+  padding: 22px 25px;
+  border: 1px solid rgba(103, 111, 84, 0.15);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(10px);
+}
+
+.cadastro-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.cadastro-header h2 {
+  font-family: "Belleza", sans-serif;
+  font-size: 2rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: #676F54;
+  margin-bottom: 10px;
+}
+
+.cadastro-header p {
+  color: #4f5f57;
+  font-size: 0.95rem;
+}
+
+.signup-link {
+  text-align: center;
+}
+
+.signup-link p {
+  color: #4f5f57;
+  font-size: 0.875rem;
+}
+
+.signup-link a {
+  color: #676F54;
+  text-decoration: none;
+  font-weight: 700;
+  transition: 0.2s ease;
+}
+
+.signup-link a:hover {
+  color: #79B4A9;
+}
+
+/* =========================
+   RESPONSIVO - CADASTRO
+========================= */
+
+@media (max-width: 900px) {
+  body {
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .back-button {
+    top: 20px;
+    left: 20px;
+    font-size: 16px;
+  }
+
+  .page-cadastro {
+    flex-direction: column;
+    gap: 25px;
+    padding: 80px 20px 30px;
+  }
+
+  .left-side {
+    order: 1;
+  }
+
+  .cadastro-container {
+    order: 2;
+    max-width: 420px;
+  }
+
+  .page-cadastro-image img {
+    max-width: 300px;
+  }
+
+  .quote p {
+    font-size: 18px;
+  }
+
+  .quote span {
+    font-size: 13px;
+  }
+
+  .cadastro-logo h1 {
+    font-size: 46px;
+  }
+
+  .cadastro-header h2 {
+    font-size: 2rem;
+  }
+
+  .cadastro-card {
+    padding: 28px;
+    border-radius: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-cadastro {
+    padding: 75px 12px 25px;
+  }
+
+  .page-cadastro-image img {
+    max-width: 230px;
+  }
+
+  .cadastro-card {
+    padding: 24px 20px;
+  }
+
+  .cadastro-logo h1 {
+    font-size: 40px;
+    letter-spacing: 4px;
+  }
+
+  .cadastro-logo .logo-line {
+    width: 110px;
+  }
+
+  .cadastro-header h2 {
+    font-size: 1.7rem;
+  }
+
+  .cadastro-header p {
+    font-size: 0.9rem;
+  }
+
+  .input-wrapper input {
+    font-size: 15px;
+    padding: 15px 16px 10px;
+  }
+
+  .cadastro-btn {
+    padding: 14px 20px;
+  }
+}

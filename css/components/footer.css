@@ -1,0 +1,203 @@
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+  padding: 50px 40px 20px;
+
+  background: #676F54;
+  color: #ffffff;
+}
+
+/* =========================
+   FOOTER TOP
+========================= */
+
+.footer-top {
+  max-width: 1400px;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  flex-wrap: wrap;
+  gap: 50px;
+}
+
+/* =========================
+   BRAND
+========================= */
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.footer-brand h3 {
+  margin: 0;
+
+  color: #6d9195;
+
+  font-family: "Belleza", sans-serif;
+  font-size: 48px;
+  font-weight: 400;
+  letter-spacing: 4px;
+}
+
+.footer-line {
+  width: 220px;
+  height: 4px;
+
+  border-radius: 999px;
+
+  background: #d4af37;
+}
+
+/* =========================
+   SOCIAL ICONS
+========================= */
+
+.footer-social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.footer-social a {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #000000;
+
+  font-size: 26px;
+  text-decoration: none;
+
+  transition: 0.3s ease;
+}
+
+.footer-social a:hover {
+  color: #79B4A9;
+  transform: translateY(-3px);
+}
+
+/* =========================
+   FOOTER COLUMNS
+========================= */
+
+.footer-column {
+  min-width: 180px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.footer-column h4 {
+  margin-bottom: 10px;
+
+  color: #ffffff;
+
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.footer-column a {
+  color: #e8e8e8;
+
+  font-size: 16px;
+  text-decoration: none;
+
+  transition: 0.3s ease;
+}
+
+.footer-column a:hover {
+  color: #79B4A9;
+  transform: translateX(4px);
+}
+
+/* =========================
+   FOOTER BOTTOM
+========================= */
+
+.footer-bottom {
+  margin-top: 60px;
+  padding-top: 25px;
+
+  text-align: center;
+
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.footer-bottom p {
+  color: #d9d9d9;
+  font-size: 14px;
+}
+
+/* =========================
+   LEGACY SOCIAL LINKS
+========================= */
+
+.links-social {
+  display: flex;
+  gap: 32px;
+
+  margin-top: 30px;
+  margin-left: 65px;
+}
+
+.links-social img {
+  width: 40px;
+  height: 32px;
+
+  transition: 0.3s ease;
+}
+
+.links-social img:hover {
+  transform: translateY(-4px);
+}
+
+/* =========================
+   LEGACY FOOTER LINKS
+========================= */
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 200px;
+}
+
+.footer-links > div {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-links p {
+  margin-bottom: 10px;
+
+  color: #000000;
+
+  font-weight: 700;
+}
+
+.footer-links a {
+  color: #2b2b2b;
+
+  font-size: 15px;
+  text-decoration: none;
+
+  transition: 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #79B4A9;
+  transform: translateX(4px);
+}

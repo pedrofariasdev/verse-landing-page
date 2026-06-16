@@ -837,7 +837,7 @@ async function iniciarPerfil() {
   await carregarSugestoes();
   await carregarContadoresFollowPerfil();
   await carregarNotificacoes();
-  await carregarBadgeMensagens();
+  //await carregarBadgeMensagens();
   configurarPesquisaGlobal();
 
   const editAvatarBtn = document.getElementById("editAvatarBtn");

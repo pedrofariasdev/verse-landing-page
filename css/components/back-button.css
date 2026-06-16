@@ -1,0 +1,19 @@
+/* =========================
+   COMPONENT: BACK BUTTON
+========================= */
+
+.back-button {
+  position: absolute;
+  top: 30px;
+  left: 40px;
+  text-decoration: none;
+  color: #676F54;
+  font-size: 18px;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.back-button:hover {
+  color: #79B4A9;
+  transform: translateX(-4px);
+}
