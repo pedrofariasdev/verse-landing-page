@@ -146,7 +146,7 @@ async function carregarPosts() {
       const quotedAuthor = profiles.find(profile => profile.id === quotedPost.user_id);
 
       quotedPostHtml = `
-        <div class="quoted-post-card">
+        <a href="../html/post.html?id=${quotedPost.id}" class="quoted-post-card quoted-post-link">
 
           <div class="quoted-post-label">
             💬 Publicação citada
@@ -166,7 +166,7 @@ async function carregarPosts() {
             : ""
           }
 
-        </div>
+        </a>
       `;
     }
 
@@ -176,6 +176,14 @@ async function carregarPosts() {
     if (item.type === "repost") {
       postCard.classList.add("post-card-reposted");
     }
+
+    const postContentLinkStart = item.type === "repost"
+      ? `<a href="../html/post.html?id=${post.id}" class="repost-content-link">`
+      : "";
+
+    const postContentLinkEnd = item.type === "repost"
+      ? `</a>`
+      : "";
 
     postCard.innerHTML = `
       ${repostLabel}
@@ -205,11 +213,15 @@ async function carregarPosts() {
 
       </div>
 
+      ${postContentLinkStart}
+
       ${post.content ? `<p class="post-text">${transformarHashtagsEmLinks(post.content)}</p>` : ""}
 
       ${post.image_url ? `<img src="${post.image_url}" class="post-images" alt="Imagem da publicação">` : ""}
 
       ${quotedPostHtml}
+
+      ${postContentLinkEnd}
 
       <div class="post-actions">
         <button class="like-btn" data-post-id="${post.id}">

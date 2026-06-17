@@ -145,3 +145,19 @@
   text-transform: uppercase;
   letter-spacing: 0.4px;
 }
+
+.quoted-post-link,
+.repost-content-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.quoted-post-link:hover,
+.repost-content-link:hover {
+  cursor: pointer;
+}
+
+.quoted-post-link:hover {
+  background: #f3f8f7;
+}
