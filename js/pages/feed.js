@@ -188,6 +188,8 @@ async function iniciarFeed() {
   configurarSugestoesHashtags();
   carregarHashtagsEmAlta();
   configurarPesquisaGlobal();
+  configurarModalRepost();
+  configurarModalQuote();
 }
 
 iniciarFeed();

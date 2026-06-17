@@ -3,10 +3,15 @@
 
 <head>
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Verse Feed</title>
+    <meta
+    name="description"
+    content="Explore publicações relacionadas a hashtags literárias na Verse."
+    >
+
+    <title>Verse - Explorar Hashtags</title>
 
   <link rel="stylesheet" href="../css/base/reset.css">
     <link rel="stylesheet" href="../css/base/global.css">
@@ -147,7 +152,7 @@
         </nav>
     </aside>
 
-    <main class="main-content">
+    <section class="main-content">
       <section class="hashtag-header">
         <h1 id="hashtagTitle">#hashtag</h1>
         <p id="hashtagCount">Carregando publicações...</p>
@@ -156,7 +161,7 @@
       <section id="hashtagPostsContainer">
         <p>Carregando posts...</p>
       </section>
-    </main>
+    </section>
 
     <aside class="sidebar-right">
 
@@ -195,7 +200,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabaseClient.js"></script>
 
-     <script src="../js/modules/auth.js"></script>
+    <script src="../js/modules/auth.js"></script>
     <script src="../js/modules/utils.js"></script>
     <script src="../js/modules/search.js"></script>
     <script src="../js/modules/avatar.js"></script>

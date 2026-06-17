@@ -1,186 +1,281 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verse</title>
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="A Verse é uma rede social literária para leitores, escritores e criadores de histórias. Escreva, descubra e conecte-se com a comunidade literária.">
+
+  <title>Verse - Rede Social Literária</title>
+
+  <link rel="stylesheet" href="css/base/reset.css">
+  <link rel="stylesheet" href="css/base/global.css">
+
+  <link rel="stylesheet" href="css/components/landing-navbar.css">
+  <link rel="stylesheet" href="css/components/newsletter.css">
+  <link rel="stylesheet" href="css/components/footer.css">
+
   <link rel="stylesheet" href="css/pages/style.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Belleza&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=Belleza&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
+
   <nav class="navbar">
+
     <div class="logo">
 
       <a href="index.html" class="logo-link">
-
         <h1>VERSE</h1>
-
         <span class="logo-line"></span>
-
       </a>
+
     </div>
-      
+
     <div class="menu-buttons">
-        <a href="index.html" class="btn2 btn-home">HOME</a>
-        <a href="html/about.html" class="btn2 btn-about">QUEM SOMOS?</a>
-        <a href="html/partners.html" class="btn2 btn-feat">PARCERIAS</a>
+      <a href="index.html" class="btn2 btn-home">HOME</a>
+      <a href="html/about.html" class="btn2 btn-about">QUEM SOMOS?</a>
+      <a href="html/partners.html" class="btn2 btn-feat">PARCERIAS</a>
     </div>
-    
+
     <div class="nav-buttons">
       <a href="html/cadastro.html" class="btn btn-primary">Criar conta</a>
       <a href="html/login.html" class="btn btn-secondary">Login</a>
     </div>
+
   </nav>
 
-  <section class="hero-banner">
-    <div class="carousel">
-           
-      <!-- SLIDE 1 -->
-      <div class="slide active">
-        <img src="assets/SAIBA MAIS.png" alt="Banner Saiba Mais">
-        <div class="button-more">
-           <a href="html/about.html" class="btn btn-more">Saiba Mais</a>
+  <main>
+
+    <section class="hero-banner" aria-label="Destaques da Verse">
+
+      <div class="carousel">
+
+        <div class="slide active">
+          <img
+            src="assets/SAIBA MAIS.png"
+            alt="Banner da Verse convidando para saber mais">
+
+          <div class="button-more">
+            <a href="html/about.html" class="btn btn-more">
+              Saiba Mais
+            </a>
+          </div>
         </div>
-      </div>
-              <!-- SLIDE 2 -->
-      <div class="slide">
-        <img src="assets/slide2.png" alt="Publique suas ideias">
-        <div class="button-more">
-            <a href="html/cadastro.html" class="btn btn-more">Criar Perfil</a>
+
+        <div class="slide">
+          <img
+            src="assets/slide2.png"
+            alt="Banner convidando usuários a criarem um perfil na Verse">
+
+          <div class="button-more">
+            <a href="html/cadastro.html" class="btn btn-more">
+              Criar Perfil
+            </a>
+          </div>
         </div>
-      </div>
-    </div>
-  </section>
 
-
-  
-  <section class="hero">
-    <div class="hero-image">
-     <img src="assets/cadastrofundo.png" alt="Livro aberto Verse">
-    </div>
-    <div class="hero-text">
-      <h1>A rede social para quem vive histórias.</h1>
-
-      <p>
-        Escreva, descubra e conecte-se com leitores, escritores,
-        editoras e profissionais criativos do universo literário.
-      </p>
-
-      <a href="html/waitlist.html" class="btn btn-primary">Entrar na  lista de espera</a>
-    </div>
-
-  </section>
-
-  <section class="cards-section">
-    <h2>O que você poderá fazer na Verse?</h2>
-
-    <div class="cards-container">
-      <div class="card">
-        <h3>Crie seu perfil</h3>
-        <p>Mostre seus projetos, livros, serviços e interesses literários.</p>
       </div>
 
-      <div class="card">
-        <h3>Publique histórias</h3>
-        <p>Compartilhe textos, capítulos, pensamentos e ideias com a comunidade.</p>
-      </div>
-      <div class="card">
-        <h3>Conecte-se</h3>
-        <p>Encontre leitores, escritores, editoras, revisores e designers.</p>
-      </div>
-    </div>
-    <div class="cards-container2">
-      <div class="card">
-        <h3>Venda seu conteúdo</h3>
-        <p>Se escreve e tem livros publicados, vemda suas obras.</p>
-      </div>
-      <div class="card">
-        <h3>Trabalhe com literatura</h3>
-        <p>Divulgue seus serviços e contrate frelancers</p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section>
-    <div class="faq-section">
+    <section class="hero">
+
+      <div class="hero-image">
+        <img
+          src="assets/cadastrofundo.png"
+          alt="Livro aberto representando a comunidade literária Verse">
+      </div>
+
+      <div class="hero-text">
+        <h1>A rede social para quem vive histórias.</h1>
+
+        <p>
+          Escreva, descubra e conecte-se com leitores, escritores,
+          editoras e profissionais criativos do universo literário.
+        </p>
+
+        <a href="html/waitlist.html" class="btn btn-primary">
+          Entrar na lista de espera
+        </a>
+      </div>
+
+    </section>
+
+    <section class="cards-section">
+
+      <h2>O que você poderá fazer na Verse?</h2>
+
+      <div class="cards-container">
+
+        <div class="card">
+          <h3>Crie seu perfil</h3>
+          <p>Mostre seus projetos, livros, serviços e interesses literários.</p>
+        </div>
+
+        <div class="card">
+          <h3>Publique histórias</h3>
+          <p>Compartilhe textos, capítulos, pensamentos e ideias com a comunidade.</p>
+        </div>
+
+        <div class="card">
+          <h3>Conecte-se</h3>
+          <p>Encontre leitores, escritores, editoras, revisores e designers.</p>
+        </div>
+
+      </div>
+
+      <div class="cards-container2">
+
+        <div class="card">
+          <h3>Venda seu conteúdo</h3>
+          <p>Se escreve e tem livros publicados, venda suas obras.</p>
+        </div>
+
+        <div class="card">
+          <h3>Trabalhe com literatura</h3>
+          <p>Divulgue seus serviços e contrate freelancers.</p>
+        </div>
+
+      </div>
+
+    </section>
+
+    <section class="faq-section">
+
       <div class="faq-image">
-        <img src="assets/faq.png" alt="Imagem da plataforma Verse">
+        <img
+          src="assets/faq.png"
+          alt="Imagem ilustrativa da plataforma Verse">
       </div>
+
       <div class="faq-container">
 
         <h2>Perguntas Frequentes</h2>
 
         <div class="faq-item">
-          <h3> 1- O que é a Verse?</h3>
-          <p> R. É uma plataforma Social literária, onde você pode conectar a pessoas, compartilhar histórias, promover suas obras, ajudar a comunidade.</p>
+          <h3>1. O que é a Verse?</h3>
+          <p>
+            É uma plataforma social literária onde você pode se conectar com pessoas,
+            compartilhar histórias, promover suas obras e ajudar a comunidade.
+          </p>
         </div>
+
         <div class="faq-item">
-          <h3> 2- Como fazer meu Cadastro?</h3>
-          <p> R. A lista de espera ainda não está aberta, mas você pode sempre passar por aqui, para verificar se está aberta, ou se cadastrar em nossa newsletter</p>
+          <h3>2. Como fazer meu cadastro?</h3>
+          <p>
+            Você pode criar sua conta diretamente pela página de cadastro ou entrar
+            na lista de espera para acompanhar as novidades da plataforma.
+          </p>
         </div>
+
         <div class="faq-item">
-          <h3> 3- Preciso pagar algum valor para criar minha conta?</h3>
-          <p> R. Não! Nossa Plataforma é totalmente gratuita!</p>
+          <h3>3. Preciso pagar algum valor para criar minha conta?</h3>
+          <p>
+            Não. A plataforma é gratuita para começar.
+          </p>
         </div>
+
         <div class="faq-item">
-          <h3> 4- O que fazer depois que eu criar minha conta?</h3>
-          <p> R. Você vai poder usufruir de uma plataforma 100% voltada a comunidade literária, 100% Gratuita!</p>
+          <h3>4. O que fazer depois que eu criar minha conta?</h3>
+          <p>
+            Você poderá criar seu perfil, publicar textos, seguir outros usuários
+            e participar da comunidade literária.
+          </p>
         </div>
+
         <div class="faq-item">
-          <h3> 5- Posso publicar minhas histórias?</h3>
-          <p> R. Claro! Aqui na VERSE, além de publicar suas histórias ou até mesmo livros e obras, vai poder divulgar e vender seus conteúdos.</p>
+          <h3>5. Posso publicar minhas histórias?</h3>
+          <p>
+            Sim. Na Verse você poderá publicar histórias, capítulos, textos e,
+            futuramente, livros e obras completas.
+          </p>
         </div>
+
       </div>
-    </div>
-  </section>
 
-  <section class="newsletter-section">
-    <div class="newsletter-container">
-      <div class="newsletter-text">
-        <h3>Fique por dentro das novidades!</h3>
-        <p>Assine nossa newsletter</p>
+    </section>
+
+    <section class="newsletter-section">
+
+      <div class="newsletter-container">
+
+        <div class="newsletter-text">
+          <h3>Fique por dentro das novidades!</h3>
+          <p>Assine nossa newsletter</p>
+        </div>
+
+        <div class="newsletter-form">
+          <input
+            type="email"
+            placeholder="Digite seu e-mail"
+            autocomplete="email">
+
+          <button type="button">
+            Inscrever-se
+          </button>
+        </div>
+
       </div>
-      <div class="newsletter-form">
-        <input type="email" placeholder="Digite seu e-mail">
-        <button>Inscrever-se</button>
 
+    </section>
 
-      </div>
-    </div>
-  </section>
+    <section class="about">
 
+      <h2>Uma comunidade literária moderna</h2>
 
-  <section class="about">
-    <h2>Uma comunidade literária moderna</h2>
+      <p>
+        A Verse nasce para aproximar pessoas criativas do mundo da escrita.
+        Um espaço para divulgar, descobrir, colaborar e construir novas histórias.
+      </p>
 
-    <p>
-      A Verse nasce para aproximar pessoas criativas do mundo da escrita.
-      Um espaço para divulgar, descobrir, colaborar e construir novas histórias.
-    </p>
-  </section>
+    </section>
+
+  </main>
 
   <footer>
 
     <div class="footer-top">
+
       <div class="footer-brand">
         <h3>VERSE</h3>
         <span class="footer-line"></span>
 
         <div class="footer-social">
-          <a href="https://www.instagram.com/verseplatform/">
+
+          <a
+            href="https://www.instagram.com/verseplatform/"
+            target="_blank"
+            rel="noopener noreferrer">
             <img src="assets/instagramicon.png" alt="Instagram">
           </a>
-          <a href="https://www.facebook.com/">
+
+          <a
+            href="https://www.facebook.com/"
+            target="_blank"
+            rel="noopener noreferrer">
             <img src="assets/facebookicon.png" alt="Facebook">
           </a>
-          <a href="https://discord.gg/NMMfW6YWd5/">
+
+          <a
+            href="https://discord.gg/NMMfW6YWd5/"
+            target="_blank"
+            rel="noopener noreferrer">
             <img src="assets/icondiscord.png" alt="Discord">
           </a>
+
         </div>
       </div>
 
@@ -202,7 +297,7 @@
       </div>
 
       <div class="footer-column">
-       <h4>Recursos</h4>
+        <h4>Recursos</h4>
         <a href="html/create-profile.html">Criar Perfil</a>
         <a href="html/publish-stories.html">Publicar Histórias</a>
         <a href="html/partnerships.html">Parcerias</a>
@@ -221,10 +316,13 @@
     </div>
 
     <div class="footer-bottom">
-      <p>© 2026 Verse. Todos os direitos reservados.</p>  
+      <p>© 2026 Verse. Todos os direitos reservados.</p>
     </div>
 
   </footer>
+
   <script src="js/pages/index.js"></script>
+
 </body>
+
 </html>

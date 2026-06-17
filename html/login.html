@@ -4,28 +4,39 @@
 <head>
 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="../css/base/reset.css">
-    <link rel="stylesheet" href="../css/base/animations.css">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="../css/components/back-button.css">
-    <link rel="stylesheet" href="../css/components/auth-form.css">
-    <link rel="stylesheet" href="../css/components/auth-button.css">
-    <link rel="stylesheet" href="../css/components/auth-success.css">
+  <meta
+    name="description"
+    content="Entre na Verse e continue sua jornada literária.">
 
-    <link rel="stylesheet" href="../css/pages/login.css">
+  <title>Verse - Login</title>
+
+  <link rel="stylesheet" href="../css/base/reset.css">
+  <link rel="stylesheet" href="../css/base/animations.css">
+
+  <link rel="stylesheet" href="../css/components/back-button.css">
+  <link rel="stylesheet" href="../css/components/auth-form.css">
+  <link rel="stylesheet" href="../css/components/auth-button.css">
+  <link rel="stylesheet" href="../css/components/auth-success.css">
+
+  <link rel="stylesheet" href="../css/pages/login.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link href="https://fonts.googleapis.com/css2?family=Belleza&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
     <a href="../index.html" class="back-button">
          ← Voltar
     </a>
-    <div class="login-container">
+    <main class="login-container">
         <div class="login-card">
             <div class="login-logo">
                 <h1>VERSE</h1>
@@ -49,7 +60,11 @@
                     <div class="input-wrapper password-wrapper">
                         <input type="password" id="password" name="password" required autocomplete="current-password">
                         <label for="password">Senha</label>
-                        <button type="button" class="password-toggle" id="passwordToggle" aria-label="Toggle password visibility">
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            id="passwordToggle"
+                            aria-label="Mostrar ou ocultar senha">
                             <span class="eye-icon"></span>
                         </button>
                     </div>
@@ -57,14 +72,19 @@
                 </div>
 
                 <div class="form-options">
-                    <label class="remember-wrapper">
-                        <input type="checkbox" id="remember" name="remember">
-                        <span class="checkbox-label">
-                            <span class="checkmark"></span>
-                            Lembrar-me
-                        </span>
-                    </label>
-                    <a href="#" class="forgot-password">Esqueceu a senha?</a>
+                <label class="remember-wrapper">
+                    <input type="checkbox" id="remember" name="remember">
+                    <span class="checkbox-label">
+                    <span class="checkmark"></span>
+                    Lembrar-me
+                    </span>
+                </label>
+
+                <a
+                    href="../html/forgot-password.html"
+                    class="forgot-password">
+                    Esqueceu a senha?
+                </a>
                 </div>
 
                 <button type="submit" class="login-btn">
@@ -79,12 +99,16 @@
             </div>
 
             <div class="success-message" id="successMessage">
-                <div class="success-icon">✓</div>
+                <div
+                    class="success-icon"
+                    aria-hidden="true">
+                    ✓
+                </div>
                 <h3>Login Efetuado com Sucesso</h3>
                 <p>Entrando...</p>
             </div>
         </div>
-    </div>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabaseClient.js"></script>

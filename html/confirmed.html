@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sua conta foi confirmada com sucesso. Agora você já pode acessar a Verse e começar sua jornada literária.">
   <title>Verse - Conta Confirmada</title>
 
   <link rel="stylesheet" href="../css/base/reset.css">
@@ -12,20 +13,22 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Belleza&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
 </head>
 
 <body>
 
   <main class="confirmado-page">
 
-    <section class="confirmado-card">
+    <article class="confirmado-card">
 
       <div class="confirmado-logo">
         <h1>VERSE</h1>
         <span></span>
       </div>
 
-      <div class="confirmado-icon">
+      <div class="confirmado-icon" aria-hidden="true">
         ✓
       </div>
 
@@ -36,15 +39,19 @@
         Agora você já pode acessar sua conta na Verse.
       </p>
 
-      <a href="../html/login.html" class="confirmado-btn">
+      <a href="../html/login.html"
+        class="confirmado-btn"
+        aria-label="Entrar na Verse">
         Entrar na Verse
       </a>
 
-      <a href="../index.html" class="confirmado-link">
+      <a href="../index.html"
+        class="confirmado-link"
+        aria-label="Voltar para a página inicial">
         Voltar para o início
       </a>
 
-    </section>
+    </article>
 
   </main>
 

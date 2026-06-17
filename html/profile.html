@@ -5,6 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <meta
+    name="description"
+    content="Gerencie seu perfil literário na Verse, acompanhe suas publicações e personalize sua presença na comunidade.">
+
   <title>Verse - Perfil</title>
 
   <link rel="stylesheet" href="../css/base/reset.css">
@@ -103,7 +107,7 @@
       </div>
 
       <div class="form-group">
-        <label>Localização</label>
+        <label for="editLocation">Localização</label>
 
         <input
           type="text"
@@ -140,8 +144,7 @@
         type="text"
         id="globalSearchInput"
         placeholder="Pesquisar na Verse..."
-        autocomplete="off"
-      >
+        autocomplete="off">
 
       <div
         id="globalSearchResults"
@@ -193,7 +196,12 @@
 
         <div class="profile-dropdown" id="profileDropdown">
           <a href="../html/profile.html">👤 Meu perfil</a>
-          <a href="../html/messages.html">💬 Mensagens</a>
+
+          <a href="../html/messages.html" class="dropdown-message-link">
+            💬 Mensagens
+            <span id="dropdownMessagesBadge" class="message-dot"></span>
+          </a>
+
           <a href="../html/settings.html">⚙️ Configurações</a>
 
           <button id="logoutBtn" type="button">
@@ -218,7 +226,15 @@
         <a href="../html/publications.html">Publicações</a>
         <a href="../html/stories.html">Histórias</a>
         <a href="../html/books.html">Livros</a>
-        <a href="../html/comunities.html">Comunidades</a>
+        <a href="../html/projects.html">Projetos</a>
+
+        <a href="../html/messages.html" class="sidebar-link message-link">
+          Mensagens
+          <span id="sidebarMessagesBadge" class="message-dot"></span>
+        </a>
+
+        <a href="../html/partnerships.html">Parcerias</a>
+        <a href="../html/events.html">Eventos</a>
         <a href="../html/settings.html">Configurações</a>
       </nav>
 
@@ -362,7 +378,11 @@
           leitores · escritores · histórias
         </p>
 
-        <button type="button">Explorar</button>
+        <button
+          type="button"
+          class="follow-btn">
+          Explorar
+        </button>
       </div>
 
     </aside>
@@ -373,7 +393,6 @@
   <script src="../js/supabaseClient.js"></script>
 
   <script src="../js/modules/auth.js"></script>
-
   <script src="../js/modules/utils.js"></script>
   <script src="../js/modules/search.js"></script>
   <script src="../js/modules/avatar.js"></script>
@@ -383,7 +402,6 @@
   <script src="../js/modules/share.js"></script>
   <script src="../js/modules/hashtags.js"></script>
   <script src="../js/modules/messages.js"></script>
-  
 
   <script src="../js/global.js"></script>
   <script src="../js/pages/profile.js"></script>

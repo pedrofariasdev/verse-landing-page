@@ -5,24 +5,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <meta
+    name="description"
+    content="Veja o perfil público de leitores, escritores e criadores da comunidade Verse.">
+
   <title>Verse - Perfil Público</title>
 
-<link rel="stylesheet" href="../css/base/reset.css">
-<link rel="stylesheet" href="../css/base/global.css">
+  <link rel="stylesheet" href="../css/base/reset.css">
+  <link rel="stylesheet" href="../css/base/global.css">
 
-<link rel="stylesheet" href="../css/components/navbar.css">
-<link rel="stylesheet" href="../css/components/search.css">
-<link rel="stylesheet" href="../css/components/notifications.css">
-<link rel="stylesheet" href="../css/components/dropdown.css">
-<link rel="stylesheet" href="../css/components/avatar.css">
-<link rel="stylesheet" href="../css/components/sidebar.css">
-<link rel="stylesheet" href="../css/components/post-card.css">
-<link rel="stylesheet" href="../css/components/comments.css">
-<link rel="stylesheet" href="../css/components/hashtags.css">
-<link rel="stylesheet" href="../css/components/suggestions.css">
+  <link rel="stylesheet" href="../css/components/navbar.css">
+  <link rel="stylesheet" href="../css/components/search.css">
+  <link rel="stylesheet" href="../css/components/notifications.css">
+  <link rel="stylesheet" href="../css/components/dropdown.css">
+  <link rel="stylesheet" href="../css/components/avatar.css">
+  <link rel="stylesheet" href="../css/components/sidebar.css">
+  <link rel="stylesheet" href="../css/components/post-card.css">
+  <link rel="stylesheet" href="../css/components/comments.css">
+  <link rel="stylesheet" href="../css/components/hashtags.css">
+  <link rel="stylesheet" href="../css/components/suggestions.css">
 
-<link rel="stylesheet" href="../css/pages/profile.css">
-<link rel="stylesheet" href="../css/pages/public-profile.css">
+  <link rel="stylesheet" href="../css/pages/profile.css">
+  <link rel="stylesheet" href="../css/pages/public-profile.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,87 +36,91 @@
 
 <body>
 
-    <nav class="navbar">
+  <nav class="navbar">
 
-        <div class="logo">
-            <a href="../html/feed.html" class="logo-link">
-            <h1>VERSE</h1>
-            <div class="logo-line"></div>
-            </a>
-        </div>
+    <div class="logo">
+      <a href="../html/feed.html" class="logo-link">
+        <h1>VERSE</h1>
+        <div class="logo-line"></div>
+      </a>
+    </div>
 
-        <div class="search-wrapper">
+    <div class="search-wrapper">
 
-          <input
-            type="text"
-            id="globalSearchInput"
-            placeholder="Pesquisar na Verse..."
-            autocomplete="off"
-          >
+      <input
+        type="text"
+        id="globalSearchInput"
+        placeholder="Pesquisar na Verse..."
+        autocomplete="off">
 
-          <div
-            id="globalSearchResults"
-            class="global-search-results">
+      <div
+        id="globalSearchResults"
+        class="global-search-results">
+      </div>
+
+    </div>
+
+    <div class="nav-actions">
+
+      <a href="../html/feed.html" class="nav-icon-btn" title="Feed">
+        🏠
+      </a>
+
+      <a href="../html/publications.html" class="nav-icon-btn" title="Publicações">
+        📚
+      </a>
+
+      <a href="../html/comunities.html" class="nav-icon-btn" title="Comunidades">
+        👥
+      </a>
+
+      <div class="notification-wrapper">
+
+        <button id="notificationBtn" class="notification-btn" type="button">
+          🔔
+          <span id="notificationBadge" class="notification-badge">0</span>
+        </button>
+
+        <div id="notificationDropdown" class="notification-dropdown">
+
+          <div class="notification-header">
+            <h3>Notificações</h3>
+          </div>
+
+          <div id="notificationList" class="notification-list">
+            <p class="empty-notifications">Nenhuma notificação ainda.</p>
           </div>
 
         </div>
 
-        <div class="nav-actions">
+      </div>
 
-            <a href="../html/feed.html" class="nav-icon-btn" title="Feed">
-            🏠
-            </a>
+      <div class="profile-menu-wrapper">
 
-            <a href="../html/publications.html" class="nav-icon-btn" title="Publicações">
-            📚
-            </a>
+        <button class="profile-menu-btn" id="profileMenuBtn" type="button">
+          <div class="nav-avatar" id="navAvatar">V</div>
+        </button>
 
-            <a href="../html/comunities.html" class="nav-icon-btn" title="Comunidades">
-            👥
-            </a>
+        <div class="profile-dropdown" id="profileDropdown">
+          <a href="../html/profile.html">👤 Meu perfil</a>
 
-            <div class="notification-wrapper">
+          <a href="../html/messages.html" class="dropdown-message-link">
+            💬 Mensagens
+            <span id="dropdownMessagesBadge" class="message-dot"></span>
+          </a>
 
-            <button id="notificationBtn" class="notification-btn" type="button">
-                🔔
-                <span id="notificationBadge" class="notification-badge">0</span>
-            </button>
+          <a href="../html/settings.html">⚙️ Configurações</a>
 
-            <div id="notificationDropdown" class="notification-dropdown">
-
-                <div class="notification-header">
-                <h3>Notificações</h3>
-                </div>
-
-                <div id="notificationList" class="notification-list">
-                <p class="empty-notifications">Nenhuma notificação ainda.</p>
-                </div>
-
-            </div>
-
-            </div>
-
-            <div class="profile-menu-wrapper">
-
-            <button class="profile-menu-btn" id="profileMenuBtn" type="button">
-                <div class="nav-avatar" id="navAvatar">V</div>
-            </button>
-
-            <div class="profile-dropdown" id="profileDropdown">
-                <a href="../html/profile.html">👤 Meu perfil</a>
-                <a href="../html/messages.html">💬 Mensagens</a>
-                <a href="../html/settings.html">⚙️ Configurações</a>
-
-                <button id="logoutBtn" type="button">
-                🚪 Sair
-                </button>
-            </div>
-
-            </div>
-
+          <button id="logoutBtn" type="button">
+            🚪 Sair
+          </button>
         </div>
 
-    </nav>
+      </div>
+
+    </div>
+
+  </nav>
 
   <main class="app-layout">
 
@@ -125,8 +133,15 @@
         <a href="../html/publications.html">Publicações</a>
         <a href="../html/stories.html">Histórias</a>
         <a href="../html/books.html">Livros</a>
-        <a href="../html/comunities.html">Comunidades</a>
-        <a href="../html/messages.html">Mensagens</a>
+        <a href="../html/projects.html">Projetos</a>
+
+        <a href="../html/messages.html" class="sidebar-link message-link">
+          Mensagens
+          <span id="sidebarMessagesBadge" class="message-dot"></span>
+        </a>
+
+        <a href="../html/partnerships.html">Parcerias</a>
+        <a href="../html/events.html">Eventos</a>
         <a href="../html/settings.html">Configurações</a>
       </nav>
 
@@ -249,7 +264,9 @@
           leitores · escritores · histórias
         </p>
 
-        <button type="button">
+        <button
+          type="button"
+          class="follow-btn">
           Explorar
         </button>
       </div>
@@ -272,7 +289,6 @@
   <script src="../js/modules/likes.js"></script>
   <script src="../js/modules/comments.js"></script>
   <script src="../js/modules/share.js"></script>
-  
 
   <script src="../js/global.js"></script>
   <script src="../js/pages/public-profile.js"></script>

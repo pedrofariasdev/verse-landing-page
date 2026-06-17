@@ -2,39 +2,33 @@
 <html lang="pt">
 
 <head>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Verse Feed</title>
+  <title>Verse - Feed</title>
 
   <link rel="stylesheet" href="../css/base/reset.css">
-    <link rel="stylesheet" href="../css/base/global.css">
+  <link rel="stylesheet" href="../css/base/global.css">
 
-    <link rel="stylesheet" href="../css/components/navbar.css">
-    <link rel="stylesheet" href="../css/components/search.css">
-    <link rel="stylesheet" href="../css/components/notifications.css">
-    <link rel="stylesheet" href="../css/components/dropdown.css">
-    <link rel="stylesheet" href="../css/components/avatar.css">
-    <link rel="stylesheet" href="../css/components/sidebar.css">
-    <link rel="stylesheet" href="../css/components/post-card.css">
-    <link rel="stylesheet" href="../css/components/comments.css">
-    <link rel="stylesheet" href="../css/components/hashtags.css">
-    <link rel="stylesheet" href="../css/components/suggestions.css">
-    <link rel="stylesheet" href="../css/components/landing-navbar.css">
-    
-    <link rel="stylesheet" href="../css/pages/feed.css">
+  <link rel="stylesheet" href="../css/components/navbar.css">
+  <link rel="stylesheet" href="../css/components/search.css">
+  <link rel="stylesheet" href="../css/components/notifications.css">
+  <link rel="stylesheet" href="../css/components/dropdown.css">
+  <link rel="stylesheet" href="../css/components/avatar.css">
+  <link rel="stylesheet" href="../css/components/sidebar.css">
+  <link rel="stylesheet" href="../css/components/post-card.css">
+  <link rel="stylesheet" href="../css/components/comments.css">
+  <link rel="stylesheet" href="../css/components/hashtags.css">
+  <link rel="stylesheet" href="../css/components/suggestions.css">
+  <link rel="stylesheet" href="../css/components/modal.css">
+  <link rel="stylesheet" href="../css/components/quote-modal.css">
 
-
-
-
-    <link rel="stylesheet" href="../css/pages/feed.css">
+  <link rel="stylesheet" href="../css/pages/feed.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link href="https://fonts.googleapis.com/css2?family=Belleza&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 </head>
 
 <body>
@@ -171,12 +165,11 @@
             
 
             <div class="createpost-actions">
-                <button>📖 Lendo</button>
-                <button>✍️ Escrevendo</button>
-                <button>⭐ Recomendando</button>
-                <button id="photoPostBtn" type="button">
-                    📷 Foto
-                </button>
+                <button type="button">📖 Lendo</button>
+                <button type="button">✍️ Escrevendo</button>
+                <button type="button">⭐ Recomendando</button>
+                <button id="photoPostBtn" type="button">📷 Foto</button>
+                <button type="button">📎 Anexo</button>
 
                 <input
                     type="file"
@@ -218,7 +211,7 @@
 
 
             <div class="publish-area">
-                <button class="post-btn" id="publishBtn">Publicar</button>
+                <button class="post-btn" id="publishBtn" type="button">Publicar</button>
             </div>
             <div id="postsContainer"></div>
 
@@ -261,6 +254,35 @@
 
   </main>
 
+    <div id="repostModal" class="repost-modal-overlay">
+        <div class="repost-modal">
+            <h3>Repostar publicação?</h3>
+            <p>Esta publicação será compartilhada no seu perfil e poderá aparecer no feed.</p>
+
+            <div class="repost-modal-actions">
+            <button id="cancelRepostBtn" type="button">Cancelar</button>
+            <button id="confirmRepostBtn" type="button">Repostar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="quoteModal" class="quote-modal-overlay">
+        <div class="quote-modal">
+            <h3>Citar publicação</h3>
+
+            <textarea
+            id="quoteContent"
+            placeholder="Escreva seu comentário sobre esta publicação..."></textarea>
+
+            <div id="quotePreview" class="quote-preview"></div>
+
+            <div class="quote-modal-actions">
+            <button id="cancelQuoteBtn" type="button">Cancelar</button>
+            <button id="confirmQuoteBtn" type="button">Publicar citação</button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabaseClient.js"></script>
 
@@ -277,8 +299,12 @@
     <script src="../js/modules/likes.js"></script>
     <script src="../js/modules/posts.js"></script>
     <script src="../js/modules/share.js"></script>
+    <script src="../js/modules/reposts.js"></script>
+    <script src="../js/modules/quotes.js"></script>
 
     <script src="../js/pages/feed.js"></script>
+
+
 
 </body>
 

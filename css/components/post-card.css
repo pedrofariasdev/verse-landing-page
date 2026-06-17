@@ -150,3 +150,19 @@
 .hashtag-link:hover {
   text-decoration: underline;
 }
+
+.repost-label {
+  margin-bottom: 12px;
+  color: #4f857a;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.post-card-reposted {
+  border-color: rgba(79, 133, 122, 0.35);
+  background: linear-gradient(
+    180deg,
+    rgba(79, 133, 122, 0.06),
+    #ffffff 22%
+  );
+}

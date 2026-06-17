@@ -5,7 +5,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <meta
+    name="description"
+    content="Gerencie as configurações da sua conta, perfil, notificações e aparência na Verse.">
+
   <title>Verse - Configurações</title>
+
+  <link rel="stylesheet" href="../css/base/reset.css">
+  <link rel="stylesheet" href="../css/base/global.css">
+
+  <link rel="stylesheet" href="../css/components/navbar.css">
+  <link rel="stylesheet" href="../css/components/search.css">
+  <link rel="stylesheet" href="../css/components/notifications.css">
+  <link rel="stylesheet" href="../css/components/dropdown.css">
+  <link rel="stylesheet" href="../css/components/avatar.css">
+  <link rel="stylesheet" href="../css/components/sidebar.css">
 
   <link rel="stylesheet" href="../css/pages/settings.css">
 
@@ -17,15 +31,13 @@
 
 <body>
 
-  <!-- NAVBAR -->
-
   <nav class="navbar">
 
     <div class="logo">
-        <a href="../html/feed.html" class="logo-link">
+      <a href="../html/feed.html" class="logo-link">
         <h1>VERSE</h1>
         <div class="logo-line"></div>
-        </a>
+      </a>
     </div>
 
     <div class="search-wrapper">
@@ -34,8 +46,7 @@
         type="text"
         id="globalSearchInput"
         placeholder="Pesquisar na Verse..."
-        autocomplete="off"
-      >
+        autocomplete="off">
 
       <div
         id="globalSearchResults"
@@ -46,66 +57,67 @@
 
     <div class="nav-actions">
 
-        <a href="../html/feed.html" class="nav-icon-btn" title="Feed">
+      <a href="../html/feed.html" class="nav-icon-btn" title="Feed">
         🏠
-        </a>
+      </a>
 
-        <a href="../html/publications.html" class="nav-icon-btn" title="Publicações">
+      <a href="../html/publications.html" class="nav-icon-btn" title="Publicações">
         📚
-        </a>
+      </a>
 
-        <a href="../html/comunities.html" class="nav-icon-btn" title="Comunidades">
+      <a href="../html/comunities.html" class="nav-icon-btn" title="Comunidades">
         👥
-        </a>
+      </a>
 
-        <div class="notification-wrapper">
+      <div class="notification-wrapper">
 
         <button id="notificationBtn" class="notification-btn" type="button">
-            🔔
-            <span id="notificationBadge" class="notification-badge">0</span>
+          🔔
+          <span id="notificationBadge" class="notification-badge">0</span>
         </button>
 
         <div id="notificationDropdown" class="notification-dropdown">
 
-            <div class="notification-header">
+          <div class="notification-header">
             <h3>Notificações</h3>
-            </div>
+          </div>
 
-            <div id="notificationList" class="notification-list">
+          <div id="notificationList" class="notification-list">
             <p class="empty-notifications">Nenhuma notificação ainda.</p>
-            </div>
+          </div>
 
         </div>
 
-        </div>
+      </div>
 
-        <div class="profile-menu-wrapper">
+      <div class="profile-menu-wrapper">
 
         <button class="profile-menu-btn" id="profileMenuBtn" type="button">
-            <div class="nav-avatar" id="navAvatar">V</div>
+          <div class="nav-avatar" id="navAvatar">V</div>
         </button>
 
         <div class="profile-dropdown" id="profileDropdown">
-            <a href="../html/profile.html">👤 Meu perfil</a>
-            <a href="../html/messages.html">💬 Mensagens</a>
-            <a href="../html/settings.html">⚙️ Configurações</a>
+          <a href="../html/profile.html">👤 Meu perfil</a>
 
-            <button id="logoutBtn" type="button">
+          <a href="../html/messages.html" class="dropdown-message-link">
+            💬 Mensagens
+            <span id="dropdownMessagesBadge" class="message-dot"></span>
+          </a>
+
+          <a href="../html/settings.html">⚙️ Configurações</a>
+
+          <button id="logoutBtn" type="button">
             🚪 Sair
-            </button>
+          </button>
         </div>
 
-        </div>
+      </div>
 
     </div>
 
   </nav>
 
-  <!-- LAYOUT -->
-
   <main class="app-layout">
-
-    <!-- MENU ESQUERDO -->
 
     <aside class="sidebar-left">
 
@@ -113,19 +125,25 @@
 
       <nav class="side-menu">
 
-        <a href="#conta">Conta</a>
+        <a href="#conta">
+          Conta
+        </a>
 
-        <a href="#perfil">Perfil</a>
+        <a href="#perfil">
+          Perfil
+        </a>
 
-        <a href="#notificacoes">Notificações</a>
+        <a href="#notificacoes">
+          Notificações
+        </a>
 
-        <a href="#aparencia">Aparência</a>
+        <a href="#aparencia">
+          Aparência
+        </a>
 
       </nav>
 
     </aside>
-
-    <!-- CONTEÚDO -->
 
     <section class="settings-main">
 
@@ -135,28 +153,33 @@
 
       <h1>Configurações</h1>
 
-      <!-- CONTA -->
-
       <div class="settings-card" id="conta">
 
         <h2>Conta</h2>
 
         <div class="setting-item">
 
-          <label>Email</label>
+          <label for="userEmail">
+            Email
+          </label>
 
           <input
             type="email"
             id="userEmail"
-            placeholder="email@exemplo.com">
+            placeholder="email@exemplo.com"
+            autocomplete="email">
 
         </div>
 
         <div class="setting-item">
 
-          <label>Alterar Senha</label>
+          <span class="setting-label">
+            Alterar Senha
+          </span>
 
-          <button class="action-btn">
+          <button
+            class="action-btn"
+            type="button">
             Alterar Senha
           </button>
 
@@ -164,9 +187,13 @@
 
         <div class="setting-item danger-zone">
 
-          <label>Excluir Conta</label>
+          <span class="setting-label">
+            Excluir Conta
+          </span>
 
-          <button class="danger-btn">
+          <button
+            class="danger-btn"
+            type="button">
             Excluir Conta
           </button>
 
@@ -174,87 +201,57 @@
 
       </div>
 
-      <!-- PERFIL -->
-
       <div class="settings-card" id="perfil">
 
         <h2>Perfil</h2>
 
-        <div class="setting-toggle">
-
+        <label class="setting-toggle" for="privateProfile">
           <span>Perfil Privado</span>
-
           <input type="checkbox" id="privateProfile">
+        </label>
 
-        </div>
-
-        <div class="setting-toggle">
-
+        <label class="setting-toggle" for="showLocation">
           <span>Mostrar Localização</span>
-
           <input type="checkbox" id="showLocation">
+        </label>
 
-        </div>
-
-        <div class="setting-toggle">
-
+        <label class="setting-toggle" for="showGenres">
           <span>Mostrar Gêneros Favoritos</span>
-
           <input type="checkbox" id="showGenres">
+        </label>
 
-        </div>
-
-        <div class="setting-toggle">
-
+        <label class="setting-toggle" for="showMemberSince">
           <span>Mostrar Data de Entrada</span>
-
           <input type="checkbox" id="showMemberSince">
-
-        </div>
+        </label>
 
       </div>
-
-      <!-- NOTIFICAÇÕES -->
 
       <div class="settings-card" id="notificacoes">
 
         <h2>Notificações</h2>
 
-        <div class="setting-toggle">
-
+        <label class="setting-toggle" for="notifyLikes">
           <span>Curtidas</span>
-
           <input type="checkbox" id="notifyLikes">
+        </label>
 
-        </div>
-
-        <div class="setting-toggle">
-
+        <label class="setting-toggle" for="notifyComments">
           <span>Comentários</span>
-
           <input type="checkbox" id="notifyComments">
+        </label>
 
-        </div>
-
-        <div class="setting-toggle">
-
+        <label class="setting-toggle" for="notifyFollowers">
           <span>Seguidores</span>
-
           <input type="checkbox" id="notifyFollowers">
+        </label>
 
-        </div>
-
-        <div class="setting-toggle">
-
+        <label class="setting-toggle" for="notifyMessages">
           <span>Mensagens</span>
-
           <input type="checkbox" id="notifyMessages">
-
-        </div>
+        </label>
 
       </div>
-
-      <!-- APARÊNCIA -->
 
       <div class="settings-card" id="aparencia">
 
@@ -262,16 +259,14 @@
 
         <div class="setting-item">
 
-          <label>Tema</label>
+          <label for="themeSelect">
+            Tema
+          </label>
 
           <select id="themeSelect">
-
             <option value="light">Claro</option>
-
             <option value="dark">Escuro</option>
-
             <option value="auto">Automático</option>
-
           </select>
 
         </div>
@@ -280,7 +275,10 @@
 
       <div class="save-area">
 
-        <button id="saveSettingsBtn" class="save-btn">
+        <button
+          id="saveSettingsBtn"
+          class="save-btn"
+          type="button">
           Salvar Configurações
         </button>
 
@@ -293,14 +291,14 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../js/supabaseClient.js"></script>
 
-<script src="../js/modules/auth.js"></script>
-<script src="../js/modules/utils.js"></script>
-<script src="../js/modules/search.js"></script>
-<script src="../js/modules/avatar.js"></script>
-<script src="../js/modules/menu.js"></script>
-<script src="../js/modules/notifications.js"></script>
+  <script src="../js/modules/auth.js"></script>
+  <script src="../js/modules/utils.js"></script>
+  <script src="../js/modules/search.js"></script>
+  <script src="../js/modules/avatar.js"></script>
+  <script src="../js/modules/menu.js"></script>
+  <script src="../js/modules/notifications.js"></script>
 
-<script src="../js/pages/settings.js"></script>
+  <script src="../js/pages/settings.js"></script>
 
 </body>
 

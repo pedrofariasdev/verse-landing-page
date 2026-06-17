@@ -5,6 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <meta
+    name="description"
+    content="Converse com leitores, escritores e criadores dentro da Verse.">
+
   <title>Verse - Mensagens</title>
 
   <link rel="stylesheet" href="../css/base/reset.css">
@@ -30,10 +34,10 @@
   <nav class="navbar">
 
     <div class="logo">
-        <a href="../html/feed.html" class="logo-link">
+      <a href="../html/feed.html" class="logo-link">
         <h1>VERSE</h1>
         <div class="logo-line"></div>
-        </a>
+      </a>
     </div>
 
     <div class="search-wrapper">
@@ -42,8 +46,7 @@
         type="text"
         id="globalSearchInput"
         placeholder="Pesquisar na Verse..."
-        autocomplete="off"
-      >
+        autocomplete="off">
 
       <div
         id="globalSearchResults"
@@ -54,60 +57,63 @@
 
     <div class="nav-actions">
 
-        <a href="../html/feed.html" class="nav-icon-btn" title="Feed">
+      <a href="../html/feed.html" class="nav-icon-btn" title="Feed">
         🏠
-        </a>
+      </a>
 
-        <a href="../html/publications.html" class="nav-icon-btn" title="Publicações">
+      <a href="../html/publications.html" class="nav-icon-btn" title="Publicações">
         📚
-        </a>
+      </a>
 
-        <a href="../html/comunities.html" class="nav-icon-btn" title="Comunidades">
+      <a href="../html/comunities.html" class="nav-icon-btn" title="Comunidades">
         👥
-        </a>
+      </a>
 
-        <div class="notification-wrapper">
+      <div class="notification-wrapper">
 
         <button id="notificationBtn" class="notification-btn" type="button">
-            🔔
-            <span id="notificationBadge" class="notification-badge">0</span>
+          🔔
+          <span id="notificationBadge" class="notification-badge">0</span>
         </button>
 
         <div id="notificationDropdown" class="notification-dropdown">
 
-            <div class="notification-header">
+          <div class="notification-header">
             <h3>Notificações</h3>
-            </div>
+          </div>
 
-            <div id="notificationList" class="notification-list">
+          <div id="notificationList" class="notification-list">
             <p class="empty-notifications">Nenhuma notificação ainda.</p>
-            </div>
+          </div>
 
         </div>
 
-        </div>
+      </div>
 
-        <div class="profile-menu-wrapper">
+      <div class="profile-menu-wrapper">
 
         <button class="profile-menu-btn" id="profileMenuBtn" type="button">
-            <div class="nav-avatar" id="navAvatar">V</div>
+          <div class="nav-avatar" id="navAvatar">V</div>
         </button>
 
         <div class="profile-dropdown" id="profileDropdown">
-            <a href="../html/profile.html">👤 Meu perfil</a>
-            <a href="../html/messages.html">💬 Mensagens</a>
-            <a href="../html/settings.html">⚙️ Configurações</a>
+          <a href="../html/profile.html">👤 Meu perfil</a>
 
-            <button id="logoutBtn" type="button">
+          <a href="../html/messages.html" class="dropdown-message-link">
+            💬 Mensagens
+            <span id="dropdownMessagesBadge" class="message-dot"></span>
+          </a>
+
+          <a href="../html/settings.html">⚙️ Configurações</a>
+
+          <button id="logoutBtn" type="button">
             🚪 Sair
-            </button>
+          </button>
         </div>
 
-        </div>
+      </div>
 
     </div>
-
-
 
   </nav>
 
@@ -123,7 +129,12 @@
         <a href="../html/stories.html">Histórias</a>
         <a href="../html/books.html">Livros</a>
         <a href="../html/projects.html">Projetos</a>
-        <a href="../html/messages.html" class="active">Mensagens</a>
+
+        <a href="../html/messages.html" class="active sidebar-link message-link">
+          Mensagens
+          <span id="sidebarMessagesBadge" class="message-dot"></span>
+        </a>
+
         <a href="../html/settings.html">Configurações</a>
       </nav>
 
@@ -154,7 +165,8 @@
             <input
               type="text"
               id="conversationSearch"
-              placeholder="Pesquisar conversa...">
+              placeholder="Pesquisar conversa..."
+              autocomplete="off">
           </div>
 
           <div id="conversationsList" class="conversations-list">
@@ -196,6 +208,7 @@
             <textarea
               id="messageInput"
               placeholder="Digite uma mensagem..."
+              rows="1"
               disabled></textarea>
 
             <button

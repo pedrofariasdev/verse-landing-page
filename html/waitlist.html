@@ -2,92 +2,180 @@
 <html lang="pt">
 
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="Entre na lista de espera da Verse e seja um dos primeiros a explorar a nova rede social para leitores e escritores.">
+
   <title>Verse - Lista de Espera</title>
+
+  <link rel="stylesheet" href="../css/base/reset.css">
+  <link rel="stylesheet" href="../css/base/animations.css">
+
+  <link rel="stylesheet" href="../css/components/back-button.css">
+  <link rel="stylesheet" href="../css/components/auth-form.css">
+  <link rel="stylesheet" href="../css/components/auth-success.css">
 
   <link rel="stylesheet" href="../css/pages/waitlist.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link href="https://fonts.googleapis.com/css2?family=Belleza&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
+
   <a href="../index.html" class="back-button">
     ← Voltar
   </a>
 
-    <div class="page-waitlist">
+  <main class="page-waitlist">
 
-        <div class="left-side">
+    <div class="left-side">
 
-            <div class="waitlist-page-image">
-                <img src="../assets/pagecadastro.png" alt="Imagem de Waitlist">
-            </div>
+      <div class="waitlist-page-image">
 
-            <div class="quote">
-                <p>“Um leitor vive mil vidas antes de morrer.”</p>
-                <span>— George R. R. Martin</span>
-            </div>
+        <img
+          src="../assets/pagecadastro.png"
+          alt="Ilustração representando leitores e escritores da comunidade Verse">
 
-        </div>
+      </div>
 
-        <div class="waitlist-container">
-
-            <div class="waitlist-card">
-
-                <div class="waitlist-logo">
-                    <h1>VERSE</h1>
-                    <span class="logo-line"></span>
-                </div>
-
-                <div class="waitlist-header">
-                    <h3>JUNTE-SE À LISTA DE ESPERA</h3>
-                    <p>Seja um dos primeiros a explorar à Verse.</p>
-                </div>
-
-                <form class="waitlist-form" id="waitlistForm" novalidate>
-
-                    <div class="form-group">
-                        <div class="input-wrapper">
-                            <input type="text" id="name" name="name" required autocomplete="name">
-                            <label for="name">Nome</label>
-                        </div>
-                        <span class="error-message" id="nameError"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="input-wrapper">
-                            <input type="email" id="email" name="email" required autocomplete="email">
-                            <label for="email">E-mail</label>
-                        </div>
-                        <span class="error-message" id="emailError"></span>
-                    </div>
-
-                    <button type="submit" class="waitlist-btn">
-                        <span class="btn-text">Entrar na Lista</span>
-                        <span class="btn-loader"></span>
-                    </button>
-
-                </form>
-
-                <div class="success-message" id="successMessage">
-                    <div class="success-icon">✓</div>
-                    <h3>Bem vindo à Verse!</h3>
-                    <p>Seu lugar na lista de espera foi reservado!</p>
-                    <a href="../index.html" class="success-link">
-                        ← Voltar para a página inicial
-                    </a>
-                </div>
-
-            </div>
-
-        </div>
+      <div class="quote">
+        <p>“Um leitor vive mil vidas antes de morrer.”</p>
+        <span>— George R. R. Martin</span>
+      </div>
 
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="../js/pages/waitlist.js"></script>
+
+    <div class="waitlist-container">
+
+      <section class="waitlist-card">
+
+        <div class="waitlist-logo">
+          <h1>VERSE</h1>
+          <span class="logo-line"></span>
+        </div>
+
+        <div class="waitlist-header">
+          <h2>JUNTE-SE À LISTA DE ESPERA</h2>
+          <p>Seja um dos primeiros a explorar a Verse.</p>
+        </div>
+
+        <form
+          class="waitlist-form"
+          id="waitlistForm"
+          novalidate>
+
+          <div class="form-group">
+
+            <div class="input-wrapper">
+
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                autocomplete="name">
+
+              <label for="name">
+                Nome
+              </label>
+
+            </div>
+
+            <span
+              class="error-message"
+              id="nameError">
+            </span>
+
+          </div>
+
+          <div class="form-group">
+
+            <div class="input-wrapper">
+
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                autocomplete="email">
+
+              <label for="email">
+                E-mail
+              </label>
+
+            </div>
+
+            <span
+              class="error-message"
+              id="emailError">
+            </span>
+
+          </div>
+
+          <button
+            type="submit"
+            class="waitlist-btn">
+
+            <span class="btn-text">
+              Entrar na Lista
+            </span>
+
+            <span
+              class="btn-loader"
+              aria-hidden="true">
+            </span>
+
+          </button>
+
+        </form>
+
+        <div
+          class="success-message"
+          id="successMessage">
+
+          <div
+            class="success-icon"
+            aria-hidden="true">
+            ✓
+          </div>
+
+          <h3>Bem-vindo à Verse!</h3>
+
+          <p>
+            Seu lugar na lista de espera foi reservado.
+          </p>
+
+          <a
+            href="../index.html"
+            class="success-link">
+
+            ← Voltar para a página inicial
+
+          </a>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="../js/pages/waitlist.js"></script>
 
 </body>
+
 </html>

@@ -2,8 +2,17 @@
 <html lang="pt">
 
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="Crie sua conta na Verse e faça parte da comunidade de leitores, escritores e criadores de histórias.">
+
   <title>Verse - Criar Conta</title>
 
   <link rel="stylesheet" href="../css/base/reset.css">
@@ -18,20 +27,25 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link href="https://fonts.googleapis.com/css2?family=Belleza&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
+
   <a href="../index.html" class="back-button">
     ← Voltar
   </a>
 
-  <div class="page-cadastro">
+  <main class="page-cadastro">
 
     <div class="left-side">
 
       <div class="page-cadastro-image">
-        <img src="../assets/pagecadastro.png" alt="Imagem de Cadastro">
+        <img
+          src="../assets/pagecadastro.png"
+          alt="Ilustração representando leitores e escritores da comunidade Verse">
       </div>
 
       <div class="quote">
@@ -43,7 +57,7 @@
 
     <div class="cadastro-container">
 
-      <div class="cadastro-card">
+      <section class="cadastro-card">
 
         <div class="cadastro-logo">
           <h1>VERSE</h1>
@@ -55,81 +69,190 @@
           <p>Comece aqui sua jornada literária!</p>
         </div>
 
-        <form class="cadastro-form" id="cadastroForm" novalidate>
+        <form
+          class="cadastro-form"
+          id="cadastroForm"
+          novalidate>
 
           <div class="form-group">
+
             <div class="input-wrapper">
-              <input type="text" id="name" name="name" required autocomplete="name" placeholder="Pedro Farias">
-              <label for="name">Nome Completo</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                autocomplete="name"
+                placeholder="Pedro Farias">
+
+              <label for="name">
+                Nome Completo
+              </label>
             </div>
-            <span class="error-message" id="nameError"></span>
+
+            <span
+              class="error-message"
+              id="nameError">
+            </span>
+
           </div>
 
           <div class="form-group">
+
             <div class="input-wrapper">
-              <input type="email" id="email" name="email" required autocomplete="email">
-              <label for="email">E-mail</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                autocomplete="email">
+
+              <label for="email">
+                E-mail
+              </label>
             </div>
-            <span class="error-message" id="emailError"></span>
+
+            <span
+              class="error-message"
+              id="emailError">
+            </span>
+
           </div>
 
           <div class="form-group">
-            <div class="input-wrapper password-wrapper">
-              <input type="password" id="password" name="password" required autocomplete="new-password">
-              <label for="password">Senha</label>
 
-              <button type="button" class="password-toggle" id="passwordToggle" aria-label="Mostrar ou esconder senha">
+            <div class="input-wrapper password-wrapper">
+
+              <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                autocomplete="new-password">
+
+              <label for="password">
+                Senha
+              </label>
+
+              <button
+                type="button"
+                class="password-toggle"
+                id="passwordToggle"
+                aria-label="Mostrar ou ocultar senha">
+
                 <span class="eye-icon"></span>
+
               </button>
+
             </div>
 
-            <span class="error-message" id="passwordError"></span>
+            <span
+              class="error-message"
+              id="passwordError">
+            </span>
+
           </div>
 
           <div class="form-group">
-            <div class="input-wrapper password-wrapper">
-              <input type="password" id="confirmPassword" name="confirmPassword" required autocomplete="new-password">
-              <label for="confirmPassword">Confirmar Senha</label>
 
-              <button type="button" class="password-toggle" id="confirmPasswordToggle" aria-label="Mostrar ou esconder confirmação de senha">
+            <div class="input-wrapper password-wrapper">
+
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                required
+                autocomplete="new-password">
+
+              <label for="confirmPassword">
+                Confirmar Senha
+              </label>
+
+              <button
+                type="button"
+                class="password-toggle"
+                id="confirmPasswordToggle"
+                aria-label="Mostrar ou ocultar confirmação de senha">
+
                 <span class="eye-icon"></span>
+
               </button>
+
             </div>
 
-            <span class="error-message" id="confirmPasswordError"></span>
+            <span
+              class="error-message"
+              id="confirmPasswordError">
+            </span>
+
           </div>
 
-          <button type="submit" class="cadastro-btn">
-            <span class="btn-text">Criar Conta</span>
-            <span class="btn-loader"></span>
+          <button
+            type="submit"
+            class="cadastro-btn">
+
+            <span class="btn-text">
+              Criar Conta
+            </span>
+
+            <span
+              class="btn-loader"
+              aria-hidden="true">
+            </span>
+
           </button>
 
         </form>
 
         <div class="signup-link">
-          <p>Já tem conta? <a href="../html/login.html">Faça login</a></p>
+          <p>
+            Já tem conta?
+            <a href="../html/login.html">
+              Faça login
+            </a>
+          </p>
         </div>
 
-        <div class="success-message" id="successMessage">
-          <div class="success-icon">✓</div>
-          <h3>Conta criada com sucesso</h3>
-          <p>Verifique seu e-mail para ativar sua conta.</p>
+        <div
+          class="success-message"
+          id="successMessage">
 
-          <a href="../html/login.html" class="success-login-btn">
+          <div
+            class="success-icon"
+            aria-hidden="true">
+            ✓
+          </div>
+
+          <h3>
+            Conta criada com sucesso
+          </h3>
+
+          <p>
+            Verifique seu e-mail para ativar sua conta.
+          </p>
+
+          <a
+            href="../html/login.html"
+            class="success-login-btn">
+
             Ir para Login
+
           </a>
+
         </div>
 
-      </div>
+      </section>
 
     </div>
 
-  </div>
+  </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <script src="../js/supabaseClient.js"></script>
 
   <script src="../js/pages/register.js"></script>
 
 </body>
+
 </html>

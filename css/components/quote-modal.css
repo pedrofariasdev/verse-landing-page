@@ -1,0 +1,139 @@
+.quote-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.quote-modal-overlay.active {
+  display: flex;
+}
+
+.quote-modal {
+  width: 100%;
+  max-width: 650px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+}
+
+.quote-modal h3 {
+  margin-bottom: 12px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+#quoteContent {
+  width: 100%;
+  min-height: 120px;
+  resize: vertical;
+  margin: 16px 0;
+  padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 15px;
+}
+
+.quote-preview {
+  border: 1px solid rgba(79, 133, 122, 0.25);
+  border-radius: 14px;
+  padding: 16px;
+  background: rgba(79, 133, 122, 0.04);
+}
+
+.quote-preview-card span {
+  display: block;
+  color: #666;
+  margin-top: 2px;
+}
+
+.quote-preview-card p {
+  margin-top: 12px;
+}
+
+.quote-preview-card img {
+  width: 100%;
+  margin-top: 12px;
+  border-radius: 12px;
+}
+
+.quote-modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.quote-modal-actions button {
+  flex: 1;
+  padding: 14px 18px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+#cancelQuoteBtn {
+  background: #ececec;
+  color: #444;
+}
+
+#cancelQuoteBtn:hover {
+  background: #dddddd;
+}
+
+#confirmQuoteBtn {
+  background: #4f857a;
+  color: #ffffff;
+}
+
+#confirmQuoteBtn:hover {
+  background: #5b9488;
+  transform: translateY(-1px);
+}
+
+.quoted-post-card {
+  margin-top: 12px;
+  padding: 16px;
+  border: 1px solid #d7e6e2;
+  border-radius: 16px;
+  background: #fafdfc;
+  transition: 0.2s;
+}
+
+.quoted-post-card:hover {
+  background: #f3f8f7;
+}
+
+.quoted-post-card span {
+  display: block;
+  color: #666;
+  margin-top: 2px;
+  font-size: 14px;
+}
+
+.quoted-post-card p {
+  margin-top: 12px;
+}
+
+.quoted-post-card img {
+  width: 100%;
+  margin-top: 12px;
+  border-radius: 12px;
+}
+
+.quoted-post-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #4f857a;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
