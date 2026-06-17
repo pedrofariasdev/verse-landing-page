@@ -106,6 +106,12 @@ async function criarPost() {
   }
 
   const content = postContent.value.trim();
+  const MAX_POST_LENGTH = 10000;
+
+  if (content.length > MAX_POST_LENGTH) {
+    alert(`Sua publicação pode ter no máximo ${MAX_POST_LENGTH} caracteres.`);
+    return;
+  }
 
   if (!content && !imagemSelecionada) {
     alert("Escreva algo ou selecione uma imagem antes de publicar.");

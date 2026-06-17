@@ -1,3 +1,35 @@
+function criarTextoPost(postId, content, limite = 300) {
+  if (!content) return "";
+
+  const textoCompleto = transformarHashtagsEmLinks(content);
+
+  if (content.length <= limite) {
+    return `
+      <p class="post-text">
+        ${textoCompleto}
+      </p>
+    `;
+  }
+
+  const textoCurto = content.slice(0, limite) + "...";
+
+  return `
+    <p class="post-text" id="postText-${postId}">
+      ${transformarHashtagsEmLinks(textoCurto)}
+    </p>
+
+    <button
+      type="button"
+      class="expand-post-btn"
+      data-post-id="${postId}"
+      data-expanded="false"
+      data-full-text="${encodeURIComponent(content)}">
+      Ver mais
+    </button>
+  `;
+}
+
+
 async function carregarPosts() {
   const postsContainer = document.getElementById("postsContainer");
 
@@ -146,10 +178,14 @@ async function carregarPosts() {
       const quotedAuthor = profiles.find(profile => profile.id === quotedPost.user_id);
 
       quotedPostHtml = `
-        <a href="../html/post.html?id=${quotedPost.id}" class="quoted-post-card quoted-post-link">
+        <div
+          class="quoted-post-card open-post-link"
+          data-post-id="${quotedPost.id}"
+          role="link"
+          tabindex="0">
 
           <div class="quoted-post-label">
-            💬 Publicação citada
+            💬 PUBLICAÇÃO CITADA
           </div>
 
           <strong>${quotedAuthor?.full_name || "Usuário Verse"}</strong>
@@ -166,7 +202,7 @@ async function carregarPosts() {
             : ""
           }
 
-        </a>
+        </div>
       `;
     }
 
@@ -176,14 +212,6 @@ async function carregarPosts() {
     if (item.type === "repost") {
       postCard.classList.add("post-card-reposted");
     }
-
-    const postContentLinkStart = item.type === "repost"
-      ? `<a href="../html/post.html?id=${post.id}" class="repost-content-link">`
-      : "";
-
-    const postContentLinkEnd = item.type === "repost"
-      ? `</a>`
-      : "";
 
     postCard.innerHTML = `
       ${repostLabel}
@@ -213,22 +241,28 @@ async function carregarPosts() {
 
       </div>
 
-      ${postContentLinkStart}
+      <div class="post-content">
 
-      ${post.content ? `<p class="post-text">${transformarHashtagsEmLinks(post.content)}</p>` : ""}
+        <div
+          class="${item.type === "repost" ? "open-post-link reposted-post-target" : ""}"
+          ${item.type === "repost" ? `data-post-id="${targetPostId}" role="link" tabindex="0"` : ""}>
 
-      ${post.image_url ? `<img src="${post.image_url}" class="post-images" alt="Imagem da publicação">` : ""}
+          ${criarTextoPost(targetPostId, post.content)}
 
-      ${quotedPostHtml}
+          ${post.image_url ? `<img src="${post.image_url}" class="post-images" alt="Imagem da publicação">` : ""}
 
-      ${postContentLinkEnd}
+        </div>
+
+        ${quotedPostHtml}
+
+      </div>
 
       <div class="post-actions">
-        <button class="like-btn" data-post-id="${post.id}">
+        <button class="like-btn" data-post-id="${targetPostId}">
           ♡ Curtir
         </button>
 
-        <button class="comment-btn" data-post-id="${post.id}">
+        <button class="comment-btn" data-post-id="${targetPostId}">
           💬 Comentar
         </button>
 
@@ -240,45 +274,50 @@ async function carregarPosts() {
           ❝ Citar
         </button>
 
-        <button class="share-btn" data-post-id="${post.id}">
+        <button class="share-btn" data-post-id="${targetPostId}">
           ↗ Compartilhar
         </button>
       </div>
 
-      <div class="comments-box" id="comments-${post.id}" style="display:none;">
+      <div class="comments-box" id="comments-${targetPostId}" style="display:none;">
         <input
           type="text"
           class="comment-input"
-          id="commentInput-${post.id}"
+          id="commentInput-${targetPostId}"
           placeholder="Escreva um comentário..."
         >
 
         <button
           class="send-comment-btn"
-          data-post-id="${post.id}">
+          data-post-id="${targetPostId}">
           Enviar
         </button>
 
         <div
           class="comments-list"
-          id="commentsList-${post.id}">
+          id="commentsList-${targetPostId}">
         </div>
       </div>
     `;
 
     postsContainer.appendChild(postCard);
 
-    configurarAcoesDoPost(targetPostId);
+    configurarAcoesDoPost(targetPostId, postCard);
   });
+
+  configurarExpansaoTextoPost(postsContainer);
+
+  configurarAberturaDePosts(postsContainer);
+  
 }
 
-async function configurarAcoesDoPost(postId) {
-  const likeBtn = document.querySelector(`.like-btn[data-post-id="${postId}"]`);
-  const commentBtn = document.querySelector(`.comment-btn[data-post-id="${postId}"]`);
-  const repostBtn = document.querySelector(`.repost-btn[data-post-id="${postId}"]`);
-  const quoteBtn = document.querySelector(`.quote-btn[data-post-id="${postId}"]`);
-  const sendCommentBtn = document.querySelector(`.send-comment-btn[data-post-id="${postId}"]`);
-  const commentsBox = document.getElementById(`comments-${postId}`);
+async function configurarAcoesDoPost(postId, postCard) {
+  const likeBtn = postCard.querySelector(`.like-btn[data-post-id="${postId}"]`);
+  const commentBtn = postCard.querySelector(`.comment-btn[data-post-id="${postId}"]`);
+  const repostBtn = postCard.querySelector(`.repost-btn[data-post-id="${postId}"]`);
+  const quoteBtn = postCard.querySelector(`.quote-btn[data-post-id="${postId}"]`);
+  const sendCommentBtn = postCard.querySelector(`.send-comment-btn[data-post-id="${postId}"]`);
+  const commentsBox = postCard.querySelector(".comments-box");
 
   if (likeBtn) {
     likeBtn.addEventListener("click", async function () {
@@ -323,3 +362,66 @@ async function configurarAcoesDoPost(postId) {
   }
 }
 
+function configurarExpansaoTextoPost(container) {
+  if (container.dataset.expandPostConfigured === "true") return;
+
+  container.dataset.expandPostConfigured = "true";
+
+  container.addEventListener("click", function (event) {
+    const button = event.target.closest(".expand-post-btn");
+
+    if (!button || !container.contains(button)) return;
+
+    const postId = button.dataset.postId;
+    const isExpanded = button.dataset.expanded === "true";
+    const fullText = decodeURIComponent(button.dataset.fullText);
+    const textElement = document.getElementById(`postText-${postId}`);
+
+    if (!textElement) return;
+
+    if (isExpanded) {
+      const shortText = fullText.slice(0, 300) + "...";
+      textElement.innerHTML = transformarHashtagsEmLinks(shortText);
+      button.textContent = "Ver mais";
+      button.dataset.expanded = "false";
+    } else {
+      textElement.innerHTML = transformarHashtagsEmLinks(fullText);
+      button.textContent = "Ver menos";
+      button.dataset.expanded = "true";
+    }
+  });
+}
+
+function configurarAberturaDePosts(container) {
+  if (container.dataset.openPostConfigured === "true") return;
+
+  container.dataset.openPostConfigured = "true";
+
+  container.addEventListener("click", function (event) {
+    const clickablePost = event.target.closest(".open-post-link");
+
+    if (!clickablePost || !container.contains(clickablePost)) return;
+
+    if (event.target.closest("a, button, input, textarea")) return;
+
+    const postId = clickablePost.dataset.postId;
+
+    if (postId) {
+      window.location.href = `../html/post.html?id=${postId}`;
+    }
+  });
+
+  container.addEventListener("keydown", function (event) {
+    if (event.key !== "Enter") return;
+
+    const clickablePost = event.target.closest(".open-post-link");
+
+    if (!clickablePost || !container.contains(clickablePost)) return;
+
+    const postId = clickablePost.dataset.postId;
+
+    if (postId) {
+      window.location.href = `../html/post.html?id=${postId}`;
+    }
+  });
+}

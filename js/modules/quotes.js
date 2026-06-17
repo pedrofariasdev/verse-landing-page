@@ -2,25 +2,23 @@ console.log("quotes.js carregado!");
 
 let quotedPostIdPendente = null;
 
-function abrirModalQuote(postId) {
-  quotedPostIdPendente = postId;
+async function resolverPostOriginalParaQuote(postId) {
+  const { data: post, error } = await supabaseClient
+    .from("posts")
+    .select("id, quoted_post_id")
+    .eq("id", postId)
+    .single();
 
-  const modal = document.getElementById("quoteModal");
-  const quoteContent = document.getElementById("quoteContent");
-  const quotePreview = document.getElementById("quotePreview");
-
-  if (quoteContent) {
-    quoteContent.value = "";
+  if (error || !post) {
+    console.error("Erro ao resolver post original para citação:", error?.message);
+    return postId;
   }
 
-  if (quotePreview) {
-    quotePreview.innerHTML = "Carregando publicação original...";
-    carregarPreviewQuote(postId);
+  if (post.quoted_post_id) {
+    return post.quoted_post_id;
   }
 
-  if (modal) {
-    modal.classList.add("active");
-  }
+  return post.id;
 }
 
 async function abrirModalQuote(postId) {
@@ -134,7 +132,30 @@ async function publicarQuote() {
     confirmBtn.textContent = "Publicando...";
   }
 
-  const { error } = await supabaseClient
+  const { data: quotedPost, error: quotedPostError } = await supabaseClient
+    .from("posts")
+    .select("user_id")
+    .eq("id", quotedPostIdPendente)
+    .single();
+
+  if (quotedPostError) {
+    console.error("Erro ao buscar dono do post citado:", quotedPostError.message);
+  }
+
+  const { data: senderProfile, error: senderProfileError } = await supabaseClient
+    .from("profiles")
+    .select("full_name")
+    .eq("id", usuarioLogado.id)
+    .single();
+
+  if (senderProfileError) {
+    console.error("Erro ao buscar perfil de quem citou:", senderProfileError.message);
+  }
+
+  const senderName =
+    senderProfile?.full_name || "Alguém";
+
+  const { data: newQuote, error } = await supabaseClient
     .from("posts")
     .insert([
       {
@@ -143,7 +164,9 @@ async function publicarQuote() {
         post_type: "quote",
         quoted_post_id: quotedPostIdPendente
       }
-    ]);
+    ])
+    .select()
+    .single();
 
   if (confirmBtn) {
     confirmBtn.disabled = false;
@@ -154,6 +177,29 @@ async function publicarQuote() {
     console.error("Erro ao publicar citação:", error.message);
     alert("Não foi possível publicar a citação.");
     return;
+  }
+
+  if (
+    quotedPost &&
+    quotedPost.user_id &&
+    quotedPost.user_id !== usuarioLogado.id
+  ) {
+    const { error: notificationError } = await supabaseClient
+      .from("notifications")
+      .insert([
+        {
+          user_id: quotedPost.user_id,
+          sender_id: usuarioLogado.id,
+          type: "quote",
+          message: `${senderName} citou sua publicação.`,
+          link: `../html/post.html?id=${newQuote.id}`,
+          is_read: false
+        }
+      ]);
+
+    if (notificationError) {
+      console.error("Erro ao criar notificação de citação:", notificationError.message);
+    }
   }
 
   fecharModalQuote();
@@ -186,6 +232,5 @@ function configurarModalQuote() {
 }
 
 async function alternarQuote(postId) {
-  
   await abrirModalQuote(postId);
 }

@@ -78,10 +78,10 @@ async function carregarPost() {
   .eq("id", post.user_id)
   .single();
 
-  renderizarPost(post, autor);
+  await renderizarPost(post, autor);
 }
 
-function renderizarPost(post, autor) {
+async function renderizarPost(post, autor) {
   const container = document.getElementById("singlePostContainer");
 
   const avatar =
@@ -99,6 +99,56 @@ function renderizarPost(post, autor) {
         alt="Imagem da publicação">
     `
     : "";
+
+  let quotedPostHtml = "";
+
+  if (post.quoted_post_id) {
+    const { data: quotedPost, error: quotedPostError } = await supabaseClient
+      .from("posts")
+      .select("*")
+      .eq("id", post.quoted_post_id)
+      .single();
+
+    if (quotedPostError) {
+      console.error("Erro ao carregar publicação citada:", quotedPostError.message);
+    }
+
+    if (quotedPost) {
+      const { data: quotedAuthor, error: quotedAuthorError } = await supabaseClient
+        .from("profiles")
+        .select("*")
+        .eq("id", quotedPost.user_id)
+        .single();
+
+      if (quotedAuthorError) {
+        console.error("Erro ao carregar autor da publicação citada:", quotedAuthorError.message);
+      }
+
+      quotedPostHtml = `
+        <div class="quoted-post-card">
+
+          <div class="quoted-post-label">
+            💬 PUBLICAÇÃO CITADA
+          </div>
+
+          <strong>${quotedAuthor?.full_name || "Usuário Verse"}</strong>
+
+          <span>@${quotedAuthor?.username || "usuario"}</span>
+
+          ${quotedPost.content
+            ? `<p>${transformarHashtagsEmLinks(quotedPost.content)}</p>`
+            : ""
+          }
+
+          ${quotedPost.image_url
+            ? `<img src="${quotedPost.image_url}" alt="Imagem da publicação citada">`
+            : ""
+          }
+
+        </div>
+      `;
+    }
+  }
 
   container.innerHTML = `
     <article class="single-post-card">
@@ -123,48 +173,51 @@ function renderizarPost(post, autor) {
 
       ${imagem}
 
+      ${quotedPostHtml}
+
       <div class="post-meta">
         ${formatarTempo(post.created_at)}
       </div>
 
       <div class="post-actions">
 
-      <button class="like-btn" data-post-id="${post.id}">
-        ♡ Curtir
-      </button>
+        <button class="like-btn" data-post-id="${post.id}">
+          ♡ Curtir
+        </button>
 
-      <button class="comment-btn" data-post-id="${post.id}">
-        💬 Comentar
-      </button>
+        <button class="comment-btn" data-post-id="${post.id}">
+          💬 Comentar
+        </button>
 
-      <button class="share-btn" data-post-id="${post.id}">
-        ↗ Compartilhar
-      </button>
+        <button class="share-btn" data-post-id="${post.id}">
+          ↗ Compartilhar
+        </button>
 
-    </div>
-
-    <div class="comments-box" id="comments-${post.id}">
-      <input
-        type="text"
-        class="comment-input"
-        id="commentInput-${post.id}"
-        placeholder="Escreva um comentário..."
-      >
-
-      <button
-        class="send-comment-btn"
-        data-post-id="${post.id}">
-        Enviar
-      </button>
-
-      <div
-        class="comments-list"
-        id="commentsList-${post.id}">
       </div>
-    </div>
+
+      <div class="comments-box" id="comments-${post.id}">
+        <input
+          type="text"
+          class="comment-input"
+          id="commentInput-${post.id}"
+          placeholder="Escreva um comentário..."
+        >
+
+        <button
+          class="send-comment-btn"
+          data-post-id="${post.id}">
+          Enviar
+        </button>
+
+        <div
+          class="comments-list"
+          id="commentsList-${post.id}">
+        </div>
+      </div>
 
     </article>
   `;
+
   configurarAcoesDoPost(post.id);
 }
 

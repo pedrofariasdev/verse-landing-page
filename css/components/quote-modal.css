@@ -151,11 +151,13 @@
   display: block;
   color: inherit;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .quoted-post-link:hover,
 .repost-content-link:hover {
   cursor: pointer;
+  opacity: 0.92;
 }
 
 .quoted-post-link:hover {

@@ -166,3 +166,19 @@
     #ffffff 22%
   );
 }
+
+.expand-post-btn {
+  margin-top: 8px;
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  font-size: 14px;
+  transition: opacity 0.2s ease;
+}
+
+.expand-post-btn:hover {
+  opacity: 0.8;
+}
