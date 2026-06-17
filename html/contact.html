@@ -4,8 +4,15 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verse</title>
-  <link rel="stylesheet" href="../css/pages/about.css">
+  <title>Verse - Contato</title>
+
+  <link rel="stylesheet" href="../css/components/footer.css">
+    <link rel="stylesheet" href="../css/components/navbar.css">
+    <link rel="stylesheet" href="../css/components/landing-navbar.css">
+    <link rel="stylesheet" href="../css/base/global.css">
+    <link rel="stylesheet" href="../css/base/reset.css">
+
+  <link rel="stylesheet" href="../css/pages/contact.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,29 +45,20 @@
 
 
 
-            <section class="newsletter-section">
-            <div class="newsletter-container">
-                <div class="newsletter-text">
-                    <h3>Preencha o formulario ao lado e com a sua dúvida ou sugestão</h3>
-                    <p>Não se preoucupe iremos responder o mais breve possível.</p>
-                </div>
-                <div class="newsletter-form">
-                    <input type="email" placeholder="Digite seu e-mail">
-                    <button>Inscrever-se</button>
-                </div>
-
-                <div class="newsletter-form">
-                    <input type="email" placeholder="Digite seu e-mail">
-                    <button>Inscrever-se</button>
-                </div>
-
-                <div class="newsletter-form">
-                    <input type="email" placeholder="Digite seu e-mail">
-                    <button>Inscrever-se</button>
-                </div>
-
+    <section class="form-section">
+        <div class="form-container">
+            <div class="form-text">
+                <h3>Preencha o formulario ao lado e com a sua dúvida ou sugestão</h3>
+                <p>Não se preoucupe iremos responder o mais breve possível.</p>
             </div>
-        </section>
+            <form class="contact-form" action="#" method="post">
+            <input type="text" name="name" placeholder="Nome" required>
+            <input type="email" name="email" placeholder="E-mail" required>
+            <input type="text" name="subject" placeholder="Assunto" required>
+            <textarea name="message" placeholder="Mensagem" required></textarea>
+            <button type="submit" class="btn btn-contact-form">Enviar mensagem</button>
+        </div>
+    </section>
 
 
     <section class="hero">

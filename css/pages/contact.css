@@ -1,0 +1,250 @@
+.form-section {
+  padding: 80px 7%;
+  background: #f7f4ee;
+}
+
+.form-container {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 48px;
+  padding: 48px;
+  background: #ffffff;
+  border: 1px solid #e3ded4;
+  border-radius: 30px;
+  box-shadow: 0 18px 40px rgba(36, 49, 47, 0.08);
+}
+
+.form-text h3 {
+  font-family: "Belleza", sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1.1;
+  color: #24312f;
+  margin-bottom: 16px;
+}
+
+.form-text p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #65716f;
+  max-width: 380px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  border: 1px solid #d9d2c7;
+  border-radius: 16px;
+  background: #fbfaf7;
+  color: #24312f;
+  font-size: 15px;
+  font-family: inherit;
+  padding: 16px 18px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.contact-form input {
+  height: 56px;
+}
+
+.contact-form textarea {
+  min-height: 180px;
+  resize: vertical;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: #9a9186;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #4f857a;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(79, 133, 122, 0.12);
+}
+
+.btn-contact-form {
+  align-self: flex-start;
+  margin-top: 8px;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 999px;
+  background: #4f857a;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-contact-form:hover {
+  background: #5b9488;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 900px) {
+  .form-container {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 32px;
+  }
+
+  .form-text p {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 620px) {
+  .form-section {
+    padding: 48px 5%;
+  }
+
+  .form-container {
+    padding: 24px;
+    border-radius: 24px;
+  }
+
+  .form-text h3 {
+    font-size: 32px;
+  }
+
+  .btn-contact-form {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.hero {
+  padding: 40px 7% 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+  background: #f7f4ee;
+}
+
+.hero-image img {
+  width: 100%;
+  max-height: 520px;
+  object-fit: cover;
+  border-radius: 30px;
+  box-shadow: 0 18px 42px rgba(36, 49, 47, 0.12);
+}
+
+.hero-text h1 {
+  max-width: 520px;
+  font-family: "Belleza", sans-serif;
+  font-size: 56px;
+  line-height: 1.02;
+  font-weight: 400;
+  color: #24312f;
+}
+
+.hero-text p {
+  max-width: 520px;
+  margin-top: 22px;
+  font-size: 18px;
+  line-height: 1.7;
+  color: #65716f;
+}
+
+.about-cta {
+  margin: 0 7% 90px;
+  padding: 56px 28px;
+  text-align: center;
+  background: #79b4a9;
+  color: #ffffff;
+  border-radius: 30px;
+  box-shadow: 0 18px 40px rgba(79, 133, 122, 0.16);
+}
+
+.about-cta h2 {
+  font-family: "Belleza", sans-serif;
+  font-size: 42px;
+  line-height: 1.1;
+  font-weight: 400;
+}
+
+.about-cta p {
+  max-width: 680px;
+  margin: 16px auto 28px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.about-cta a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 26px;
+  border-radius: 999px;
+  background: #4f857a;
+  color: #ffffff;
+  font-weight: 700;
+  transition: 0.2s ease;
+}
+
+.about-cta a:hover {
+  background: #5b9488;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 980px) {
+  .form-container,
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .form-text {
+    grid-row: auto;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .form-section {
+    padding: 48px 5%;
+  }
+
+  .form-container {
+    padding: 28px;
+    border-radius: 24px;
+  }
+
+  .form-text h3 {
+    font-size: 31px;
+  }
+
+  .hero {
+    padding: 24px 5% 64px;
+    gap: 34px;
+  }
+
+  .hero-text h1 {
+    font-size: 40px;
+  }
+
+  .hero-text p {
+    font-size: 16px;
+  }
+
+  .about-cta {
+    margin: 0 5% 72px;
+    padding: 42px 22px;
+  }
+
+  .about-cta h2 {
+    font-size: 34px;
+  }
+}
+
