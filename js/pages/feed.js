@@ -4,6 +4,167 @@ console.log("Feed.js carregado!");
 
 let imagemSelecionada = null;
 
+function configurarUploadImagemPost() {
+  const photoPostBtn = document.getElementById("photoPostBtn");
+  const postImageInput = document.getElementById("postImageInput");
+  const imagePreviewBox = document.getElementById("imagePreviewBox");
+  const imagePreview = document.getElementById("imagePreview");
+  const removeImageBtn = document.getElementById("removeImageBtn");
+
+  if (photoPostBtn && postImageInput) {
+    photoPostBtn.addEventListener("click", function () {
+      postImageInput.click();
+    });
+  }
+
+  if (postImageInput) {
+    postImageInput.addEventListener("change", function (event) {
+      const file = event.target.files[0];
+
+      if (!file) return;
+
+      imagemSelecionada = file;
+
+      const imageUrl = URL.createObjectURL(file);
+
+      if (imagePreview) {
+        imagePreview.src = imageUrl;
+      }
+
+      if (imagePreviewBox) {
+        imagePreviewBox.style.display = "block";
+      }
+    });
+  }
+
+  if (removeImageBtn) {
+    removeImageBtn.addEventListener("click", function () {
+      imagemSelecionada = null;
+
+      if (postImageInput) {
+        postImageInput.value = "";
+      }
+
+      if (imagePreview) {
+        imagePreview.src = "";
+      }
+
+      if (imagePreviewBox) {
+        imagePreviewBox.style.display = "none";
+      }
+    });
+  }
+}
+
+async function uploadImagemPost() {
+  if (!imagemSelecionada || !usuarioLogado) return null;
+
+  const fileExt = imagemSelecionada.name.split(".").pop();
+
+  const fileName = `${usuarioLogado.id}-${Date.now()}.${fileExt}`;
+
+  const filePath = `posts/${fileName}`;
+
+  const { error: uploadError } = await supabaseClient.storage
+    .from("post-images")
+    .upload(filePath, imagemSelecionada, {
+      upsert: false
+    });
+
+  if (uploadError) {
+    console.error("Erro ao enviar imagem:", uploadError.message);
+    alert("Não foi possível enviar a imagem.");
+    return null;
+  }
+
+  const { data: publicUrlData } = supabaseClient.storage
+    .from("post-images")
+    .getPublicUrl(filePath);
+
+  return publicUrlData.publicUrl;
+}
+
+function limparImagemSelecionada() {
+  const postImageInput = document.getElementById("postImageInput");
+  const imagePreviewBox = document.getElementById("imagePreviewBox");
+  const imagePreview = document.getElementById("imagePreview");
+
+  imagemSelecionada = null;
+
+  if (postImageInput) postImageInput.value = "";
+  if (imagePreview) imagePreview.src = "";
+  if (imagePreviewBox) imagePreviewBox.style.display = "none";
+}
+
+async function criarPost() {
+  const postContent = document.getElementById("postContent");
+  const publishBtn = document.getElementById("publishBtn");
+
+  if (!postContent || !publishBtn) {
+    console.error("Campos de publicação não encontrados.");
+    return;
+  }
+
+  const content = postContent.value.trim();
+
+  if (!content && !imagemSelecionada) {
+    alert("Escreva algo ou selecione uma imagem antes de publicar.");
+    return;
+  }
+
+  if (!usuarioLogado) {
+    alert("Você precisa estar logado para publicar.");
+    return;
+  }
+
+  publishBtn.disabled = true;
+  publishBtn.textContent = "Publicando...";
+
+  let imageUrl = null;
+
+  if (imagemSelecionada) {
+    imageUrl = await uploadImagemPost();
+
+    if (!imageUrl) {
+      publishBtn.disabled = false;
+      publishBtn.textContent = "Publicar";
+      return;
+    }
+  }
+
+  const { data, error } = await supabaseClient
+    .from("posts")
+    .insert([
+      {
+        user_id: usuarioLogado.id,
+        content: content || "",
+        post_type: imageUrl ? "image" : "text",
+        image_url: imageUrl
+      }
+    ])
+    .select();
+
+  publishBtn.disabled = false;
+  publishBtn.textContent = "Publicar";
+
+  if (error) {
+    console.error("Erro ao criar post:", error.message);
+    alert("Não foi possível publicar. Tente novamente.");
+    return;
+  }
+
+  if (data && data.length > 0) {
+    await salvarHashtagsDoPost(data[0].id, content);
+  }
+
+  postContent.value = "";
+
+  limparImagemSelecionada();
+
+  await carregarPosts();
+  await carregarHashtagsEmAlta();
+}
+
 
 async function uploadImagemPost() {
   if (!imagemSelecionada || !usuarioLogado) return null;

@@ -109,6 +109,7 @@ async function carregarPosts() {
 
   feedItems.forEach(function (item) {
     const post = item.post;
+    const targetPostId = post.id;
 
     const authorProfile = profiles.find(profile => profile.id === post.user_id);
     const repostProfile = profiles.find(profile => profile.id === item.repostUserId);
@@ -219,11 +220,11 @@ async function carregarPosts() {
           💬 Comentar
         </button>
 
-        <button class="repost-btn" data-post-id="${post.id}">
+        <button class="repost-btn" data-post-id="${targetPostId}">
           ↻ Repostar
         </button>
 
-        <button class="quote-btn" data-post-id="${post.id}">
+        <button class="quote-btn" data-post-id="${targetPostId}">
           ❝ Citar
         </button>
 
@@ -255,7 +256,7 @@ async function carregarPosts() {
 
     postsContainer.appendChild(postCard);
 
-    configurarAcoesDoPost(post.id);
+    configurarAcoesDoPost(targetPostId);
   });
 }
 
@@ -309,3 +310,4 @@ async function configurarAcoesDoPost(postId) {
     });
   }
 }
+

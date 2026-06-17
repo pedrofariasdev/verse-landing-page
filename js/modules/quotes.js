@@ -23,6 +23,32 @@ function abrirModalQuote(postId) {
   }
 }
 
+async function abrirModalQuote(postId) {
+  const modal = document.getElementById("quoteModal");
+  const quoteContent = document.getElementById("quoteContent");
+  const quotePreview = document.getElementById("quotePreview");
+
+  if (quoteContent) {
+    quoteContent.value = "";
+  }
+
+  if (quotePreview) {
+    quotePreview.innerHTML = "Carregando publicação original...";
+  }
+
+  if (modal) {
+    modal.classList.add("active");
+  }
+
+  const targetPostId = await resolverPostOriginalParaQuote(postId);
+
+  quotedPostIdPendente = targetPostId;
+
+  if (quotePreview) {
+    await carregarPreviewQuote(targetPostId);
+  }
+}
+
 function fecharModalQuote() {
   quotedPostIdPendente = null;
 
@@ -160,5 +186,6 @@ function configurarModalQuote() {
 }
 
 async function alternarQuote(postId) {
-  abrirModalQuote(postId);
+  
+  await abrirModalQuote(postId);
 }

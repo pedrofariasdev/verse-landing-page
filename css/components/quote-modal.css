@@ -59,8 +59,12 @@
 
 .quote-preview-card img {
   width: 100%;
-  margin-top: 12px;
+  max-width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  display: block;
   border-radius: 12px;
+  margin-top: 12px;
 }
 
 .quote-modal-actions {
@@ -125,8 +129,12 @@
 
 .quoted-post-card img {
   width: 100%;
-  margin-top: 12px;
+  max-width: 100%;
+  max-height: 360px;
+  object-fit: cover;
+  display: block;
   border-radius: 12px;
+  margin-top: 12px;
 }
 
 .quoted-post-label {
