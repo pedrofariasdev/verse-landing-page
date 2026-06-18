@@ -51,12 +51,13 @@
                 <h3>Preencha o formulario ao lado e com a sua dúvida ou sugestão</h3>
                 <p>Não se preoucupe iremos responder o mais breve possível.</p>
             </div>
-            <form class="contact-form" action="#" method="post">
-            <input type="text" name="name" placeholder="Nome" required>
-            <input type="email" name="email" placeholder="E-mail" required>
-            <input type="text" name="subject" placeholder="Assunto" required>
-            <textarea name="message" placeholder="Mensagem" required></textarea>
-            <button type="submit" class="btn btn-contact-form">Enviar mensagem</button>
+            <form class="contact-form" id="contactForm">
+                <input type="text" name="name" placeholder="Nome" required>
+                <input type="email" name="email" placeholder="E-mail" required>
+                <input type="text" name="subject" placeholder="Assunto" required>
+                <textarea name="message" placeholder="Mensagem" required></textarea>
+                <button type="submit" class="btn btn-contact-form">Enviar mensagem</button>
+            </form>
         </div>
     </section>
 
@@ -145,5 +146,23 @@
         </div>
 
     </footer>
+
+    <div id="contactModal" class="contact-modal-overlay">
+        <div class="contact-modal">
+            <h3 id="contactModalTitle">Mensagem enviada!</h3>
+            <p id="contactModalText">
+            Recebemos sua mensagem e responderemos o mais breve possível.
+            </p>
+
+            <button id="contactModalBtn" type="button">
+            OK
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabaseClient.js"></script>
+    <script src="../js/pages/contact.js"></script>
+
 </body>
 </html>                  

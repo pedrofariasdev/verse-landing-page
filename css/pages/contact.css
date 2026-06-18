@@ -248,3 +248,58 @@
   }
 }
 
+.contact-modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(36, 49, 47, 0.45);
+  z-index: 9999;
+}
+
+.contact-modal-overlay.active {
+  display: flex;
+}
+
+.contact-modal {
+  width: 100%;
+  max-width: 420px;
+  padding: 32px;
+  text-align: center;
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 18px 50px rgba(36, 49, 47, 0.18);
+}
+
+.contact-modal h3 {
+  font-family: "Belleza", sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  color: #24312f;
+  margin-bottom: 12px;
+}
+
+.contact-modal p {
+  color: #65716f;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+#contactModalBtn {
+  min-width: 120px;
+  padding: 13px 24px;
+  border: none;
+  border-radius: 999px;
+  background: #4f857a;
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+#contactModalBtn:hover {
+  background: #5b9488;
+  transform: translateY(-1px);
+}
