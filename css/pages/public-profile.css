@@ -382,3 +382,51 @@
   color: #2b2b2b;
   transform: translateY(-2px);
 }
+
+.profile-dropdown {
+  display: none;
+}
+
+.profile-dropdown.show {
+  display: flex;
+  flex-direction: column;
+}
+
+.notification-dropdown {
+  display: none;
+}
+
+.notification-dropdown.show {
+  display: block;
+}
+
+.profile-menu-wrapper,
+.notification-wrapper {
+  position: relative;
+  z-index: 9999;
+}
+
+.profile-dropdown {
+  display: none;
+  position: absolute;
+  top: 52px;
+  right: 0;
+  z-index: 10000;
+}
+
+.profile-dropdown.show {
+  display: flex !important;
+  flex-direction: column;
+}
+
+.notification-dropdown {
+  display: none;
+  position: absolute;
+  top: 52px;
+  right: 0;
+  z-index: 10000;
+}
+
+.notification-dropdown.show {
+  display: block !important;
+}
