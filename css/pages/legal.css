@@ -64,3 +64,61 @@
 .legal-updated {
     margin-bottom: 1rem;
 }
+
+/* =========================
+   CTA SECTION
+========================= */
+
+.legal-cta {
+  margin-top: 50px;
+
+  padding: 40px;
+
+  text-align: center;
+
+  background: #f8f8f5;
+
+  border: 1px solid #ececec;
+  border-radius: 24px;
+}
+
+.legal-cta h2 {
+  margin-bottom: 15px;
+
+  color: #676F54;
+
+  font-size: 32px;
+}
+
+.legal-cta p {
+  max-width: 700px;
+
+  margin: 0 auto 25px;
+
+  color: #555555;
+
+  line-height: 1.8;
+}
+
+.legal-cta a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 14px 32px;
+
+  border-radius: 999px;
+
+  background: #676F54;
+  color: #ffffff;
+
+  font-weight: 600;
+  text-decoration: none;
+
+  transition: 0.3s ease;
+}
+
+.legal-cta a:hover {
+  background: #79B4A9;
+  transform: translateY(-2px);
+}
