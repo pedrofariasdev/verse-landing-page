@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="../assets/favicon/apple-touch-icon.png">
+  <link rel="manifest" href="../assets/favicon/site.webmanifest">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Minhas Histórias | Verse</title>
+
+  <link rel="stylesheet" href="../css/base/reset.css">
+  <link rel="stylesheet" href="../css/base/global.css">
+
+  <link rel="stylesheet" href="../css/components/navbar.css">
+  <link rel="stylesheet" href="../css/components/search.css">
+  <link rel="stylesheet" href="../css/components/notifications.css">
+  <link rel="stylesheet" href="../css/components/dropdown.css">
+  <link rel="stylesheet" href="../css/components/avatar.css">
+  <link rel="stylesheet" href="../css/components/sidebar.css">
+  <link rel="stylesheet" href="../css/components/hashtags.css">
+  <link rel="stylesheet" href="../css/components/suggestions.css">
+
+  <link rel="stylesheet" href="../css/pages/feed.css">
+  <link rel="stylesheet" href="../css/pages/my-stories.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Belleza&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="logo">
+      <a href="../html/feed.html" class="logo-link">
+        <h1>VERSE</h1>
+        <div class="logo-line"></div>
+      </a>
+    </div>
+
+    <div class="search-wrapper">
+      <input
+        type="text"
+        id="globalSearchInput"
+        placeholder="Pesquisar na Verse..."
+        autocomplete="off">
+
+      <div
+        id="globalSearchResults"
+        class="global-search-results">
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <a href="../html/feed.html" class="nav-icon-btn" title="Feed">
+        🏠
+      </a>
+
+      <a href="../html/stories.html" class="nav-icon-btn" title="Histórias">
+        📚
+      </a>
+
+      <a href="../html/comunities.html" class="nav-icon-btn" title="Comunidades">
+        👥
+      </a>
+
+      <div class="notification-wrapper">
+        <button id="notificationBtn" class="notification-btn" type="button">
+          🔔
+          <span id="notificationBadge" class="notification-badge">0</span>
+        </button>
+
+        <div id="notificationDropdown" class="notification-dropdown">
+          <div class="notification-header">
+            <h3>Notificações</h3>
+          </div>
+
+          <div id="notificationList" class="notification-list">
+            <p class="empty-notifications">Nenhuma notificação ainda.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-menu-wrapper">
+        <button class="profile-menu-btn" id="profileMenuBtn" type="button">
+          <div class="nav-avatar" id="navAvatar">V</div>
+        </button>
+
+        <div class="profile-dropdown" id="profileDropdown">
+          <a href="../html/profile.html">👤 Meu perfil</a>
+
+          <a href="../html/messages.html" class="dropdown-message-link">
+            💬 Mensagens
+            <span id="dropdownMessagesBadge" class="message-dot"></span>
+          </a>
+
+          <a href="../html/settings.html">⚙️ Configurações</a>
+
+          <button id="logoutBtn" type="button">
+            🚪 Sair
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="app-layout">
+    <aside class="sidebar-left">
+      <h2>Menu</h2>
+
+      <div class="logged-user-card">
+        <div class="logged-avatar" id="userAvatar">V</div>
+
+        <div class="logged-user-info">
+          <strong id="userName">Usuário Verse</strong>
+          <p id="userEmail">email@verse.com</p>
+        </div>
+      </div>
+
+      <nav class="side-menu">
+        <a href="../html/profile.html">Perfil</a>
+        <a href="../html/publications.html">Minhas Publicações</a>
+        <a href="../html/my-stories.html">Minhas Histórias</a>
+        <a href="../html/books.html">Meus Livros</a>
+        <a href="../html/projects.html">Meus Projetos</a>
+
+        <a href="../html/messages.html" class="sidebar-link message-link">
+          Mensagens
+          <span id="sidebarMessagesBadge" class="message-dot"></span>
+        </a>
+
+        <a href="../html/partnerships.html">Parcerias</a>
+        <a href="../html/events.html">Eventos</a>
+        <a href="../html/settings.html">Configurações</a>
+      </nav>
+    </aside>
+
+    <section class="feed-main stories-main">
+      <div class="stories-header">
+        <div>
+          <span class="page-label">Área do autor</span>
+
+          <h1>Minhas Histórias</h1>
+
+          <p>
+            Gerencie suas histórias, acompanhe estatísticas, publique capítulos e desenvolva suas obras literárias.
+          </p>
+        </div>
+
+        <button id="openCreateStoryModalBtn" type="button" class="new-story-btn">
+          Nova história
+        </button>
+      </div>
+
+      <div class="stories-stats">
+        <div class="story-stat-card">
+          <strong id="storiesCount">5</strong>
+          <span>Histórias</span>
+        </div>
+
+        <div class="story-stat-card">
+          <strong id="storiesViewsCount">917</strong>
+          <span>Leituras</span>
+        </div>
+
+        <div class="story-stat-card">
+          <strong id="storiesLikesCount">206</strong>
+          <span>Curtidas</span>
+        </div>
+
+        <div class="story-stat-card">
+          <strong id="storiesRatingsAverage">4.7</strong>
+          <span>Avaliação média</span>
+        </div>
+      </div>
+
+      <div class="stories-filters">
+        <button type="button" class="story-filter-btn active" data-filter="all">
+          Todas
+        </button>
+
+        <button type="button" class="story-filter-btn" data-filter="published">
+          Publicadas
+        </button>
+
+        <button type="button" class="story-filter-btn" data-filter="draft">
+          Rascunhos
+        </button>
+
+        <button type="button" class="story-filter-btn" data-filter="completed">
+          Concluídas
+        </button>
+      </div>
+
+      <div class="stories-sort">
+        <button type="button" class="story-sort-btn active" data-sort="recent">
+          Recentes
+        </button>
+
+        <button type="button" class="story-sort-btn" data-sort="views">
+          Mais Lidas
+        </button>
+
+        <button type="button" class="story-sort-btn" data-sort="rating">
+          Melhor Avaliadas
+        </button>
+      </div>
+
+      <div id="storiesGrid" class="stories-grid">
+
+        <article class="story-card">
+          <div class="story-cover">
+            A
+
+            <div class="story-overlay">
+              <button type="button" class="story-read-btn">
+                Ler História
+              </button>
+            </div>
+          </div>
+
+          <div class="story-card-body">
+            <h3>A Cidade Entre as Páginas</h3>
+
+            <span class="story-author">Pedro Farias</span>
+
+            <div class="story-meta">
+              <span>👁 152</span>
+              <span>❤️ 34</span>
+              <span>💬 12</span>
+              <span>⭐ 4.8</span>
+            </div>
+
+            <div class="story-card-actions">
+              <button type="button" class="story-edit-btn">
+                Editar
+              </button>
+
+              <button type="button" class="story-chapters-btn">
+                Capítulos
+              </button>
+            </div>
+
+            <span class="story-status">
+              Em andamento
+            </span>
+          </div>
+        </article>
+
+        <article class="story-card">
+          <div class="story-cover">
+            G
+
+            <div class="story-overlay">
+              <button type="button" class="story-read-btn">
+                Ler História
+              </button>
+            </div>
+          </div>
+
+          <div class="story-card-body">
+            <h3>Os Guardiões do Eclipse</h3>
+
+            <span class="story-author">Pedro Farias</span>
+
+            <div class="story-meta">
+              <span>👁 387</span>
+              <span>❤️ 89</span>
+              <span>💬 41</span>
+              <span>⭐ 4.9</span>
+            </div>
+
+            <div class="story-card-actions">
+              <button type="button" class="story-edit-btn">
+                Editar
+              </button>
+
+              <button type="button" class="story-chapters-btn">
+                Capítulos
+              </button>
+            </div>
+
+            <span class="story-status">
+              Concluída
+            </span>
+          </div>
+        </article>
+
+        <article class="story-card">
+          <div class="story-cover">
+            B
+
+            <div class="story-overlay">
+              <button type="button" class="story-read-btn">
+                Ler História
+              </button>
+            </div>
+          </div>
+
+          <div class="story-card-body">
+            <h3>A Biblioteca do Tempo</h3>
+
+            <span class="story-author">Pedro Farias</span>
+
+            <div class="story-meta">
+              <span>👁 74</span>
+              <span>❤️ 15</span>
+              <span>💬 3</span>
+              <span>⭐ 4.5</span>
+            </div>
+
+            <div class="story-card-actions">
+              <button type="button" class="story-edit-btn">
+                Editar
+              </button>
+
+              <button type="button" class="story-chapters-btn">
+                Capítulos
+              </button>
+            </div>
+
+            <span class="story-status">
+              Rascunho
+            </span>
+          </div>
+        </article>
+
+        <article class="story-card">
+          <div class="story-cover">
+            R
+
+            <div class="story-overlay">
+              <button type="button" class="story-read-btn">
+                Ler História
+              </button>
+            </div>
+          </div>
+
+          <div class="story-card-body">
+            <h3>Reino de Vidro</h3>
+
+            <span class="story-author">Pedro Farias</span>
+
+            <div class="story-meta">
+              <span>👁 210</span>
+              <span>❤️ 46</span>
+              <span>💬 18</span>
+              <span>⭐ 4.6</span>
+            </div>
+
+            <div class="story-card-actions">
+              <button type="button" class="story-edit-btn">
+                Editar
+              </button>
+
+              <button type="button" class="story-chapters-btn">
+                Capítulos
+              </button>
+            </div>
+
+            <span class="story-status">
+              Em andamento
+            </span>
+          </div>
+        </article>
+
+        <article class="story-card">
+          <div class="story-cover">
+            S
+
+            <div class="story-overlay">
+              <button type="button" class="story-read-btn">
+                Ler História
+              </button>
+            </div>
+          </div>
+
+          <div class="story-card-body">
+            <h3>Sombras da Aurora</h3>
+
+            <span class="story-author">Pedro Farias</span>
+
+            <div class="story-meta">
+              <span>👁 94</span>
+              <span>❤️ 22</span>
+              <span>💬 7</span>
+              <span>⭐ 4.4</span>
+            </div>
+
+            <div class="story-card-actions">
+              <button type="button" class="story-edit-btn">
+                Editar
+              </button>
+
+              <button type="button" class="story-chapters-btn">
+                Capítulos
+              </button>
+            </div>
+
+            <span class="story-status">
+              Em andamento
+            </span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <aside class="sidebar-right">
+      <h2>Sugestões</h2>
+
+      <div id="suggestionsContainer"></div>
+
+      <div class="trend-card">
+        <div class="suggestion-avatar">V</div>
+
+        <span>Comunidade Verse</span>
+
+        <p class="friend-tags">
+          leitores · escritores · histórias
+        </p>
+
+        <button type="button" class="follow-btn">
+          Explorar
+        </button>
+      </div>
+
+      <div class="trending-box">
+        <h3>📖 Em Alta na Verse</h3>
+
+        <div id="trendingHashtags">
+          Carregando...
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <div id="createStoryModal" class="story-modal-overlay">
+    <div class="story-modal">
+      <h2>Nova história</h2>
+
+      <p class="story-modal-subtitle">
+        Crie uma nova história para publicar capítulos, receber leitores e construir sua obra na Verse.
+      </p>
+
+      <form id="createStoryForm">
+        <div class="story-form-group">
+          <label for="storyTitle">Título</label>
+
+          <input
+            type="text"
+            id="storyTitle"
+            name="storyTitle"
+            placeholder="Ex: A Cidade entre as Páginas"
+            required>
+        </div>
+
+        <div class="story-form-group">
+          <label for="storyDescription">Descrição</label>
+
+          <textarea
+            id="storyDescription"
+            name="storyDescription"
+            placeholder="Escreva uma breve sinopse da sua história..."
+            required></textarea>
+        </div>
+
+        <div class="story-form-row">
+          <div class="story-form-group">
+            <label for="storyGenre">Gênero</label>
+
+            <select id="storyGenre" name="storyGenre">
+              <option value="">Selecionar</option>
+              <option value="Fantasia">Fantasia</option>
+              <option value="Romance">Romance</option>
+              <option value="Terror">Terror</option>
+              <option value="Suspense">Suspense</option>
+              <option value="Ficção Científica">Ficção Científica</option>
+              <option value="Drama">Drama</option>
+              <option value="Aventura">Aventura</option>
+              <option value="Outro">Outro</option>
+            </select>
+          </div>
+
+          <div class="story-form-group">
+            <label for="storyStatus">Status</label>
+
+            <select id="storyStatus" name="storyStatus">
+              <option value="draft">Rascunho</option>
+              <option value="published">Publicada</option>
+              <option value="completed">Concluída</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="story-form-group">
+          <label for="storyCoverInput">Capa da história</label>
+
+          <input
+            type="file"
+            id="storyCoverInput"
+            accept="image/*">
+        </div>
+
+        <div id="storyCoverPreviewBox" class="story-cover-preview-box">
+          <img id="storyCoverPreview" src="" alt="Pré-visualização da capa">
+        </div>
+
+        <div class="story-modal-actions">
+          <button type="button" id="cancelCreateStoryBtn">
+            Cancelar
+          </button>
+
+          <button type="submit" id="createStoryBtn">
+            Criar história
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabaseClient.js"></script>
+
+  <script src="../js/modules/auth.js"></script>
+  <script src="../js/modules/utils.js"></script>
+  <script src="../js/modules/avatar.js"></script>
+  <script src="../js/modules/search.js"></script>
+  <script src="../js/modules/menu.js"></script>
+  <script src="../js/modules/notifications.js"></script>
+  <script src="../js/modules/messages.js"></script>
+  <script src="../js/modules/hashtags.js"></script>
+
+  <script src="../js/pages/my-stories.js"></script>
+</body>
+</html>

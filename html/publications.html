@@ -17,37 +17,34 @@
     <link rel="manifest"
         href="../assets/favicon/site.webmanifest">
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-    name="description"
-    content="Explore publicações relacionadas a hashtags literárias na Verse."
-    >
-
-    <title>Verse - Explorar Hashtags</title>
+  <title>Verse - Feed</title>
 
   <link rel="stylesheet" href="../css/base/reset.css">
-    <link rel="stylesheet" href="../css/base/global.css">
+  <link rel="stylesheet" href="../css/base/global.css">
 
-    <link rel="stylesheet" href="../css/components/navbar.css">
-    <link rel="stylesheet" href="../css/components/search.css">
-    <link rel="stylesheet" href="../css/components/notifications.css">
-    <link rel="stylesheet" href="../css/components/dropdown.css">
-    <link rel="stylesheet" href="../css/components/avatar.css">
-    <link rel="stylesheet" href="../css/components/sidebar.css">
-    <link rel="stylesheet" href="../css/components/post-card.css">
-    <link rel="stylesheet" href="../css/components/comments.css">
-    <link rel="stylesheet" href="../css/components/hashtags.css">
-    <link rel="stylesheet" href="../css/components/suggestions.css">
+  <link rel="stylesheet" href="../css/components/navbar.css">
+  <link rel="stylesheet" href="../css/components/search.css">
+  <link rel="stylesheet" href="../css/components/notifications.css">
+  <link rel="stylesheet" href="../css/components/dropdown.css">
+  <link rel="stylesheet" href="../css/components/avatar.css">
+  <link rel="stylesheet" href="../css/components/sidebar.css">
+  <link rel="stylesheet" href="../css/components/post-card.css">
+  <link rel="stylesheet" href="../css/components/comments.css">
+  <link rel="stylesheet" href="../css/components/hashtags.css">
+  <link rel="stylesheet" href="../css/components/suggestions.css">
+  <link rel="stylesheet" href="../css/components/modal.css">
+  <link rel="stylesheet" href="../css/components/quote-modal.css">
 
-    <link rel="stylesheet" href="../css/pages/hashtag.css">
+  <link rel="stylesheet" href="../css/pages/feed.css">
+  <link rel="stylesheet" href="../css/pages/publications.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link href="https://fonts.googleapis.com/css2?family=Belleza&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 </head>
 
 <body>
@@ -152,10 +149,10 @@
 
         <nav class="side-menu">
             <a href="../html/profile.html">Perfil</a>
-            <a href="../html/publications.html">Publicações</a>
-            <a href="../html/stories.html">Histórias</a>
-            <a href="../html/books.html">Livros</a>
-            <a href="../html/projects.html">Projetos</a>
+            <a href="../html/publications.html">Minhas Publicações</a>
+            <a href="../html/stories.html">Minhas Histórias</a>
+            <a href="../html/books.html">Meus Livros</a>
+            <a href="../html/projects.html">Meus Projetos</a>
             <a href="../html/messages.html" class="sidebar-link message-link">
                 Mensagens
                 <span id="sidebarMessagesBadge" class="message-dot"></span>
@@ -166,66 +163,109 @@
         </nav>
     </aside>
 
-    <section class="main-content">
-      <section class="hashtag-header">
-        <h1 id="hashtagTitle">#hashtag</h1>
-        <p id="hashtagCount">Carregando publicações...</p>
-      </section>
+    <section class="feed-main publications-main">
 
-      <section id="hashtagPostsContainer">
-        <p>Carregando posts...</p>
-      </section>
+      <div class="publications-header">
+        <div>
+          <span class="page-label">Gestão de conteúdo</span>
+
+          <h1>Minhas Publicações</h1>
+
+          <p>
+            Veja, acompanhe e gerencie tudo que você publicou na Verse.
+          </p>
+        </div>
+
+        <a href="../html/feed.html" class="new-publication-btn">
+          Nova publicação
+        </a>
+      </div>
+
+      <div class="publications-stats">
+        <div class="publication-stat-card">
+          <strong id="myPostsCount">0</strong>
+          <span>Publicações</span>
+        </div>
+
+        <div class="publication-stat-card">
+          <strong id="myLikesCount">0</strong>
+          <span>Curtidas recebidas</span>
+        </div>
+
+        <div class="publication-stat-card">
+          <strong id="myCommentsCount">0</strong>
+          <span>Comentários</span>
+        </div>
+      </div>
+
+      <div id="myPublicationsContainer" class="posts-container">
+        <p>Carregando suas publicações...</p>
+      </div>
+
     </section>
 
     <aside class="sidebar-right">
 
-      <h2>Sugestões</h2>
-
-      <div id="suggestionsContainer"></div>
-
       <div class="trend-card">
         <div class="suggestion-avatar">V</div>
 
-        <span>Comunidade Verse</span>
+        <span>Dica Verse</span>
 
         <p class="friend-tags">
-          leitores · escritores · histórias
+          Suas publicações aparecem aqui para você acompanhar e gerenciar melhor seu conteúdo.
         </p>
-
-        <button
-            type="button"
-            class="follow-btn">
-            Explorar
-        </button>
-      </div>
-
-      <div class="trending-box">
-        <h3>📖 Em Alta na Verse</h3>
-
-        <div id="trendingHashtags">
-          Carregando...
-        </div>
       </div>
 
     </aside>
 
+    
+
   </main>
+
+  Primeiro precisamos criar um modal de edição no publications.html, antes dos scripts:
+
+  <div id="editPostModal" class="modal">
+    <div class="modal-content">
+      <h2>Editar publicação</h2>
+
+      <textarea
+        id="editPostContent"
+        placeholder="Edite sua publicação..."></textarea>
+
+      <div class="modal-actions">
+        <button type="button" id="cancelEditPostBtn">
+          Cancelar
+        </button>
+
+        <button type="button" id="saveEditPostBtn">
+          Salvar alterações
+        </button>
+      </div>
+    </div>
+  </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabaseClient.js"></script>
 
     <script src="../js/modules/auth.js"></script>
+
     <script src="../js/modules/utils.js"></script>
-    <script src="../js/modules/search.js"></script>
     <script src="../js/modules/avatar.js"></script>
+    <script src="../js/modules/search.js"></script>
     <script src="../js/modules/menu.js"></script>
     <script src="../js/modules/notifications.js"></script>
-    <script src="../js/modules/share.js"></script>
     <script src="../js/modules/messages.js"></script>
-   
-
-    <script src="../js/global.js"></script>
     <script src="../js/modules/hashtags.js"></script>
+    <script src="../js/modules/comments.js"></script>
+    <script src="../js/modules/likes.js"></script>
+    <script src="../js/modules/posts.js"></script>
+    <script src="../js/modules/share.js"></script>
+    <script src="../js/modules/reposts.js"></script>
+    <script src="../js/modules/quotes.js"></script>
+    
+
+
+    <script src="../js/pages/publications.js"></script>
 
 </body>
 
