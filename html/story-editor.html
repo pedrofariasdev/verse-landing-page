@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Editor de História | Verse</title>
+
+  <link rel="stylesheet" href="../css/base/reset.css">
+  <link rel="stylesheet" href="../css/base/global.css">
+
+  <link rel="stylesheet" href="../css/components/navbar.css">
+  <link rel="stylesheet" href="../css/components/search.css">
+  <link rel="stylesheet" href="../css/components/notifications.css">
+  <link rel="stylesheet" href="../css/components/dropdown.css">
+  <link rel="stylesheet" href="../css/components/avatar.css">
+  <link rel="stylesheet" href="../css/components/sidebar.css">
+
+  <link rel="stylesheet" href="../css/pages/feed.css">
+  <link rel="stylesheet" href="../css/pages/story-editor.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Belleza&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="logo">
+      <a href="../html/feed.html" class="logo-link">
+        <h1>VERSE</h1>
+        <div class="logo-line"></div>
+      </a>
+    </div>
+
+    <div class="search-wrapper">
+      <input
+        type="text"
+        id="globalSearchInput"
+        placeholder="Pesquisar na Verse..."
+        autocomplete="off">
+
+      <div id="globalSearchResults" class="global-search-results"></div>
+    </div>
+
+    <div class="nav-actions">
+      <a href="../html/feed.html" class="nav-icon-btn" title="Feed">🏠</a>
+      <a href="../html/stories.html" class="nav-icon-btn" title="Histórias">📚</a>
+      <a href="../html/comunities.html" class="nav-icon-btn" title="Comunidades">👥</a>
+
+      <div class="notification-wrapper">
+        <button id="notificationBtn" class="notification-btn" type="button">
+          🔔
+          <span id="notificationBadge" class="notification-badge">0</span>
+        </button>
+
+        <div id="notificationDropdown" class="notification-dropdown">
+          <div class="notification-header">
+            <h3>Notificações</h3>
+          </div>
+
+          <div id="notificationList" class="notification-list">
+            <p class="empty-notifications">Nenhuma notificação ainda.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-menu-wrapper">
+        <button class="profile-menu-btn" id="profileMenuBtn" type="button">
+          <div class="nav-avatar" id="navAvatar">V</div>
+        </button>
+
+        <div class="profile-dropdown" id="profileDropdown">
+          <a href="../html/profile.html">👤 Meu perfil</a>
+
+          <a href="../html/messages.html" class="dropdown-message-link">
+            💬 Mensagens
+            <span id="dropdownMessagesBadge" class="message-dot"></span>
+          </a>
+
+          <a href="../html/settings.html">⚙️ Configurações</a>
+
+          <button id="logoutBtn" type="button">
+            🚪 Sair
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="app-layout">
+
+    <aside class="sidebar-left">
+      <h2>Menu</h2>
+
+      <div class="logged-user-card">
+        <div class="logged-avatar" id="userAvatar">V</div>
+
+        <div class="logged-user-info">
+          <strong id="userName">Usuário Verse</strong>
+          <p id="userEmail">email@verse.com</p>
+        </div>
+      </div>
+
+      <nav class="side-menu">
+        <a href="../html/profile.html">Perfil</a>
+        <a href="../html/publications.html">Minhas Publicações</a>
+        <a href="../html/my-stories.html">Minhas Histórias</a>
+        <a href="../html/books.html">Meus Livros</a>
+        <a href="../html/projects.html">Meus Projetos</a>
+
+        <a href="../html/messages.html" class="sidebar-link message-link">
+          Mensagens
+          <span id="sidebarMessagesBadge" class="message-dot"></span>
+        </a>
+
+        <a href="../html/partnerships.html">Parcerias</a>
+        <a href="../html/events.html">Eventos</a>
+        <a href="../html/settings.html">Configurações</a>
+      </nav>
+    </aside>
+
+    <section class="feed-main story-editor-main">
+
+      <a href="../html/my-stories.html" class="back-link">
+        ← Voltar para Minhas Histórias
+      </a>
+
+      <section class="story-editor-hero">
+
+        <div class="story-editor-cover" id="storyCover">
+          H
+        </div>
+
+        <div class="story-editor-info">
+          <span class="page-label">Editor da história</span>
+
+          <h1 id="storyTitle">
+            Carregando história...
+          </h1>
+
+          <div class="story-editor-meta">
+            <span id="storyGenre">Gênero</span>
+            <span>•</span>
+            <span id="storyStatus">Status</span>
+          </div>
+
+          <p id="storyDescription">
+            A descrição da história aparecerá aqui.
+          </p>
+
+          <div class="story-editor-actions">
+            <button type="button" id="editStoryBtn">
+              Editar história
+            </button>
+
+            <button type="button" id="changeCoverBtn">
+              Trocar capa
+            </button>
+            <input
+            type="file"
+            id="changeCoverInput"
+            accept="image/*"
+            style="display: none;">
+
+            <button type="button" id="deleteStoryBtn">
+              Excluir história
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+      <section class="chapters-panel">
+
+        <div class="chapters-header">
+          <div>
+            <h2>Capítulos</h2>
+
+            <p>
+              Organize os capítulos da sua história e continue escrevendo sua obra.
+            </p>
+          </div>
+
+          <button type="button" id="newChapterBtn">
+            + Novo capítulo
+          </button>
+        </div>
+
+        <div id="chaptersList" class="chapters-list">
+
+          <div class="chapter-empty">
+            <h3>Nenhum capítulo ainda.</h3>
+
+            <p>
+              Crie o primeiro capítulo para começar a desenvolver sua história.
+            </p>
+          </div>
+
+        </div>
+
+      </section>
+
+    </section>
+
+    <aside class="sidebar-right">
+
+      <div class="trend-card">
+        <div class="suggestion-avatar">V</div>
+
+        <span>Dica de escrita</span>
+
+        <p class="friend-tags">
+          Organize sua história em capítulos curtos para facilitar a leitura.
+        </p>
+      </div>
+
+      <div class="trending-box">
+        <h3>📖 Próximos passos</h3>
+
+        <div>
+          <p>1. Crie o primeiro capítulo.</p>
+          <p>2. Salve como rascunho.</p>
+          <p>3. Publique quando estiver pronto.</p>
+        </div>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabaseClient.js"></script>
+
+  <script src="../js/modules/auth.js"></script>
+  <script src="../js/modules/utils.js"></script>
+  <script src="../js/modules/avatar.js"></script>
+  <script src="../js/modules/search.js"></script>
+  <script src="../js/modules/menu.js"></script>
+  <script src="../js/modules/notifications.js"></script>
+  <script src="../js/modules/messages.js"></script>
+
+  <script src="../js/pages/story-editor.js"></script>
+</body>
+</html>

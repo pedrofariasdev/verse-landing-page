@@ -1,0 +1,373 @@
+/* =========================
+   STORY EDITOR PAGE
+========================= */
+
+.story-editor-main {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.back-link {
+  color: #676F54;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.back-link:hover {
+  color: #79B4A9;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.story-editor-hero {
+  display: flex;
+  gap: 30px;
+
+  padding: 28px;
+
+  background: #ffffff;
+
+  border: 1px solid #ececec;
+  border-radius: 24px;
+}
+
+.story-editor-cover {
+  width: 220px;
+  height: 320px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 20px;
+
+  background: #79B4A9;
+  color: #ffffff;
+
+  font-size: 72px;
+  font-weight: 700;
+
+  overflow: hidden;
+}
+
+.story-editor-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.story-editor-info {
+  flex: 1;
+}
+
+.story-editor-info h1 {
+  margin-top: 8px;
+  margin-bottom: 12px;
+
+  color: #2b2b2b;
+
+  font-family: "Belleza", sans-serif;
+  font-size: 42px;
+}
+
+.story-editor-meta {
+  display: flex;
+  gap: 10px;
+
+  margin-bottom: 20px;
+
+  color: #676F54;
+  font-weight: 600;
+}
+
+.story-editor-info p {
+  color: #555555;
+  line-height: 1.7;
+}
+
+/* =========================
+   ACTIONS
+========================= */
+
+.story-editor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  margin-top: 24px;
+}
+
+.story-editor-actions button {
+  border: none;
+  border-radius: 999px;
+
+  padding: 12px 18px;
+
+  cursor: pointer;
+
+  font-weight: 700;
+
+  transition: 0.3s ease;
+}
+
+#editStoryBtn {
+  background: #79B4A9;
+  color: white;
+}
+
+#editStoryBtn:hover {
+  background: #676F54;
+}
+
+#changeCoverBtn {
+  background: #f5f5f0;
+  color: #676F54;
+}
+
+#changeCoverBtn:hover {
+  background: #eaeaea;
+}
+
+#deleteStoryBtn {
+  background: #fff1f1;
+  color: #b42318;
+}
+
+#deleteStoryBtn:hover {
+  background: #ffd7d7;
+}
+
+/* =========================
+   CHAPTERS
+========================= */
+
+.chapters-panel {
+  padding: 28px;
+
+  background: white;
+
+  border: 1px solid #ececec;
+  border-radius: 24px;
+}
+
+.chapters-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 24px;
+}
+
+.chapters-header h2 {
+  color: #2b2b2b;
+  margin-bottom: 6px;
+}
+
+.chapters-header p {
+  color: #777777;
+}
+
+#newChapterBtn {
+  border: none;
+  border-radius: 999px;
+
+  padding: 12px 20px;
+
+  background: #79B4A9;
+  color: white;
+
+  font-weight: 700;
+  cursor: pointer;
+
+  transition: 0.3s ease;
+}
+
+#newChapterBtn:hover {
+  background: #676F54;
+}
+
+/* =========================
+   CHAPTER LIST
+========================= */
+
+.chapters-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.chapter-card {
+  padding: 20px;
+
+  border: 1px solid #ececec;
+  border-radius: 18px;
+
+  background: #fafafa;
+}
+
+.chapter-card h3 {
+  margin-bottom: 8px;
+
+  color: #2b2b2b;
+}
+
+.chapter-card span {
+  color: #777777;
+  font-size: 14px;
+}
+
+.chapter-actions {
+  display: flex;
+  gap: 10px;
+
+  margin-top: 16px;
+}
+
+.chapter-actions button {
+  border: none;
+  border-radius: 999px;
+
+  padding: 8px 14px;
+
+  background: #eef3ee;
+  color: #676F54;
+
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.chapter-actions button:hover {
+  background: #79B4A9;
+  color: white;
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.chapter-empty {
+  padding: 40px;
+
+  text-align: center;
+
+  border: 2px dashed #d9d9d9;
+  border-radius: 20px;
+}
+
+.chapter-empty h3 {
+  margin-bottom: 10px;
+
+  color: #2b2b2b;
+}
+
+.chapter-empty p {
+  color: #777777;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+  .story-editor-hero {
+    flex-direction: column;
+  }
+
+  .story-editor-cover {
+    width: 100%;
+    max-width: 260px;
+    margin: 0 auto;
+  }
+
+  .chapters-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .story-editor-info h1 {
+    font-size: 32px;
+  }
+
+  .story-editor-actions {
+    flex-direction: column;
+  }
+
+  .story-editor-actions button {
+    width: 100%;
+  }
+
+}
+
+/* =========================
+   RIGHT SIDEBAR - STORY EDITOR
+========================= */
+
+.sidebar-right .trend-card,
+.sidebar-right .trending-box {
+  padding: 24px;
+
+  background: #ffffff;
+
+  border: 1px solid #ececec;
+  border-radius: 24px;
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+}
+
+.sidebar-right .trend-card {
+  margin-bottom: 22px;
+}
+
+.sidebar-right .trend-card span {
+  display: block;
+
+  margin-top: 14px;
+  margin-bottom: 8px;
+
+  color: #2b2b2b;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.sidebar-right .friend-tags {
+  color: #676F54;
+
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.sidebar-right .trending-box h3 {
+  margin-bottom: 16px;
+
+  color: #2b2b2b;
+
+  font-size: 22px;
+}
+
+.sidebar-right .trending-box p {
+  margin-bottom: 10px;
+
+  color: #555555;
+
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.story-editor-cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}

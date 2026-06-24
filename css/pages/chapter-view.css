@@ -1,0 +1,166 @@
+.chapter-reader-layout {
+  width: 100%;
+  min-height: 100vh;
+
+  padding-top: 120px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 80px;
+
+  background: #f8f8f5;
+}
+
+.chapter-reader-container {
+  width: 100%;
+  max-width: 900px;
+
+  margin: 0 auto;
+}
+
+.chapter-back-link {
+  display: inline-block;
+
+  margin-bottom: 24px;
+
+  color: #676F54;
+
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.chapter-back-link:hover {
+  color: #79B4A9;
+}
+
+.chapter-reader-header {
+  padding: 40px;
+
+  margin-bottom: 28px;
+
+  background: #ffffff;
+
+  border: 1px solid #ececec;
+  border-radius: 28px;
+
+  text-align: center;
+}
+
+.story-title-label {
+  display: block;
+
+  margin-bottom: 12px;
+
+  color: #79B4A9;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.chapter-reader-header h1 {
+  margin-bottom: 14px;
+
+  color: #2b2b2b;
+
+  font-family: "Belleza", sans-serif;
+  font-size: 52px;
+  font-weight: 400;
+}
+
+.chapter-reader-meta {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+
+  color: #676F54;
+
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.chapter-content {
+  padding: 52px;
+
+  background: #ffffff;
+
+  border: 1px solid #ececec;
+  border-radius: 28px;
+
+  color: #2b2b2b;
+
+  font-size: 20px;
+  line-height: 2;
+
+  white-space: pre-line;
+}
+
+.chapter-content p {
+  margin-bottom: 24px;
+}
+
+.chapter-navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+
+  margin-top: 28px;
+}
+
+.chapter-navigation button {
+  border: none;
+  border-radius: 999px;
+
+  padding: 14px 24px;
+
+  background: #79B4A9;
+  color: #ffffff;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.25s ease;
+}
+
+.chapter-navigation button:hover {
+  background: #676F54;
+}
+
+.chapter-navigation button:disabled {
+  background: #d9d9d9;
+  color: #777777;
+  cursor: not-allowed;
+}
+
+@media (max-width: 700px) {
+  .chapter-reader-layout {
+    padding-top: 140px;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .chapter-reader-header {
+    padding: 28px;
+  }
+
+  .chapter-reader-header h1 {
+    font-size: 38px;
+  }
+
+  .chapter-content {
+    padding: 28px;
+
+    font-size: 18px;
+    line-height: 1.9;
+  }
+
+  .chapter-navigation {
+    flex-direction: column;
+  }
+
+  .chapter-navigation button {
+    width: 100%;
+  }
+}

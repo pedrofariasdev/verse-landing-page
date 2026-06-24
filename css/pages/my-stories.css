@@ -624,3 +624,17 @@
   }
 }
 
+.cover-help {
+  display: block;
+
+  margin-top: 8px;
+
+  color: #777777;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+
+
+

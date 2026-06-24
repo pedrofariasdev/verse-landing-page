@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Editor de Capítulo | Verse</title>
+
+  <link rel="stylesheet" href="../css/base/reset.css">
+  <link rel="stylesheet" href="../css/base/global.css">
+
+  <link rel="stylesheet" href="../css/components/navbar.css">
+  <link rel="stylesheet" href="../css/components/search.css">
+  <link rel="stylesheet" href="../css/components/notifications.css">
+  <link rel="stylesheet" href="../css/components/dropdown.css">
+  <link rel="stylesheet" href="../css/components/avatar.css">
+  <link rel="stylesheet" href="../css/components/sidebar.css">
+
+  <link rel="stylesheet" href="../css/pages/feed.css">
+  <link rel="stylesheet" href="../css/pages/chapter-editor.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Belleza&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="logo">
+      <a href="../html/feed.html" class="logo-link">
+        <h1>VERSE</h1>
+        <div class="logo-line"></div>
+      </a>
+    </div>
+
+    <div class="search-wrapper">
+      <input
+        type="text"
+        id="globalSearchInput"
+        placeholder="Pesquisar na Verse..."
+        autocomplete="off">
+
+      <div id="globalSearchResults" class="global-search-results"></div>
+    </div>
+
+    <div class="nav-actions">
+      <a href="../html/feed.html" class="nav-icon-btn" title="Feed">🏠</a>
+      <a href="../html/stories.html" class="nav-icon-btn" title="Histórias">📚</a>
+      <a href="../html/comunities.html" class="nav-icon-btn" title="Comunidades">👥</a>
+
+      <div class="notification-wrapper">
+        <button id="notificationBtn" class="notification-btn" type="button">
+          🔔
+          <span id="notificationBadge" class="notification-badge">0</span>
+        </button>
+
+        <div id="notificationDropdown" class="notification-dropdown">
+          <div class="notification-header">
+            <h3>Notificações</h3>
+          </div>
+
+          <div id="notificationList" class="notification-list">
+            <p class="empty-notifications">Nenhuma notificação ainda.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-menu-wrapper">
+        <button class="profile-menu-btn" id="profileMenuBtn" type="button">
+          <div class="nav-avatar" id="navAvatar">V</div>
+        </button>
+
+        <div class="profile-dropdown" id="profileDropdown">
+          <a href="../html/profile.html">👤 Meu perfil</a>
+
+          <a href="../html/messages.html" class="dropdown-message-link">
+            💬 Mensagens
+            <span id="dropdownMessagesBadge" class="message-dot"></span>
+          </a>
+
+          <a href="../html/settings.html">⚙️ Configurações</a>
+
+          <button id="logoutBtn" type="button">
+            🚪 Sair
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="app-layout">
+
+    <aside class="sidebar-left">
+      <h2>Menu</h2>
+
+      <div class="logged-user-card">
+        <div class="logged-avatar" id="userAvatar">V</div>
+
+        <div class="logged-user-info">
+          <strong id="userName">Usuário Verse</strong>
+          <p id="userEmail">email@verse.com</p>
+        </div>
+      </div>
+
+      <nav class="side-menu">
+        <a href="../html/profile.html">Perfil</a>
+        <a href="../html/publications.html">Minhas Publicações</a>
+        <a href="../html/my-stories.html">Minhas Histórias</a>
+        <a href="../html/books.html">Meus Livros</a>
+        <a href="../html/projects.html">Meus Projetos</a>
+
+        <a href="../html/messages.html" class="sidebar-link message-link">
+          Mensagens
+          <span id="sidebarMessagesBadge" class="message-dot"></span>
+        </a>
+
+        <a href="../html/partnerships.html">Parcerias</a>
+        <a href="../html/events.html">Eventos</a>
+        <a href="../html/settings.html">Configurações</a>
+      </nav>
+    </aside>
+
+    <section class="feed-main chapter-editor-main">
+
+      <a href="#" id="backToStoryBtn" class="back-link">
+        ← Voltar para a história
+      </a>
+
+      <div class="chapter-editor-header">
+        <div>
+          <span class="page-label">Editor de capítulo</span>
+
+          <h1 id="chapterEditorTitle">
+            Novo capítulo
+          </h1>
+
+          <p id="storyInfoText">
+            Carregando informações da história...
+          </p>
+        </div>
+      </div>
+
+      <form id="chapterForm" class="chapter-form">
+
+        <div class="chapter-form-group">
+          <label for="chapterTitle">Título do capítulo</label>
+
+          <input
+            type="text"
+            id="chapterTitle"
+            placeholder="Ex: O Livro Esquecido"
+            required>
+        </div>
+
+        <div class="chapter-form-group">
+          <label for="chapterContent">Conteúdo</label>
+
+          <textarea
+            id="chapterContent"
+            placeholder="Comece a escrever seu capítulo aqui..."
+            required></textarea>
+        </div>
+
+        <div class="chapter-editor-footer">
+          <div class="chapter-counter">
+            <span id="chapterWordCount">0 palavras</span>
+            <span>•</span>
+            <span id="chapterCharCount">0 caracteres</span>
+          </div>
+
+          <div class="chapter-actions">
+            <button type="button" id="cancelChapterBtn">
+              Cancelar
+            </button>
+
+            <button type="submit" id="saveChapterBtn">
+              Salvar capítulo
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+    </section>
+
+    <aside class="sidebar-right">
+
+      <div class="trend-card">
+        <div class="suggestion-avatar">V</div>
+
+        <span>Dica de capítulo</span>
+
+        <p class="friend-tags">
+          Escreva capítulos claros, com começo, conflito e fechamento parcial para manter o leitor interessado.
+        </p>
+      </div>
+
+      <div class="trending-box">
+        <h3>📖 Estrutura sugerida</h3>
+
+        <div>
+          <p>1. Abertura forte.</p>
+          <p>2. Desenvolvimento da cena.</p>
+          <p>3. Gancho para o próximo capítulo.</p>
+        </div>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabaseClient.js"></script>
+
+  <script src="../js/modules/auth.js"></script>
+  <script src="../js/modules/utils.js"></script>
+  <script src="../js/modules/avatar.js"></script>
+  <script src="../js/modules/search.js"></script>
+  <script src="../js/modules/menu.js"></script>
+  <script src="../js/modules/notifications.js"></script>
+  <script src="../js/modules/messages.js"></script>
+
+  <script src="../js/pages/chapter-editor.js"></script>
+</body>
+</html>

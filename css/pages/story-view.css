@@ -1,0 +1,322 @@
+.story-view-container {
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 120px auto 60px;
+
+  padding: 0 20px;
+}
+
+.story-header {
+  display: flex;
+  gap: 40px;
+
+  padding: 40px;
+
+  background: #ffffff;
+
+  border: 1px solid #ececec;
+  border-radius: 28px;
+
+  margin-bottom: 30px;
+}
+
+.story-cover-large {
+  width: 280px;
+  height: 420px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 24px;
+
+  overflow: hidden;
+
+  background: #79B4A9;
+
+  color: white;
+
+  font-size: 92px;
+  font-weight: 700;
+}
+
+.story-cover-large img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+}
+
+.story-info {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.story-genre {
+  display: inline-block;
+
+  width: fit-content;
+
+  padding: 8px 16px;
+
+  border-radius: 999px;
+
+  background: #e9f5f2;
+  color: #79B4A9;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+
+  margin-bottom: 18px;
+}
+
+.story-info h1 {
+  margin-bottom: 12px;
+
+  color: #2b2b2b;
+
+  font-family: "Belleza", sans-serif;
+  font-size: 54px;
+  font-weight: 400;
+}
+
+.story-author {
+  margin-bottom: 24px;
+
+  color: #666;
+
+  font-size: 18px;
+}
+
+.story-stats {
+  display: flex;
+  gap: 30px;
+
+  margin-bottom: 32px;
+
+  flex-wrap: wrap;
+}
+
+.story-stats div {
+  display: flex;
+  flex-direction: column;
+}
+
+.story-stats strong {
+  color: #2b2b2b;
+
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.story-stats span {
+  color: #777;
+
+  font-size: 14px;
+}
+
+.story-buttons {
+  display: flex;
+  gap: 16px;
+
+  margin-top: auto;
+}
+
+.primary-story-btn,
+.secondary-story-btn {
+  border: none;
+
+  border-radius: 999px;
+
+  padding: 14px 24px;
+
+  cursor: pointer;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  transition: 0.25s ease;
+}
+
+.primary-story-btn {
+  background: #79B4A9;
+  color: white;
+}
+
+.primary-story-btn:hover {
+  background: #679d93;
+}
+
+.secondary-story-btn {
+  background: #f2f2f2;
+  color: #555;
+}
+
+.secondary-story-btn:hover {
+  background: #e6e6e6;
+}
+
+.story-description-card,
+.story-chapters-card {
+  background: white;
+
+  border: 1px solid #ececec;
+  border-radius: 28px;
+
+  padding: 36px;
+
+  margin-bottom: 24px;
+}
+
+.story-description-card h2,
+.story-chapters-card h2 {
+  margin-bottom: 18px;
+
+  color: #2b2b2b;
+
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.story-description-card p {
+  color: #444;
+
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.story-chapters-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 24px;
+}
+
+.story-chapters-header span {
+  color: #777;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.story-chapters-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.chapter-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 20px;
+
+  border: 1px solid #ececec;
+  border-radius: 18px;
+
+  transition: 0.25s ease;
+}
+
+.chapter-item:hover {
+  border-color: #79B4A9;
+
+  transform: translateY(-2px);
+}
+
+.chapter-info h3 {
+  margin-bottom: 6px;
+
+  color: #2b2b2b;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.chapter-info span {
+  color: #777;
+
+  font-size: 14px;
+}
+
+.chapter-read-btn {
+  border: none;
+
+  border-radius: 999px;
+
+  padding: 12px 20px;
+
+  background: #79B4A9;
+  color: white;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.chapter-read-btn:hover {
+  background: #679d93;
+}
+
+@media (max-width: 900px) {
+
+  .story-header {
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .story-buttons {
+    justify-content: center;
+  }
+
+  .story-stats {
+    justify-content: center;
+  }
+
+  .story-cover-large {
+    width: 220px;
+    height: 330px;
+  }
+
+  .story-info h1 {
+    font-size: 42px;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .story-view-container {
+    padding: 0 12px;
+  }
+
+  .story-header,
+  .story-description-card,
+  .story-chapters-card {
+    padding: 24px;
+  }
+
+  .chapter-item {
+    flex-direction: column;
+    gap: 14px;
+
+    text-align: center;
+  }
+
+  .chapter-read-btn {
+    width: 100%;
+  }
+}
