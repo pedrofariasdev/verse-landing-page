@@ -110,7 +110,7 @@ function renderizarCapitulo(chapter) {
 
   if (backToStoryBtn) {
     backToStoryBtn.href =
-      `../html/story-editor.html?id=${chapter.story_id}`;
+      `../html/story-view.html?id=${chapter.story_id}`;
   }
 }
 

@@ -107,6 +107,10 @@
 
   <main class="story-view-container">
 
+    <a href="../html/stories.html" class="back-to-stories-link">
+      ← Voltar para Histórias
+    </a>
+
     <section class="story-header">
 
       <div
@@ -144,11 +148,11 @@
           </div>
 
           <div>
-            <strong id="storyLikes">
-              0
+            <strong id="storyFavorites">
+             0
             </strong>
 
-            <span>Curtidas</span>
+            <span>Favoritos</span>
           </div>
 
           <div>
@@ -188,6 +192,24 @@
             Favoritar
 
           </button>
+
+        </div>
+
+        <div class="story-rating-box">
+
+          <h3>Avalie esta história</h3>
+
+          <div class="rating-stars" id="ratingStars">
+            <button type="button" class="rating-star" data-rating="1">☆</button>
+            <button type="button" class="rating-star" data-rating="2">☆</button>
+            <button type="button" class="rating-star" data-rating="3">☆</button>
+            <button type="button" class="rating-star" data-rating="4">☆</button>
+            <button type="button" class="rating-star" data-rating="5">☆</button>
+          </div>
+
+          <p id="userRatingText" class="user-rating-text">
+            Você ainda não avaliou esta história.
+          </p>
 
         </div>
 
@@ -232,6 +254,35 @@
       </div>
 
     </section>
+
+    <section class="story-comments-card">
+
+      <div class="story-comments-header">
+        <h2>Comentários</h2>
+
+        <span id="commentsCount">
+          0 comentários
+        </span>
+      </div>
+
+      <form id="storyCommentForm" class="story-comment-form">
+
+        <textarea
+          id="storyCommentInput"
+          placeholder="Escreva um comentário sobre esta história..."
+          required></textarea>
+
+        <button type="submit" id="sendStoryCommentBtn">
+          Comentar
+        </button>
+
+      </form>
+
+      <div id="storyCommentsList" class="story-comments-list">
+        <p>Carregando comentários...</p>
+      </div>
+
+    </section>    
 
   </main>
 

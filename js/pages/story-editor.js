@@ -161,6 +161,11 @@ function configurarBotoesEditor() {
   const newChapterBtn = document.getElementById("newChapterBtn");
   const deleteStoryBtn = document.getElementById("deleteStoryBtn");
   const editStoryBtn = document.getElementById("editStoryBtn");
+  const publishStoryBtn = document.getElementById("publishStoryBtn");
+
+  if (publishStoryBtn) {
+    publishStoryBtn.addEventListener("click", publicarHistoria);
+  }
 
   if (newChapterBtn) {
     newChapterBtn.addEventListener("click", function () {
@@ -267,6 +272,32 @@ async function excluirHistoria() {
   }
 
   window.location.href = "../html/my-stories.html";
+}
+
+async function publicarHistoria() {
+  const confirmar = confirm(
+    "Deseja publicar esta história? Ela ficará visível para a comunidade."
+  );
+
+  if (!confirmar) return;
+
+  const { error } = await supabaseClient
+    .from("stories")
+    .update({
+      status: "published"
+    })
+    .eq("id", storyId)
+    .eq("user_id", usuarioLogado.id);
+
+  if (error) {
+    console.error("Erro ao publicar história:", error.message);
+    alert("Não foi possível publicar a história.");
+    return;
+  }
+
+  alert("História publicada com sucesso!");
+
+  await carregarHistoria();
 }
 
 function formatarDataCapitulo(data) {
