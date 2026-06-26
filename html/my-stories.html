@@ -34,6 +34,7 @@
 </head>
 
 <body>
+
   <nav class="navbar">
     <div class="logo">
       <a href="../html/feed.html" class="logo-link">
@@ -49,24 +50,13 @@
         placeholder="Pesquisar na Verse..."
         autocomplete="off">
 
-      <div
-        id="globalSearchResults"
-        class="global-search-results">
-      </div>
+      <div id="globalSearchResults" class="global-search-results"></div>
     </div>
 
     <div class="nav-actions">
-      <a href="../html/feed.html" class="nav-icon-btn" title="Feed">
-        🏠
-      </a>
-
-      <a href="../html/stories.html" class="nav-icon-btn" title="Histórias">
-        📚
-      </a>
-
-      <a href="../html/comunities.html" class="nav-icon-btn" title="Comunidades">
-        👥
-      </a>
+      <a href="../html/feed.html" class="nav-icon-btn" title="Feed">🏠</a>
+      <a href="../html/stories.html" class="nav-icon-btn" title="Histórias">📚</a>
+      <a href="../html/comunities.html" class="nav-icon-btn" title="Comunidades">👥</a>
 
       <div class="notification-wrapper">
         <button id="notificationBtn" class="notification-btn" type="button">
@@ -109,6 +99,7 @@
   </nav>
 
   <main class="app-layout">
+
     <aside class="sidebar-left">
       <h2>Menu</h2>
 
@@ -140,6 +131,7 @@
     </aside>
 
     <section class="feed-main stories-main">
+
       <div class="stories-header">
         <div>
           <span class="page-label">Área do autor</span>
@@ -158,22 +150,22 @@
 
       <div class="stories-stats">
         <div class="story-stat-card">
-          <strong id="storiesCount">5</strong>
+          <strong id="storiesCount">0</strong>
           <span>Histórias</span>
         </div>
 
         <div class="story-stat-card">
-          <strong id="storiesViewsCount">917</strong>
+          <strong id="storiesViewsCount">0</strong>
           <span>Leituras</span>
         </div>
 
         <div class="story-stat-card">
-          <strong id="storiesLikesCount">206</strong>
-          <span>Curtidas</span>
+          <strong id="storiesLikesCount">0</strong>
+          <span>Favoritos</span>
         </div>
 
         <div class="story-stat-card">
-          <strong id="storiesRatingsAverage">4.7</strong>
+          <strong id="storiesRatingsAverage">0.0</strong>
           <span>Avaliação média</span>
         </div>
       </div>
@@ -210,13 +202,10 @@
         </button>
       </div>
 
-        <article class="story-card">
-          
-          <div id="storiesGrid" class="stories-grid">
-            <p>Carregando suas histórias...</p>
-          </div>
+      <div id="storiesGrid" class="stories-grid">
+        <p>Carregando suas histórias...</p>
+      </div>
 
-        </article>     
     </section>
 
     <aside class="sidebar-right">
@@ -246,6 +235,7 @@
         </div>
       </div>
     </aside>
+
   </main>
 
   <div id="createStoryModal" class="story-modal-overlay">

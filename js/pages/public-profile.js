@@ -1,6 +1,5 @@
 console.log("Public Profile carregado!");
 
-
 let usuarioPerfil = null;
 let jaSegue = false;
 
@@ -14,48 +13,10 @@ function formatarHashtags(texto) {
 
 function obterIdDaUrl() {
   const params = new URLSearchParams(window.location.search);
-
   return params.get("id");
 }
 
-async function carregarUsuarioLogado() {
-  const { data, error } = await supabaseClient.auth.getUser();
-
-  if (error || !data.user) {
-    window.location.href = "../html/login.html";
-    return;
-  }
-
-  usuarioLogado = data.user;
-
-  const { data: meuPerfil, error: meuPerfilError } = await supabaseClient
-    .from("profiles")
-    .select("*")
-    .eq("id", usuarioLogado.id)
-    .single();
-
-  if (meuPerfilError) {
-    console.error("Erro ao carregar meu perfil:", meuPerfilError.message);
-    return;
-  }
-
-  const navAvatar = document.getElementById("navAvatar");
-  const firstLetter = (meuPerfil.full_name || "U").charAt(0).toUpperCase();
-
-  if (navAvatar) {
-    navAvatar.textContent = firstLetter;
-  }
-
-  if (meuPerfil.avatar_url && navAvatar) {
-    navAvatar.style.backgroundImage = `url(${meuPerfil.avatar_url})`;
-    navAvatar.style.backgroundSize = "cover";
-    navAvatar.style.backgroundPosition = "center";
-    navAvatar.style.color = "transparent";
-  }
-}
-
 async function carregarPerfilPublico() {
-
   const userId = obterIdDaUrl();
 
   if (!userId) {
@@ -78,127 +39,84 @@ async function carregarPerfilPublico() {
   usuarioPerfil = profile;
 
   preencherPerfil();
-  carregarPosts();
+  await carregarPosts();
 }
 
 function preencherPerfil() {
+  const profileName = document.getElementById("publicProfileName");
+  const profileUsername = document.getElementById("publicProfileUsername");
+  const profileBio = document.getElementById("publicProfileBio");
+  const profileGenres = document.getElementById("publicProfileGenres");
+  const profileLocation = document.getElementById("publicProfileLocation");
+  const profileMemberSince = document.getElementById("publicProfileMemberSince");
+  const profileAvatar = document.getElementById("publicProfileAvatar");
+  const profileBanner = document.getElementById("publicProfileBanner");
+  const profileTags = document.getElementById("publicProfileTags");
+  const messageBtn = document.getElementById("messageBtn");
 
-  const profileName =
-    document.getElementById("publicProfileName");
+  if (profileName) {
+    profileName.textContent = usuarioPerfil.full_name || "Usuário Verse";
+  }
 
-  const profileUsername =
-    document.getElementById("publicProfileUsername");
+  if (profileUsername) {
+    profileUsername.textContent = "@" + (usuarioPerfil.username || "usuario");
+  }
 
-  const profileBio =
-    document.getElementById("publicProfileBio");
+  if (profileBio) {
+    profileBio.textContent =
+      usuarioPerfil.bio || "Este usuário ainda não adicionou uma bio.";
+  }
 
-  const profileGenres =
-    document.getElementById("publicProfileGenres");
+  if (profileLocation) {
+    profileLocation.textContent = usuarioPerfil.location || "Não informado";
+  }
 
-  const profileLocation =
-    document.getElementById("publicProfileLocation");
+  if (profileGenres) {
+    profileGenres.textContent =
+      usuarioPerfil.favorite_genres?.join(" • ") || "Não informado";
+  }
 
-  const profileMemberSince =
-    document.getElementById("publicProfileMemberSince");
+  if (messageBtn) {
+    messageBtn.onclick = function () {
+      window.location.href = `../html/messages.html?receiver=${usuarioPerfil.id}`;
+    };
+  }
 
-  const profileAvatar =
-    document.getElementById("publicProfileAvatar");
-
-  const profileBanner =
-    document.getElementById("publicProfileBanner");
-
-  const profileTags =
-    document.getElementById("publicProfileTags");
-
-  profileName.textContent =
-    usuarioPerfil.full_name || "Usuário Verse";
-
-  profileUsername.textContent =
-    "@" + (usuarioPerfil.username || "usuario");
-
-  profileBio.textContent =
-    usuarioPerfil.bio ||
-    "Este usuário ainda não adicionou uma bio.";
-
-  profileLocation.textContent =
-    usuarioPerfil.location ||
-    "Não informado";
-
-  profileGenres.textContent =
-    usuarioPerfil.favorite_genres?.join(" • ") ||
-    "Não informado";
-
-    const messageBtn =
-  document.getElementById("messageBtn");
-
-    if (messageBtn) {
-
-  messageBtn.onclick = function () {
-
-    window.location.href =
-      `../html/messages.html?receiver=${usuarioPerfil.id}`;
-
-  };
-
-    }
-
-  if (usuarioPerfil.created_at) {
-
+  if (profileMemberSince && usuarioPerfil.created_at) {
     const data = new Date(usuarioPerfil.created_at);
-
-    profileMemberSince.textContent =
-      data.toLocaleDateString("pt-PT");
+    profileMemberSince.textContent = data.toLocaleDateString("pt-PT");
   }
 
-  if (usuarioPerfil.avatar_url) {
-
-    profileAvatar.style.backgroundImage =
-      `url(${usuarioPerfil.avatar_url})`;
-
-    profileAvatar.style.backgroundSize = "cover";
-    profileAvatar.style.backgroundPosition = "center";
-    profileAvatar.style.color = "transparent";
-
-  } else {
-
-    profileAvatar.textContent =
-      usuarioPerfil.full_name
-      .charAt(0)
-      .toUpperCase();
-
+  if (profileAvatar) {
+    if (usuarioPerfil.avatar_url) {
+      profileAvatar.style.backgroundImage = `url(${usuarioPerfil.avatar_url})`;
+      profileAvatar.style.backgroundSize = "cover";
+      profileAvatar.style.backgroundPosition = "center";
+      profileAvatar.style.color = "transparent";
+    } else {
+      profileAvatar.textContent =
+        (usuarioPerfil.full_name || "U").charAt(0).toUpperCase();
+    }
   }
 
-  if (usuarioPerfil.banner_url) {
-
-    profileBanner.style.backgroundImage =
-      `url(${usuarioPerfil.banner_url})`;
-
+  if (profileBanner && usuarioPerfil.banner_url) {
+    profileBanner.style.backgroundImage = `url(${usuarioPerfil.banner_url})`;
     profileBanner.style.backgroundSize = "cover";
     profileBanner.style.backgroundPosition = "center";
   }
 
-  profileTags.innerHTML = "";
+  if (profileTags) {
+    profileTags.innerHTML = "";
 
-  if (
-    usuarioPerfil.tags &&
-    usuarioPerfil.tags.length > 0
-  ) {
-
-    usuarioPerfil.tags.forEach(tag => {
-
-      const span =
-        document.createElement("span");
-
-      span.classList.add("profile-tag");
-
-      span.textContent = tag;
-
-      profileTags.appendChild(span);
-
-    });
-
+    if (usuarioPerfil.tags && usuarioPerfil.tags.length > 0) {
+      usuarioPerfil.tags.forEach(function (tag) {
+        const span = document.createElement("span");
+        span.classList.add("profile-tag");
+        span.textContent = tag;
+        profileTags.appendChild(span);
+      });
+    }
   }
-
 }
 
 async function verificarSeSegue() {
@@ -251,7 +169,7 @@ function atualizarBotaoFollow() {
 async function alternarFollow() {
   const followBtn = document.getElementById("followBtn");
 
-  if (!usuarioLogado || !usuarioPerfil) return;
+  if (!usuarioLogado || !usuarioPerfil || !followBtn) return;
 
   followBtn.disabled = true;
 
@@ -288,18 +206,18 @@ async function alternarFollow() {
     }
 
     jaSegue = true;
+
+    await criarNotificacaoFollow();
   }
 
   atualizarBotaoFollow();
   await carregarContadoresFollow();
-  await criarNotificacaoFollow();
 
   followBtn.disabled = false;
 }
 
 async function criarNotificacaoFollow() {
   if (!usuarioLogado || !usuarioPerfil) return;
-
   if (usuarioLogado.id === usuarioPerfil.id) return;
 
   const { data: meuPerfil } = await supabaseClient
@@ -308,8 +226,7 @@ async function criarNotificacaoFollow() {
     .eq("id", usuarioLogado.id)
     .single();
 
-  const nome =
-    meuPerfil?.full_name || "Alguém";
+  const nome = meuPerfil?.full_name || "Alguém";
 
   const { error } = await supabaseClient
     .from("notifications")
@@ -331,11 +248,8 @@ async function criarNotificacaoFollow() {
 async function carregarContadoresFollow() {
   if (!usuarioPerfil) return;
 
-  const followersCountEl =
-    document.getElementById("publicProfileFollowersCount");
-
-  const followingCountEl =
-    document.getElementById("publicProfileFollowingCount");
+  const followersCountEl = document.getElementById("publicProfileFollowersCount");
+  const followingCountEl = document.getElementById("publicProfileFollowingCount");
 
   const { count: followersCount, error: followersError } = await supabaseClient
     .from("followers")
@@ -356,70 +270,68 @@ async function carregarContadoresFollow() {
   }
 }
 
+async function carregarContadorHistoriasPublicas() {
+  const storiesCounter = document.getElementById("profileStoriesCount");
+  const publicProfileId = obterIdDaUrl();
+
+  if (!storiesCounter || !publicProfileId) return;
+
+  const { count, error } = await supabaseClient
+    .from("stories")
+    .select("*", {
+      count: "exact",
+      head: true
+    })
+    .eq("user_id", publicProfileId)
+    .eq("status", "published");
+
+  if (error) {
+    console.error("Erro ao contar histórias públicas:", error.message);
+    storiesCounter.textContent = "0";
+    return;
+  }
+
+  storiesCounter.textContent = count || 0;
+}
+
 async function carregarPosts() {
+  const container = document.getElementById("publicProfilePostsContainer");
+  const count = document.getElementById("publicProfilePostsCount");
 
-  const container =
-    document.getElementById(
-      "publicProfilePostsContainer"
-    );
-
-  const count =
-    document.getElementById(
-      "publicProfilePostsCount"
-    );
-
-  if (!container) return;
+  if (!container || !usuarioPerfil) return;
 
   container.innerHTML = "";
 
-  const { data: posts, error } =
-    await supabaseClient
-      .from("posts")
-      .select("*")
-      .eq("user_id", usuarioPerfil.id)
-      .order(
-        "created_at",
-        { ascending: false }
-      );
+  const { data: posts, error } = await supabaseClient
+    .from("posts")
+    .select("*")
+    .eq("user_id", usuarioPerfil.id)
+    .order("created_at", { ascending: false });
 
   if (error) {
     console.error(error);
     return;
   }
 
-  count.textContent =
-    posts ? posts.length : 0;
+  if (count) {
+    count.textContent = posts ? posts.length : 0;
+  }
 
   if (!posts || posts.length === 0) {
-
-    container.innerHTML =
-      "<p>Este usuário ainda não publicou nada.</p>";
-
+    container.innerHTML = "<p>Este usuário ainda não publicou nada.</p>";
     return;
   }
 
-  posts.forEach(post => {
-
-    const card =
-      document.createElement("article");
-
+  posts.forEach(function (post) {
+    const card = document.createElement("article");
     card.classList.add("post-card");
 
     card.innerHTML = `
       <div class="post-header">
-
         <div class="post-user-info">
-
-          <h3>
-            ${usuarioPerfil.full_name}
-          </h3>
-
-          <span>
-            @${usuarioPerfil.username}
-          </span>
-
+          <h3>${usuarioPerfil.full_name || "Usuário Verse"}</h3>
+          <span>@${usuarioPerfil.username || "usuario"}</span>
         </div>
-
       </div>
 
       <p class="post-text">
@@ -438,7 +350,6 @@ async function carregarPosts() {
       }
 
       <div class="post-actions">
-
         <button
           class="like-btn"
           data-post-id="${post.id}">
@@ -451,14 +362,13 @@ async function carregarPosts() {
           💬 Comentar
         </button>
 
-        <button>↻ Repostar</button>
+        <button type="button">↻ Repostar</button>
 
-        <button>❝ Citar</button>
+        <button type="button">❝ Citar</button>
 
         <button class="share-btn" data-post-id="${post.id}">
           ↗ Compartilhar
         </button>
-
       </div>
 
       <div
@@ -470,8 +380,7 @@ async function carregarPosts() {
           type="text"
           class="comment-input"
           id="commentInput-${post.id}"
-          placeholder="Escreva um comentário..."
-        >
+          placeholder="Escreva um comentário...">
 
         <button
           class="send-comment-btn"
@@ -483,156 +392,98 @@ async function carregarPosts() {
           class="comments-list"
           id="commentsList-${post.id}">
         </div>
-
       </div>
     `;
 
     container.appendChild(card);
     configurarAcoesDoPost(post.id);
-
   });
-
-}
-function configurarMenuPerfil() {
-  const profileMenuBtn = document.getElementById("profileMenuBtn");
-  const profileDropdown = document.getElementById("profileDropdown");
-  const logoutBtn = document.getElementById("logoutBtn");
-
-  if (!profileMenuBtn || !profileDropdown) return;
-
-  profileMenuBtn.onclick = function (event) {
-    event.preventDefault();
-    event.stopPropagation();
-
-    profileDropdown.classList.toggle("show");
-
-    const notificationDropdown =
-      document.getElementById("notificationDropdown");
-
-    if (notificationDropdown) {
-      notificationDropdown.classList.remove("show");
-    }
-  };
-
-  profileDropdown.onclick = function (event) {
-    event.stopPropagation();
-  };
-
-  if (logoutBtn) {
-    logoutBtn.onclick = async function () {
-      await supabaseClient.auth.signOut();
-      window.location.href = "../html/login.html";
-    };
-  }
 }
 
-async function carregarNotificacoes() {
-  const notificationList = document.getElementById("notificationList");
-  const notificationBadge = document.getElementById("notificationBadge");
+function configurarTabsPerfilPublico() {
+  const tabs = document.querySelectorAll(".profile-stat-tab");
 
-  if (!notificationList || !notificationBadge || !usuarioLogado) return;
+  tabs.forEach(function (tab) {
+    tab.addEventListener("click", async function () {
+      tabs.forEach(function (btn) {
+        btn.classList.remove("active");
+      });
 
-  const { data: notifications, error } = await supabaseClient
-    .from("notifications")
-    .select("*")
-    .eq("user_id", usuarioLogado.id)
-    .order("created_at", { ascending: false })
-    .limit(10);
+      tab.classList.add("active");
 
-  if (error) {
-    console.error("Erro ao carregar notificações:", error.message);
-    return;
-  }
+      const tipo = tab.dataset.tab;
 
-  notificationList.innerHTML = "";
+      if (tipo === "posts") {
+        await carregarPosts();
+      }
 
-  if (!notifications || notifications.length === 0) {
-    notificationList.innerHTML =
-      `<p class="empty-notifications">Nenhuma notificação ainda.</p>`;
-
-    notificationBadge.classList.remove("show");
-    return;
-  }
-
-  const unreadCount = notifications.filter(item => !item.is_read).length;
-
-  if (unreadCount > 0) {
-    notificationBadge.textContent = unreadCount;
-    notificationBadge.classList.add("show");
-  } else {
-    notificationBadge.classList.remove("show");
-  }
-
-  notifications.forEach(notification => {
-    const item = document.createElement("div");
-
-    item.classList.add("notification-item");
-
-    if (!notification.is_read) {
-      item.classList.add("unread");
-    }
-
-    item.innerHTML = `
-      <strong>${notification.message}</strong>
-      <span>${formatarTempo(notification.created_at)}</span>
-    `;
-
-    item.addEventListener("click", async function () {
-      await supabaseClient
-        .from("notifications")
-        .update({ is_read: true })
-        .eq("id", notification.id);
-
-      if (notification.link) {
-        window.location.href = notification.link;
-      } else {
-        carregarNotificacoes();
+      if (tipo === "stories") {
+        await carregarHistoriasDoPerfilPublico();
       }
     });
-
-    notificationList.appendChild(item);
   });
 }
 
-function configurarNotificacoes() {
-  const notificationBtn = document.getElementById("notificationBtn");
-  const notificationDropdown = document.getElementById("notificationDropdown");
+async function carregarHistoriasDoPerfilPublico() {
+  const container = document.getElementById("publicProfileContent");
+  const publicProfileId = obterIdDaUrl();
 
-  if (!notificationBtn || !notificationDropdown) return;
+  if (!container || !publicProfileId) return;
 
-  notificationBtn.onclick = function (event) {
-    event.preventDefault();
-    event.stopPropagation();
+  container.innerHTML = "<p>Carregando histórias...</p>";
 
-    notificationDropdown.classList.toggle("show");
+  const { data: stories, error } = await supabaseClient
+    .from("stories")
+    .select("*")
+    .eq("user_id", publicProfileId)
+    .eq("status", "published")
+    .order("created_at", { ascending: false });
 
-    const profileDropdown =
-      document.getElementById("profileDropdown");
+  if (error) {
+    console.error(error);
+    container.innerHTML = "<p>Erro ao carregar histórias.</p>";
+    return;
+  }
 
-    if (profileDropdown) {
-      profileDropdown.classList.remove("show");
-    }
+  if (!stories || stories.length === 0) {
+    container.innerHTML = "<p>Este autor ainda não publicou histórias.</p>";
+    return;
+  }
 
-    carregarNotificacoes();
-  };
+  container.innerHTML = "";
 
-  notificationDropdown.onclick = function (event) {
-    event.stopPropagation();
-  };
+  stories.forEach(function (story) {
+    const card = document.createElement("article");
+    card.classList.add("public-profile-story-card");
+
+    const coverHTML = story.cover_url
+      ? `<img src="${story.cover_url}" alt="${story.title}">`
+      : "V";
+
+    card.innerHTML = `
+      <div class="public-profile-story-cover">
+        ${coverHTML}
+      </div>
+
+      <div class="public-profile-story-body">
+        <h3>${story.title || "História sem título"}</h3>
+
+        <div class="public-profile-story-meta">
+          <span>👁 ${story.views_count || 0}</span>
+          <span>❤️ ${story.favorites_count || 0}</span>
+          <span>💬 ${story.comments_count || 0}</span>
+          <span>⭐ ${story.rating_average || "0.0"}</span>
+        </div>
+      </div>
+    `;
+
+    card.addEventListener("click", function () {
+      window.location.href = `../html/story-view.html?id=${story.id}`;
+    });
+
+    container.appendChild(card);
+  });
 }
-
-document.addEventListener("click", function () {
-  const profileDropdown = document.getElementById("profileDropdown");
-  const notificationDropdown = document.getElementById("notificationDropdown");
-
-  if (profileDropdown) {
-    profileDropdown.classList.remove("show");
-  }
-
-  if (notificationDropdown) {
-    notificationDropdown.classList.remove("show");
-  }
-});
 
 async function configurarAcoesDoPost(postId) {
   const likeBtn = document.querySelector(`.like-btn[data-post-id="${postId}"]`);
@@ -665,11 +516,14 @@ async function configurarAcoesDoPost(postId) {
   if (sendCommentBtn) {
     sendCommentBtn.addEventListener("click", async function () {
       await enviarComentario(postId);
+      await carregarContadorComentarios(postId, commentBtn);
     });
   }
 }
 
 async function carregarContadorComentarios(postId, button) {
+  if (!button) return;
+
   const { count, error } = await supabaseClient
     .from("comments")
     .select("*", { count: "exact", head: true })
@@ -684,6 +538,8 @@ async function carregarContadorComentarios(postId, button) {
 }
 
 async function carregarEstadoCurtida(postId, button) {
+  if (!button || !usuarioLogado) return;
+
   const { data: like } = await supabaseClient
     .from("likes")
     .select("*")
@@ -749,7 +605,7 @@ async function alternarCurtida(postId, button) {
 async function enviarComentario(postId) {
   const input = document.getElementById(`commentInput-${postId}`);
 
-  if (!input) return;
+  if (!input || !usuarioLogado) return;
 
   const content = input.value.trim();
 
@@ -815,7 +671,7 @@ async function carregarComentarios(postId) {
     return;
   }
 
-  comments.forEach(comment => {
+  comments.forEach(function (comment) {
     const author = profiles.find(profile => profile.id === comment.user_id);
 
     const div = document.createElement("div");
@@ -828,119 +684,31 @@ async function carregarComentarios(postId) {
     `;
 
     commentsList.appendChild(div);
-
   });
 }
 
-function configurarPesquisaGlobal() {
-  const searchInput = document.getElementById("globalSearchInput");
-  const searchResults = document.getElementById("globalSearchResults");
+document.addEventListener("click", function () {
+  const profileDropdown = document.getElementById("profileDropdown");
+  const notificationDropdown = document.getElementById("notificationDropdown");
 
-  if (!searchInput || !searchResults) return;
-
-  let searchTimeout = null;
-
-  searchInput.addEventListener("input", function () {
-    const term = searchInput.value.trim();
-
-    clearTimeout(searchTimeout);
-
-    if (term.length < 2) {
-      searchResults.classList.remove("show");
-      searchResults.innerHTML = "";
-      return;
-    }
-
-    searchTimeout = setTimeout(function () {
-      buscarUsuarios(term);
-    }, 400);
-  });
-
-  document.addEventListener("click", function (event) {
-    if (!event.target.closest(".search-wrapper")) {
-      searchResults.classList.remove("show");
-    }
-  });
-}
-
-async function buscarUsuarios(term) {
-  const searchResults = document.getElementById("globalSearchResults");
-
-  if (!searchResults) return;
-
-  const { data: users, error } = await supabaseClient
-    .from("profiles")
-    .select("*")
-    .or(`full_name.ilike.%${term}%,username.ilike.%${term}%`)
-    .limit(6);
-
-  if (error) {
-    console.error("Erro ao pesquisar usuários:", error.message);
-    return;
+  if (profileDropdown) {
+    profileDropdown.classList.remove("show");
   }
 
-  searchResults.innerHTML = "";
-
-  if (!users || users.length === 0) {
-    searchResults.innerHTML = `
-      <p class="search-empty">
-        Nenhum usuário encontrado.
-      </p>
-    `;
-
-    searchResults.classList.add("show");
-    return;
+  if (notificationDropdown) {
+    notificationDropdown.classList.remove("show");
   }
-
-  searchResults.innerHTML = `
-    <div class="search-section-title">
-      Usuários
-    </div>
-  `;
-
-  users.forEach(function (user) {
-    const firstLetter =
-      (user.full_name || "U").charAt(0).toUpperCase();
-
-    const avatarStyle = user.avatar_url
-      ? `background-image: url('${user.avatar_url}'); background-size: cover; background-position: center; color: transparent;`
-      : "";
-
-    const item = document.createElement("div");
-
-    item.classList.add("search-result-item");
-
-    item.innerHTML = `
-      <div
-        class="search-result-avatar"
-        style="${avatarStyle}">
-        ${firstLetter}
-      </div>
-
-      <div class="search-result-info">
-        <strong>${user.full_name || "Usuário Verse"}</strong>
-        <span>@${user.username || "usuario"}</span>
-      </div>
-    `;
-
-    item.addEventListener("click", function () {
-      window.location.href =
-        `../html/public-profile.html?id=${user.id}`;
-    });
-
-    searchResults.appendChild(item);
-  });
-
-  searchResults.classList.add("show");
-}
-
-
+});
 
 async function iniciarPerfilPublico() {
   await carregarUsuarioLogado();
   await carregarPerfilPublico();
   await verificarSeSegue();
   await carregarContadoresFollow();
+  await carregarContadorHistoriasPublicas();
+  await carregarHistoriasDoPerfilPublico();
+
+  configurarTabsPerfilPublico();
 
   if (typeof configurarMenuPerfil === "function") {
     configurarMenuPerfil();

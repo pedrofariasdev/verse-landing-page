@@ -25,52 +25,20 @@ async function iniciarStoryView() {
   }
 
   await carregarHistoria();
-  await registrarLeitura();
+  await sincronizarMetricasHistoria();
+  await recarregarMetricasDaHistoria();
   await carregarCapitulos();
 
   configurarBotoesStoryView();
   configurarAvaliacaoHistoria();
-  
 
   await carregarAvaliacaoUsuario();
   await carregarEstadoFavorito();
 
   configurarFormularioComentario();
-  await carregarComentariosHistoria();  
-}
+  await carregarComentariosHistoria();
 
-async function registrarLeitura() {
-  if (!storyId) return;
-
-  const chave = `story_view_${storyId}`;
-
-  const jaContabilizada = localStorage.getItem(chave);
-
-  if (jaContabilizada) return;
-
-  const novoTotal = (historiaAtual.views_count || 0) + 1;
-
-  const { error } = await supabaseClient
-    .from("stories")
-    .update({
-      views_count: novoTotal
-    })
-    .eq("id", storyId);
-
-  if (error) {
-    console.error("Erro ao registrar leitura:", error.message);
-    return;
-  }
-
-  localStorage.setItem(chave, "true");
-
-  historiaAtual.views_count = novoTotal;
-
-  const storyViews = document.getElementById("storyViews");
-
-  if (storyViews) {
-    storyViews.textContent = novoTotal;
-  }
+  await recarregarMetricasDaHistoria();
 }
 
 async function carregarHistoria() {
@@ -88,31 +56,50 @@ async function carregarHistoria() {
 
   historiaAtual = data;
 
-  document.getElementById("storyTitle").textContent =
-    data.title || "História sem título";
-
-  document.getElementById("storyGenre").textContent =
-    data.genre || "Sem gênero";
-
-  document.getElementById("storyDescription").textContent =
-    data.description || "Esta história ainda não possui sinopse.";
-
-  document.getElementById("storyViews").textContent =
-    data.views_count || 0;
-
-document.getElementById("storyFavorites").textContent =
-  data.favorites_count || 0;
-
-  document.getElementById("storyComments").textContent =
-    data.comments_count || 0;
-
-  document.getElementById("storyRating").textContent =
-    data.rating_average || "0.0";
-
-  document.getElementById("storyAuthor").textContent =
-    "Autor Verse";
-
+  const storyTitle = document.getElementById("storyTitle");
+  const storyGenre = document.getElementById("storyGenre");
+  const storyDescription = document.getElementById("storyDescription");
+  const storyViews = document.getElementById("storyViews");
+  const storyFavorites = document.getElementById("storyFavorites");
+  const storyComments = document.getElementById("storyComments");
+  const storyRating = document.getElementById("storyRating");
+  const storyAuthor = document.getElementById("storyAuthor");
   const cover = document.getElementById("storyCover");
+
+  if (storyTitle) {
+    storyTitle.textContent = data.title || "História sem título";
+  }
+
+  if (storyGenre) {
+    storyGenre.textContent = data.genre || "Sem gênero";
+  }
+
+  if (storyDescription) {
+    storyDescription.textContent =
+      data.description || "Esta história ainda não possui sinopse.";
+  }
+
+  if (storyViews) {
+    storyViews.textContent = data.views_count || 0;
+  }
+
+  if (storyFavorites) {
+    storyFavorites.textContent = data.favorites_count || 0;
+  }
+
+  if (storyComments) {
+    storyComments.textContent = data.comments_count || 0;
+  }
+
+  if (storyRating) {
+    storyRating.textContent = data.rating_average || "0.0";
+  }
+
+  if (storyAuthor) {
+    storyAuthor.textContent = "Autor Verse";
+  }
+
+  await carregarAutorHistoria(data.user_id);
 
   if (cover) {
     cover.innerHTML = "";
@@ -120,7 +107,7 @@ document.getElementById("storyFavorites").textContent =
     if (data.cover_url) {
       const img = document.createElement("img");
       img.src = data.cover_url;
-      img.alt = `Capa de ${data.title}`;
+      img.alt = `Capa de ${data.title || "história"}`;
 
       cover.appendChild(img);
     } else {
@@ -131,9 +118,45 @@ document.getElementById("storyFavorites").textContent =
   }
 }
 
+async function carregarAutorHistoria(authorId) {
+  const storyAuthor = document.getElementById("storyAuthor");
+
+  if (!storyAuthor || !authorId) return;
+
+  const { data, error } = await supabaseClient
+    .from("profiles")
+    .select("full_name, username")
+    .eq("id", authorId)
+    .single();
+
+  if (error) {
+    console.error("Erro ao carregar autor:", error.message);
+    storyAuthor.textContent = "Autor Verse";
+    return;
+  }
+
+  storyAuthor.textContent =
+    data?.full_name || data?.username || "Autor Verse";
+}
+
+async function sincronizarMetricasHistoria() {
+  const { error } = await supabaseClient.rpc("sync_story_metrics", {
+    target_story_id: storyId
+  });
+
+  if (error) {
+    console.error("Erro ao sincronizar métricas:", error.message);
+    return;
+  }
+
+  await recarregarMetricasDaHistoria();
+}
+
 async function carregarCapitulos() {
   const chaptersList = document.getElementById("storyChaptersList");
   const chaptersCount = document.getElementById("chaptersCount");
+
+  if (!chaptersList) return;
 
   chaptersList.innerHTML = "<p>Carregando capítulos...</p>";
 
@@ -151,8 +174,10 @@ async function carregarCapitulos() {
 
   capitulosHistoria = data || [];
 
-  chaptersCount.textContent =
-    `${capitulosHistoria.length} capítulo${capitulosHistoria.length === 1 ? "" : "s"}`;
+  if (chaptersCount) {
+    chaptersCount.textContent =
+      `${capitulosHistoria.length} capítulo${capitulosHistoria.length === 1 ? "" : "s"}`;
+  }
 
   if (capitulosHistoria.length === 0) {
     chaptersList.innerHTML = `
@@ -195,146 +220,9 @@ function configurarBotoesCapitulos() {
   buttons.forEach(function (button) {
     button.addEventListener("click", function () {
       const chapterId = button.dataset.chapterId;
-
-      window.location.href =
-        `../html/chapter-view.html?id=${chapterId}`;
+      window.location.href = `../html/chapter-view.html?id=${chapterId}`;
     });
   });
-}
-
-async function carregarAvaliacaoUsuario() {
-  if (!usuarioLogado || !storyId) return;
-
-  const { data, error } = await supabaseClient
-    .from("story_ratings")
-    .select("*")
-    .eq("story_id", storyId)
-    .eq("user_id", usuarioLogado.id)
-    .maybeSingle();
-
-  if (error) {
-    console.error("Erro ao carregar avaliação:", error.message);
-    return;
-  }
-
-  if (data) {
-    atualizarEstrelas(data.rating);
-
-    const userRatingText = document.getElementById("userRatingText");
-
-    if (userRatingText) {
-      userRatingText.textContent =
-        `Você avaliou esta história com ${data.rating} estrela${data.rating > 1 ? "s" : ""}.`;
-    }
-  }
-}
-
-function configurarAvaliacaoHistoria() {
-  const stars = document.querySelectorAll(".rating-star");
-
-  stars.forEach(function (star) {
-    star.addEventListener("click", async function () {
-      const rating = Number(star.dataset.rating);
-      await salvarAvaliacaoHistoria(rating);
-    });
-  });
-}
-
-async function salvarAvaliacaoHistoria(rating) {
-  if (!usuarioLogado) {
-    alert("Você precisa estar logado para avaliar.");
-    return;
-  }
-
-  const { error } = await supabaseClient
-    .from("story_ratings")
-    .upsert(
-      {
-        story_id: storyId,
-        user_id: usuarioLogado.id,
-        rating: rating,
-        updated_at: new Date().toISOString()
-      },
-      {
-        onConflict: "story_id,user_id"
-      }
-    );
-
-  if (error) {
-    console.error("Erro ao salvar avaliação:", error.message);
-    alert("Não foi possível salvar sua avaliação.");
-    return;
-  }
-
-  atualizarEstrelas(rating);
-
-  const userRatingText = document.getElementById("userRatingText");
-
-  if (userRatingText) {
-    userRatingText.textContent =
-      `Você avaliou esta história com ${rating} estrela${rating > 1 ? "s" : ""}.`;
-  }
-
-  await atualizarMediaAvaliacoes();
-}
-
-function atualizarEstrelas(rating) {
-  const stars = document.querySelectorAll(".rating-star");
-
-  stars.forEach(function (star) {
-    const starValue = Number(star.dataset.rating);
-
-    if (starValue <= rating) {
-      star.textContent = "★";
-      star.classList.add("active");
-    } else {
-      star.textContent = "☆";
-      star.classList.remove("active");
-    }
-  });
-}
-
-async function atualizarMediaAvaliacoes() {
-  const { data, error } = await supabaseClient
-    .from("story_ratings")
-    .select("rating")
-    .eq("story_id", storyId);
-
-  if (error) {
-    console.error("Erro ao calcular média:", error.message);
-    return;
-  }
-
-  const ratings = data || [];
-  const count = ratings.length;
-
-  const average =
-    count > 0
-      ? (
-          ratings.reduce(function (total, item) {
-            return total + Number(item.rating);
-          }, 0) / count
-        ).toFixed(1)
-      : "0.0";
-
-  const { error: updateError } = await supabaseClient
-    .from("stories")
-    .update({
-      rating_average: average,
-      ratings_count: count
-    })
-    .eq("id", storyId);
-
-  if (updateError) {
-    console.error("Erro ao atualizar média:", updateError.message);
-    return;
-  }
-
-  const storyRating = document.getElementById("storyRating");
-
-  if (storyRating) {
-    storyRating.textContent = average;
-  }
 }
 
 function configurarBotoesStoryView() {
@@ -350,24 +238,13 @@ function configurarBotoesStoryView() {
 
       const firstChapter = capitulosHistoria[0];
 
-      window.location.href =
-        `../html/chapter-view.html?id=${firstChapter.id}`;
+      window.location.href = `../html/chapter-view.html?id=${firstChapter.id}`;
     });
   }
 
   if (favoriteStoryBtn) {
     favoriteStoryBtn.addEventListener("click", alternarFavoritoHistoria);
   }
-}
-
-function formatarDataHistoria(data) {
-  if (!data) return "";
-
-  return new Date(data).toLocaleDateString("pt-PT", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric"
-  });
 }
 
 async function carregarEstadoFavorito() {
@@ -405,7 +282,6 @@ async function alternarFavoritoHistoria() {
   }
 
   const favoriteBtn = document.getElementById("favoriteStoryBtn");
-
   if (!favoriteBtn) return;
 
   const estaFavoritado = favoriteBtn.classList.contains("favorited");
@@ -419,134 +295,131 @@ async function alternarFavoritoHistoria() {
       .eq("story_id", storyId)
       .eq("user_id", usuarioLogado.id);
 
-    favoriteBtn.disabled = false;
-
     if (error) {
       console.error("Erro ao remover favorito:", error.message);
       alert("Não foi possível remover dos favoritos.");
+      favoriteBtn.disabled = false;
       return;
     }
 
     favoriteBtn.classList.remove("favorited");
     favoriteBtn.textContent = "Favoritar";
+  } else {
+    const { error } = await supabaseClient
+      .from("story_favorites")
+      .insert([
+        {
+          story_id: storyId,
+          user_id: usuarioLogado.id
+        }
+      ]);
+
+    if (error) {
+      console.error("Erro ao favoritar:", error.message);
+      alert("Não foi possível favoritar esta história.");
+      favoriteBtn.disabled = false;
+      return;
+    }
+
+    favoriteBtn.classList.add("favorited");
+    favoriteBtn.textContent = "Favoritado";
+  }
+
+  await sincronizarMetricasHistoria();
+  await carregarEstadoFavorito();
+
+  favoriteBtn.disabled = false;
+}
+
+function configurarAvaliacaoHistoria() {
+  const stars = document.querySelectorAll(".rating-star");
+
+  stars.forEach(function (star) {
+    star.addEventListener("click", async function () {
+      const rating = Number(star.dataset.rating);
+      await salvarAvaliacaoHistoria(rating);
+    });
+  });
+}
+
+async function carregarAvaliacaoUsuario() {
+  if (!usuarioLogado || !storyId) return;
+
+  const { data, error } = await supabaseClient
+    .from("story_ratings")
+    .select("*")
+    .eq("story_id", storyId)
+    .eq("user_id", usuarioLogado.id)
+    .maybeSingle();
+
+  if (error) {
+    console.error("Erro ao carregar avaliação:", error.message);
+    return;
+  }
+
+  if (data) {
+    atualizarEstrelas(data.rating);
+
+    const userRatingText = document.getElementById("userRatingText");
+
+    if (userRatingText) {
+      userRatingText.textContent =
+        `Você avaliou esta história com ${data.rating} estrela${data.rating > 1 ? "s" : ""}.`;
+    }
+  }
+}
+
+async function salvarAvaliacaoHistoria(rating) {
+  if (!usuarioLogado) {
+    alert("Você precisa estar logado para avaliar.");
     return;
   }
 
   const { error } = await supabaseClient
-    .from("story_favorites")
-    .insert([
+    .from("story_ratings")
+    .upsert(
       {
         story_id: storyId,
-        user_id: usuarioLogado.id
+        user_id: usuarioLogado.id,
+        rating: rating,
+        updated_at: new Date().toISOString()
+      },
+      {
+        onConflict: "story_id,user_id"
       }
-    ]);
-
-  favoriteBtn.disabled = false;
+    );
 
   if (error) {
-    console.error("Erro ao favoritar:", error.message);
-    alert("Não foi possível favoritar esta história.");
+    console.error("Erro ao salvar avaliação:", error.message);
+    alert("Não foi possível salvar sua avaliação.");
     return;
   }
 
-  favoriteBtn.classList.add("favorited");
-  favoriteBtn.textContent = "Favoritado";
+  atualizarEstrelas(rating);
+
+  const userRatingText = document.getElementById("userRatingText");
+
+  if (userRatingText) {
+    userRatingText.textContent =
+      `Você avaliou esta história com ${rating} estrela${rating > 1 ? "s" : ""}.`;
+  }
+
+  await sincronizarMetricasHistoria();
 }
 
-async function atualizarContadorFavoritos() {
-  const { count, error } = await supabaseClient
-    .from("story_favorites")
-    .select("*", {
-      count: "exact",
-      head: true
-    })
-    .eq("story_id", storyId);
+function atualizarEstrelas(rating) {
+  const stars = document.querySelectorAll(".rating-star");
 
-  if (error) {
-    console.error("Erro ao contar favoritos:", error.message);
-    return;
-  }
+  stars.forEach(function (star) {
+    const starValue = Number(star.dataset.rating);
 
-  const total = count || 0;
-
-  const { error: updateError } = await supabaseClient
-    .from("stories")
-    .update({
-      favorites_count: total
-    })
-    .eq("id", storyId);
-
-  if (updateError) {
-    console.error("Erro ao atualizar favorites_count:", updateError.message);
-    return;
-  }
-
-  const storyFavorites = document.getElementById("storyFavorites");
-
-  if (storyFavorites) {
-    storyFavorites.textContent = total;
-  }
-}
-
-async function carregarComentariosHistoria() {
-  const commentsList = document.getElementById("storyCommentsList");
-  const commentsCount = document.getElementById("commentsCount");
-
-  if (!commentsList || !storyId) return;
-
-  commentsList.innerHTML = "<p>Carregando comentários...</p>";
-
-  const { data, error } = await supabaseClient
-    .from("story_comments")
-    .select("*")
-    .eq("story_id", storyId)
-    .order("created_at", { ascending: false });
-
-  if (error) {
-    console.error("Erro ao carregar comentários:", error.message);
-    commentsList.innerHTML = "<p>Não foi possível carregar os comentários.</p>";
-    return;
-  }
-
-  const comments = data || [];
-
-  if (commentsCount) {
-    commentsCount.textContent =
-      `${comments.length} comentário${comments.length === 1 ? "" : "s"}`;
-  }
-
-  await atualizarContadorComentarios(comments.length);
-
-  if (comments.length === 0) {
-    commentsList.innerHTML = `
-      <div class="story-comments-empty">
-        Nenhum comentário ainda. Seja o primeiro a comentar.
-      </div>
-    `;
-    return;
-  }
-
-  commentsList.innerHTML = "";
-
-  comments.forEach(function (comment) {
-    const commentCard = document.createElement("article");
-    commentCard.classList.add("story-comment");
-
-    commentCard.innerHTML = `
-      <div class="story-comment-author">
-        Usuário Verse
-      </div>
-
-      <div class="story-comment-date">
-        ${formatarDataComentario(comment.created_at)}
-      </div>
-
-      <p class="story-comment-text">
-        ${comment.comment}
-      </p>
-    `;
-
-    commentsList.appendChild(commentCard);
+    if (starValue <= rating) {
+      star.textContent = "★";
+      star.classList.add("active");
+    } else {
+      star.textContent = "☆";
+      star.classList.remove("active");
+    }
   });
 }
 
@@ -568,6 +441,8 @@ async function enviarComentarioHistoria(event) {
 
   const input = document.getElementById("storyCommentInput");
   const sendBtn = document.getElementById("sendStoryCommentBtn");
+
+  if (!input || !sendBtn) return;
 
   const comment = input.value.trim();
 
@@ -601,25 +476,97 @@ async function enviarComentarioHistoria(event) {
   input.value = "";
 
   await carregarComentariosHistoria();
+  await sincronizarMetricasHistoria();
 }
 
-async function atualizarContadorComentarios(total) {
-  const { error } = await supabaseClient
-    .from("stories")
-    .update({
-      comments_count: total
-    })
-    .eq("id", storyId);
+async function carregarComentariosHistoria() {
+  const commentsList = document.getElementById("storyCommentsList");
+  const commentsCount = document.getElementById("commentsCount");
+
+  if (!commentsList || !storyId) return;
+
+  commentsList.innerHTML = "<p>Carregando comentários...</p>";
+
+  const { data: comments, error } = await supabaseClient
+    .from("story_comments")
+    .select("*")
+    .eq("story_id", storyId)
+    .order("created_at", { ascending: false });
 
   if (error) {
-    console.error("Erro ao atualizar contador de comentários:", error.message);
+    console.error("Erro ao carregar comentários:", error.message);
+    commentsList.innerHTML = "<p>Não foi possível carregar os comentários.</p>";
+    return;
   }
 
-  const storyComments = document.getElementById("storyComments");
+  const comentarios = comments || [];
 
-  if (storyComments) {
-    storyComments.textContent = total;
+  if (commentsCount) {
+    commentsCount.textContent =
+      `${comentarios.length} comentário${comentarios.length === 1 ? "" : "s"}`;
   }
+
+  if (comentarios.length === 0) {
+    commentsList.innerHTML = `
+      <div class="story-comments-empty">
+        Nenhum comentário ainda. Seja o primeiro a comentar.
+      </div>
+    `;
+    return;
+  }
+
+  const userIds = [...new Set(comentarios.map(comment => comment.user_id))];
+
+  const { data: profiles, error: profilesError } = await supabaseClient
+    .from("profiles")
+    .select("id, full_name, username, avatar_url")
+    .in("id", userIds);
+
+  if (profilesError) {
+    console.error("Erro ao carregar perfis dos comentários:", profilesError.message);
+  }
+
+  commentsList.innerHTML = "";
+
+  comentarios.forEach(function (comment) {
+    const profile = profiles?.find(function (item) {
+      return item.id === comment.user_id;
+    });
+
+    const nomeAutor =
+      profile?.full_name ||
+      profile?.username ||
+      "Usuário Verse";
+
+    const commentCard = document.createElement("article");
+    commentCard.classList.add("story-comment");
+
+    commentCard.innerHTML = `
+      <div class="story-comment-author">
+        ${nomeAutor}
+      </div>
+
+      <div class="story-comment-date">
+        ${formatarDataComentario(comment.created_at)}
+      </div>
+
+      <p class="story-comment-text">
+        ${comment.comment}
+      </p>
+    `;
+
+    commentsList.appendChild(commentCard);
+  });
+}
+
+function formatarDataHistoria(data) {
+  if (!data) return "";
+
+  return new Date(data).toLocaleDateString("pt-PT", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric"
+  });
 }
 
 function formatarDataComentario(data) {
@@ -630,6 +577,29 @@ function formatarDataComentario(data) {
     month: "long",
     year: "numeric"
   });
+}
+
+async function recarregarMetricasDaHistoria() {
+  const { data, error } = await supabaseClient
+    .from("stories")
+    .select("views_count, favorites_count, comments_count, rating_average")
+    .eq("id", storyId)
+    .single();
+
+  if (error) {
+    console.error("Erro ao recarregar métricas:", error.message);
+    return;
+  }
+
+  const storyViews = document.getElementById("storyViews");
+  const storyFavorites = document.getElementById("storyFavorites");
+  const storyComments = document.getElementById("storyComments");
+  const storyRating = document.getElementById("storyRating");
+
+  if (storyViews) storyViews.textContent = data.views_count || 0;
+  if (storyFavorites) storyFavorites.textContent = data.favorites_count || 0;
+  if (storyComments) storyComments.textContent = data.comments_count || 0;
+  if (storyRating) storyRating.textContent = data.rating_average || "0.0";
 }
 
 iniciarStoryView();

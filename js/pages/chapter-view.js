@@ -54,6 +54,8 @@ async function carregarCapitulo() {
 
   renderizarCapitulo(data);
   configurarNavegacaoCapitulos();
+
+  await registrarProgressoDoCapitulo();
 }
 
 async function carregarTodosCapitulosDaHistoria(storyId) {
@@ -90,7 +92,8 @@ function renderizarCapitulo(chapter) {
   }
 
   if (chapterTitle) {
-    chapterTitle.textContent = chapter.title || "Capítulo sem título";
+    chapterTitle.textContent =
+      chapter.title || "Capítulo sem título";
   }
 
   if (chapterNumber) {
@@ -168,6 +171,121 @@ function formatarDataLeitura(data) {
     month: "long",
     year: "numeric"
   });
+}
+
+async function registrarProgressoDoCapitulo() {
+  if (!usuarioLogado || !currentChapter) return;
+
+  const { error } = await supabaseClient
+    .from("story_read_progress")
+    .upsert(
+      {
+        story_id: currentChapter.story_id,
+        chapter_id: currentChapter.id,
+        user_id: usuarioLogado.id,
+        chapter_number: currentChapter.chapter_number
+      },
+      {
+        onConflict: "story_id,chapter_id,user_id"
+      }
+    );
+
+  if (error) {
+    console.error("Erro ao registrar progresso:", error.message);
+    return;
+  }
+
+  await tentarRegistrarLeituraCompleta();
+}
+
+async function tentarRegistrarLeituraCompleta() {
+  if (!usuarioLogado || !currentChapter) return;
+
+  const ultimoCapitulo =
+    storyChapters[storyChapters.length - 1];
+
+  if (!ultimoCapitulo) return;
+
+  const capituloAtualEhUltimo =
+    currentChapter.id === ultimoCapitulo.id;
+
+  if (!capituloAtualEhUltimo) {
+    return;
+  }
+
+  const { data: progresso, error } = await supabaseClient
+    .from("story_read_progress")
+    .select("chapter_number")
+    .eq("story_id", currentChapter.story_id)
+    .eq("user_id", usuarioLogado.id);
+
+  if (error) {
+    console.error("Erro ao verificar progresso:", error.message);
+    return;
+  }
+
+  const capitulosLidos = progresso || [];
+
+  const numerosLidos = capitulosLidos.map(function (item) {
+    return Number(item.chapter_number);
+  });
+
+  const todosCapitulosLidos = storyChapters.every(function (chapter) {
+    return numerosLidos.includes(Number(chapter.chapter_number));
+  });
+
+  if (!todosCapitulosLidos) {
+    return;
+  }
+
+  const { error: readError } = await supabaseClient
+    .from("story_reads")
+    .upsert(
+      {
+        story_id: currentChapter.story_id,
+        user_id: usuarioLogado.id
+      },
+      {
+        onConflict: "story_id,user_id"
+      }
+    );
+
+  if (readError) {
+    console.error("Erro ao registrar leitura completa:", readError.message);
+    return;
+  }
+
+  await atualizarContadorLeiturasHistoria();
+}
+
+async function atualizarContadorLeiturasHistoria() {
+  if (!currentChapter) return;
+
+  const { count, error } = await supabaseClient
+    .from("story_reads")
+    .select("*", {
+      count: "exact",
+      head: true
+    })
+    .eq("story_id", currentChapter.story_id);
+
+  if (error) {
+    console.error("Erro ao contar leituras:", error.message);
+    return;
+  }
+
+  const total = count || 0;
+
+  const { error: updateError } = await supabaseClient
+    .from("stories")
+    .update({
+      views_count: total
+    })
+    .eq("id", currentChapter.story_id);
+
+  if (updateError) {
+    console.error("Erro ao atualizar leituras da história:", updateError.message);
+  }
 }
 
 iniciarChapterView();

@@ -40,15 +40,16 @@ function configurarPreviewCapaHistoria() {
   input.addEventListener("change", function (event) {
     const file = event.target.files[0];
 
+    if (!file) return;
+
     const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
 
     if (!allowedTypes.includes(file.type)) {
       alert("Use uma imagem em JPG, PNG ou WEBP.");
       input.value = "";
+      storyCoverFile = null;
       return;
     }
-
-    if (!file) return;
 
     storyCoverFile = file;
 
@@ -126,6 +127,11 @@ async function criarHistoria(event) {
   const genreInput = document.getElementById("storyGenre");
   const statusInput = document.getElementById("storyStatus");
   const createBtn = document.getElementById("createStoryBtn");
+
+  if (!titleInput || !descriptionInput || !genreInput || !statusInput || !createBtn) {
+    console.error("Campos do formulário de história não encontrados.");
+    return;
+  }
 
   const title = titleInput.value.trim();
   const description = descriptionInput.value.trim();
@@ -261,7 +267,7 @@ async function carregarMinhasHistorias() {
 
         <div class="story-meta">
           <span>👁 ${story.views_count || 0}</span>
-          <span>❤️ ${story.likes_count || 0}</span>
+          <span>❤️ ${story.favorites_count || 0}</span>
           <span>💬 ${story.comments_count || 0}</span>
           <span>⭐ ${story.rating_average || "0.0"}</span>
         </div>
@@ -297,7 +303,11 @@ async function carregarMinhasHistorias() {
 function atualizarResumoHistorias(stories) {
   const storiesCount = document.getElementById("storiesCount");
   const storiesViewsCount = document.getElementById("storiesViewsCount");
-  const storiesLikesCount = document.getElementById("storiesLikesCount");
+
+  const storiesFavoritesCount =
+    document.getElementById("storiesFavoritesCount") ||
+    document.getElementById("storiesLikesCount");
+
   const storiesRatingsAverage = document.getElementById("storiesRatingsAverage");
 
   if (!stories) return;
@@ -308,8 +318,8 @@ function atualizarResumoHistorias(stories) {
     return total + (story.views_count || 0);
   }, 0);
 
-  const totalLikes = stories.reduce(function (total, story) {
-    return total + (story.likes_count || 0);
+  const totalFavorites = stories.reduce(function (total, story) {
+    return total + (story.favorites_count || 0);
   }, 0);
 
   const ratings = stories
@@ -331,7 +341,7 @@ function atualizarResumoHistorias(stories) {
 
   if (storiesCount) storiesCount.textContent = totalStories;
   if (storiesViewsCount) storiesViewsCount.textContent = totalViews;
-  if (storiesLikesCount) storiesLikesCount.textContent = totalLikes;
+  if (storiesFavoritesCount) storiesFavoritesCount.textContent = totalFavorites;
   if (storiesRatingsAverage) storiesRatingsAverage.textContent = averageRating;
 }
 

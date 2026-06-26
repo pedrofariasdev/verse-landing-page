@@ -392,6 +392,28 @@ async function salvarPerfil() {
   window.location.reload();
 }
 
+async function carregarContadorHistoriasPerfil() {
+  const storiesCounter = document.getElementById("profileStoriesCount");
+
+  if (!storiesCounter || !usuarioLogado) return;
+
+  const { count, error } = await supabaseClient
+    .from("stories")
+    .select("*", {
+      count: "exact",
+      head: true
+    })
+    .eq("user_id", usuarioLogado.id);
+
+  if (error) {
+    console.error("Erro ao contar histórias:", error.message);
+    storiesCounter.textContent = "0";
+    return;
+  }
+
+  storiesCounter.textContent = count || 0;
+}
+
 async function atualizarAvatar(event) {
   const file = event.target.files[0];
 
@@ -837,8 +859,10 @@ async function iniciarPerfil() {
   await carregarSugestoes();
   await carregarContadoresFollowPerfil();
   await carregarNotificacoes();
+  await carregarContadorHistoriasPerfil();
   //await carregarBadgeMensagens();
   configurarPesquisaGlobal();
+  
 
   const editAvatarBtn = document.getElementById("editAvatarBtn");
   const avatarInput = document.getElementById("avatarInput");

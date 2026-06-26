@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-
   <link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
 
   <meta charset="UTF-8">
@@ -24,12 +23,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link href="https://fonts.googleapis.com/css2?family=Belleza&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 </head>
 
 <body>
-
-  <!-- NAVBAR -->
 
   <nav class="navbar">
 
@@ -41,69 +37,62 @@
     </div>
 
     <div class="search-wrapper">
-
       <input
         type="text"
         id="globalSearchInput"
         placeholder="Pesquisar na Verse..."
         autocomplete="off">
 
-      <div
-        id="globalSearchResults"
-        class="global-search-results">
-      </div>
-
+      <div id="globalSearchResults" class="global-search-results"></div>
     </div>
 
     <div class="nav-actions">
 
       <a href="../html/feed.html" class="nav-icon-btn">🏠</a>
-
       <a href="../html/stories.html" class="nav-icon-btn">📚</a>
-
       <a href="../html/comunities.html" class="nav-icon-btn">👥</a>
 
       <div class="notification-wrapper">
-
-        <button
-          id="notificationBtn"
-          class="notification-btn"
-          type="button">
-
+        <button id="notificationBtn" class="notification-btn" type="button">
           🔔
-
-          <span
-            id="notificationBadge"
-            class="notification-badge">
-            0
-          </span>
-
+          <span id="notificationBadge" class="notification-badge">0</span>
         </button>
 
+        <div id="notificationDropdown" class="notification-dropdown">
+          <div class="notification-header">
+            <h3>Notificações</h3>
+          </div>
+
+          <div id="notificationList" class="notification-list">
+            <p class="empty-notifications">Nenhuma notificação ainda.</p>
+          </div>
+        </div>
       </div>
 
       <div class="profile-menu-wrapper">
-
-        <button
-          class="profile-menu-btn"
-          id="profileMenuBtn"
-          type="button">
-
-          <div
-            class="nav-avatar"
-            id="navAvatar">
-            V
-          </div>
-
+        <button class="profile-menu-btn" id="profileMenuBtn" type="button">
+          <div class="nav-avatar" id="navAvatar">V</div>
         </button>
 
+        <div class="profile-dropdown" id="profileDropdown">
+          <a href="../html/profile.html">👤 Meu perfil</a>
+
+          <a href="../html/messages.html" class="dropdown-message-link">
+            💬 Mensagens
+            <span id="dropdownMessagesBadge" class="message-dot"></span>
+          </a>
+
+          <a href="../html/settings.html">⚙️ Configurações</a>
+
+          <button id="logoutBtn" type="button">
+            🚪 Sair
+          </button>
+        </div>
       </div>
 
     </div>
 
   </nav>
-
-  <!-- CONTEÚDO -->
 
   <main class="story-view-container">
 
@@ -113,12 +102,8 @@
 
     <section class="story-header">
 
-      <div
-        id="storyCover"
-        class="story-cover-large">
-
+      <div id="storyCover" class="story-cover-large">
         V
-
       </div>
 
       <div class="story-info">
@@ -131,43 +116,29 @@
           Carregando...
         </h1>
 
-        <p
-          id="storyAuthor"
-          class="story-author">
+        <p id="storyAuthor" class="story-author">
           Autor
         </p>
 
         <div class="story-stats">
 
           <div>
-            <strong id="storyViews">
-              0
-            </strong>
-
+            <strong id="storyViews">0</strong>
             <span>Leituras</span>
           </div>
 
           <div>
-            <strong id="storyFavorites">
-             0
-            </strong>
-
+            <strong id="storyFavorites">0</strong>
             <span>Favoritos</span>
           </div>
 
           <div>
-            <strong id="storyComments">
-              0
-            </strong>
-
+            <strong id="storyComments">0</strong>
             <span>Comentários</span>
           </div>
 
           <div>
-            <strong id="storyRating">
-              0.0
-            </strong>
-
+            <strong id="storyRating">0.0</strong>
             <span>Avaliação</span>
           </div>
 
@@ -179,18 +150,14 @@
             type="button"
             id="startReadingBtn"
             class="primary-story-btn">
-
             Começar Leitura
-
           </button>
 
           <button
             type="button"
             id="favoriteStoryBtn"
             class="secondary-story-btn">
-
             Favoritar
-
           </button>
 
         </div>
@@ -217,40 +184,26 @@
 
     </section>
 
-    <!-- SINOPSE -->
-
     <section class="story-description-card">
-
       <h2>Sinopse</h2>
 
       <p id="storyDescription">
-
         Carregando descrição...
-
       </p>
-
     </section>
-
-    <!-- CAPÍTULOS -->
 
     <section class="story-chapters-card">
 
       <div class="story-chapters-header">
-
         <h2>Capítulos</h2>
 
         <span id="chaptersCount">
           0 capítulos
         </span>
-
       </div>
 
-      <div
-        id="storyChaptersList"
-        class="story-chapters-list">
-
+      <div id="storyChaptersList" class="story-chapters-list">
         <p>Carregando capítulos...</p>
-
       </div>
 
     </section>
@@ -282,17 +235,13 @@
         <p>Carregando comentários...</p>
       </div>
 
-    </section>    
+    </section>
 
   </main>
-
-  <!-- SUPABASE -->
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script src="../js/supabaseClient.js"></script>
-
-  <!-- MODULES -->
 
   <script src="../js/modules/auth.js"></script>
   <script src="../js/modules/utils.js"></script>
@@ -301,8 +250,6 @@
   <script src="../js/modules/menu.js"></script>
   <script src="../js/modules/notifications.js"></script>
   <script src="../js/modules/messages.js"></script>
-
-  <!-- PAGE -->
 
   <script src="../js/pages/story-view.js"></script>
 
