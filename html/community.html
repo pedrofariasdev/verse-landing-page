@@ -171,9 +171,9 @@
 
           <div class="community-meta">
 
-            <span id="communityMembers">
-              0 membros
-            </span>
+            <button id="openMembersModalBtn" class="community-meta-btn" type="button">
+              <span id="communityMembers">0 membros</span>
+            </button>
 
             <span id="communityTopics">
               0 tópicos
@@ -374,6 +374,33 @@
 
       <div id="membersList" class="members-list">
         <p>Carregando membros...</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="communityMembersModal" class="topic-modal hidden">
+    <div class="topic-modal-content">
+
+      <div class="topic-modal-header">
+        <h2>Membros da comunidade</h2>
+
+        <button id="closeCommunityMembersModal" class="topic-modal-close" type="button">
+          ×
+        </button>
+      </div>
+
+      <div class="members-search-area">
+        <input
+          type="text"
+          id="communityMembersSearch"
+          placeholder="Pesquisar membro..."
+          autocomplete="off"
+        >
+      </div>
+
+      <div id="communityMembersList" class="members-list">
+        <p class="members-empty">Carregando membros...</p>
       </div>
 
     </div>

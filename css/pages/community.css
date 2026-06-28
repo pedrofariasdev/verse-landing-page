@@ -944,3 +944,68 @@
     justify-content: flex-end;
   }
 }
+
+.discussion-meta {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.discussion-stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.community-meta-btn {
+  border: none;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.community-meta-btn span {
+  display: inline-flex;
+  padding: 8px 14px;
+
+  background: #f8f8f5;
+  border-radius: 999px;
+
+  color: #676F54;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.community-meta-btn:hover span {
+  background: #D7F2BA;
+}
+
+.members-search-area {
+  padding: 18px 24px 0;
+}
+
+.members-search-area input {
+  width: 100%;
+
+  padding: 13px 16px;
+
+  border: 1px solid #ececec;
+  border-radius: 999px;
+
+  background: #f8f8f5;
+  color: #2b2b2b;
+
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+
+  outline: none;
+}
+
+.members-search-area input:focus {
+  border-color: #79B4A9;
+  background: #ffffff;
+}

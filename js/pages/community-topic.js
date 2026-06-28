@@ -6,7 +6,7 @@ const topicId = topicParams.get("id");
 let currentUser = null;
 let currentTopic = null;
 let currentCommunity = null;
-
+let currentUserRole = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
   await loadCurrentUser();
@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   setupBackButtons();
   setupReplyForm();
+  setupReplyLikeButtons();
 });
 
 /* =========================
@@ -45,15 +46,16 @@ async function loadTopic() {
   const { data: topic, error } = await supabaseClient
     .from("community_topics")
     .select(`
-      id,
-      community_id,
-      author_id,
-      title,
-      content,
-      replies_count,
-      views_count,
-      created_at
-    `)
+          id,
+          community_id,
+          author_id,
+          title,
+          content,
+          replies_count,
+          views_count,
+          likes_count,
+          created_at
+        `)
     .eq("id", topicId)
     .single();
 
@@ -86,6 +88,8 @@ async function loadTopic() {
 
   currentCommunity = community || null;
 
+  await loadCurrentUserRole();
+
   currentTopic.communities = community || null;
   currentTopic.profiles = author || null;
 
@@ -97,6 +101,28 @@ async function loadTopic() {
 /* =========================
    RENDERIZAR TÓPICO
 ========================= */
+
+async function loadCurrentUserRole() {
+  if (!currentUser || !currentCommunity?.id) {
+    currentUserRole = null;
+    return;
+  }
+
+  const { data: membership, error } = await supabaseClient
+    .from("community_members")
+    .select("role")
+    .eq("community_id", currentCommunity.id)
+    .eq("user_id", currentUser.id)
+    .maybeSingle();
+
+  if (error) {
+    console.error("Erro ao carregar cargo do usuário:", error);
+    currentUserRole = null;
+    return;
+  }
+
+  currentUserRole = membership?.role || null;
+}
 
 function renderTopic(topic) {
   const authorName =
@@ -141,6 +167,21 @@ function renderTopic(topic) {
     topicContentEl.textContent = topic.content;
   }
 
+  const topicLikeArea = document.getElementById("topicLikeArea");
+
+  if (topicLikeArea) {
+    topicLikeArea.innerHTML = `
+      <button
+        id="topicLikeBtn"
+        class="topic-like-btn"
+        type="button">
+        ♡ ${topic.likes_count || 0} curtidas
+      </button>
+    `;
+
+    setupTopicLikeButton();
+  }
+
   if (repliesCountEl) {
     repliesCountEl.textContent =
       formatCount(topic.replies_count || 0, "resposta", "respostas");
@@ -177,6 +218,78 @@ async function incrementTopicViews(topicId, currentViews) {
   }
 }
 
+function setupReplyLikeButtons() {
+  document.querySelectorAll(".reply-like-btn").forEach((button) => {
+    button.onclick = async () => {
+      const replyId = button.dataset.replyId;
+
+      await toggleReplyLike(replyId);
+    };
+  });
+}
+
+async function toggleReplyLike(replyId) {
+  if (!currentUser) {
+    alert("Você precisa estar logado.");
+    return;
+  }
+
+  const { error } = await supabaseClient.rpc("toggle_reply_like", {
+    target_reply_id: replyId
+  });
+
+  if (error) {
+    console.error("Erro ao curtir:", error);
+    alert("Não foi possível curtir esta resposta.");
+    return;
+  }
+
+  await createReplyLikeNotification(replyId);
+
+  await loadReplies();
+}
+
+async function createReplyLikeNotification(replyId) {
+  const { data: reply, error } = await supabaseClient
+    .from("community_replies")
+    .select(`
+      id,
+      author_id,
+      content
+    `)
+    .eq("id", replyId)
+    .single();
+
+  if (error || !reply) {
+    console.error("Erro ao buscar resposta para notificação:", error);
+    return;
+  }
+
+  if (reply.author_id === currentUser.id) {
+    return;
+  }
+
+  const senderName =
+    currentUser.user_metadata?.full_name ||
+    currentUser.email ||
+    "Alguém";
+
+  const { error: notificationError } = await supabaseClient
+    .from("notifications")
+    .insert({
+      user_id: reply.author_id,
+      sender_id: currentUser.id,
+      type: "reply_like",
+      message: `${senderName} curtiu sua resposta.`,
+      link: `/html/community-topic.html?id=${topicId}`,
+      is_read: false
+    });
+
+  if (notificationError) {
+    console.error("Erro ao criar notificação de curtida:", notificationError);
+  }
+}
+
 /* =========================
    BOTÕES DE VOLTAR
 ========================= */
@@ -209,12 +322,16 @@ async function loadReplies() {
     .select(`
       id,
       content,
+      likes_count,
       created_at,
       profiles:author_id (
         id,
         full_name,
         username,
         avatar_url
+      ),
+      community_reply_likes (
+        user_id
       )
     `)
     .eq("topic_id", topicId)
@@ -251,6 +368,15 @@ async function loadReplies() {
       ? `<img src="${reply.profiles.avatar_url}" alt="${authorName}">`
       : firstLetter;
 
+    const canModerate =
+      currentUserRole === "owner" ||
+      currentUserRole === "moderator";
+
+    const isLiked =
+      reply.community_reply_likes?.some(
+        (like) => like.user_id === currentUser?.id
+      ) || false;
+
     return `
       <article class="reply-card">
         <div class="reply-author">
@@ -276,9 +402,35 @@ async function loadReplies() {
         <div class="reply-content">
           ${escapeHtml(reply.content)}
         </div>
+
+        <div class="reply-footer">
+          <button
+            class="reply-like-btn ${isLiked ? "liked" : ""}"
+            data-reply-id="${reply.id}">
+            ${isLiked ? "♥" : "♡"} ${reply.likes_count || 0}
+          </button>
+        </div>
+
+        ${
+          canModerate
+            ? `
+              <div class="reply-actions">
+                <button
+                  class="delete-reply-btn"
+                  data-reply-id="${reply.id}">
+                  Excluir resposta
+                </button>
+              </div>
+            `
+            : ""
+        }
+
       </article>
     `;
   }).join("");
+
+  setupReplyModerationButtons();
+  setupReplyLikeButtons();
 }
 
 /* =========================
@@ -319,6 +471,8 @@ async function createReply() {
       content
     });
 
+    await createReplyNotification();
+
   if (error) {
     console.error("Erro ao criar resposta:", error);
     alert("Não foi possível publicar a resposta.");
@@ -344,6 +498,111 @@ function updateRepliesCount(change) {
   const newNumber = Math.max(currentNumber + change, 0);
 
   repliesEl.textContent = formatCount(newNumber, "resposta", "respostas");
+}
+
+function setupReplyModerationButtons() {
+  document.querySelectorAll(".delete-reply-btn").forEach((button) => {
+    button.onclick = async () => {
+      const replyId = button.dataset.replyId;
+
+      await deleteReply(replyId);
+    };
+  });
+}
+
+async function deleteReply(replyId) {
+  const canModerate =
+    currentUserRole === "owner" ||
+    currentUserRole === "moderator";
+
+  if (!canModerate) {
+    alert("Você não tem permissão para excluir respostas.");
+    return;
+  }
+
+  const confirmDelete = confirm("Tem certeza que deseja excluir esta resposta?");
+
+  if (!confirmDelete) return;
+
+  const { error } = await supabaseClient.rpc("delete_community_reply", {
+    target_reply_id: replyId
+  });
+
+  if (error) {
+    console.error("Erro ao excluir resposta:", error);
+    alert("Não foi possível excluir a resposta.");
+    return;
+  }
+
+  updateRepliesCount(-1);
+  await loadReplies();
+}
+
+async function createReplyNotification() {
+  if (!currentTopic) return;
+
+  // não notificar a si mesmo
+  if (currentTopic.author_id === currentUser.id) {
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("notifications")
+    .insert({
+      user_id: currentTopic.author_id,
+      sender_id: currentUser.id,
+
+      type: "topic_reply",
+
+      message: `${currentUser.user_metadata?.full_name || "Alguém"} respondeu sua discussão "${currentTopic.title}"`,
+
+      link: `/html/community-topic.html?id=${currentTopic.id}`,
+
+      is_read: false
+    });
+
+  if (error) {
+    console.error("Erro ao criar notificação:", error);
+  }
+}
+
+function setupTopicLikeButton() {
+  const likeBtn = document.getElementById("topicLikeBtn");
+
+  if (!likeBtn) return;
+
+  likeBtn.onclick = async () => {
+    await toggleTopicLike();
+  };
+}
+
+async function toggleTopicLike() {
+  if (!currentUser) {
+    alert("Você precisa estar logado para curtir.");
+    return;
+  }
+
+  if (!currentTopic?.id) return;
+
+  const { data, error } = await supabaseClient.rpc("toggle_topic_like", {
+    target_topic_id: currentTopic.id
+  });
+
+  if (error) {
+    console.error("Erro ao curtir tópico:", error);
+    alert("Não foi possível curtir esta discussão.");
+    return;
+  }
+
+  const newCount = data ?? 0;
+
+  currentTopic.likes_count = newCount;
+
+  const likeBtn = document.getElementById("topicLikeBtn");
+
+  if (likeBtn) {
+    likeBtn.textContent = `♡ ${newCount} curtidas`;
+  }
 }
 
 /* =========================

@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   setupEditCommunityModal();
   setupManageMembersModal();
+  setupCommunityMembersModal();
 
   await loadTopics();
 });
@@ -619,12 +620,13 @@ async function loadTopics() {
   const { data: topics, error } = await supabaseClient
     .from("community_topics")
     .select(`
-    id,
-    title,
-    replies_count,
-    views_count,
-    is_pinned,
-    created_at,
+      id,
+      title,
+      replies_count,
+      views_count,
+      likes_count,
+      is_pinned,
+      created_at,
       profiles:author_id (
         username,
         full_name
@@ -689,6 +691,7 @@ async function loadTopics() {
 
         <div class="topic-meta">
           <span>Por ${authorName}</span>
+          <span>♡ ${topic.likes_count || 0} curtidas</span>
           <span>💬 ${topic.replies_count || 0} respostas</span>
           <span>👁️ ${topic.views_count || 0} visualizações</span>
         </div>
@@ -1050,6 +1053,151 @@ async function deleteTopic(topicId) {
 
   updateTopicsCount(-1);
   await loadTopics();
+}
+
+
+/* =========================
+   MODAL PÚBLICO DE MEMBROS
+========================= */
+
+let allCommunityMembers = [];
+
+function setupCommunityMembersModal() {
+  const openBtn = document.getElementById("openMembersModalBtn");
+  const modal = document.getElementById("communityMembersModal");
+  const closeBtn = document.getElementById("closeCommunityMembersModal");
+  const searchInput = document.getElementById("communityMembersSearch");
+
+  if (!openBtn || !modal) return;
+
+  openBtn.onclick = async () => {
+    modal.classList.remove("hidden");
+    await loadPublicCommunityMembers();
+  };
+
+  closeBtn?.addEventListener("click", () => {
+    modal.classList.add("hidden");
+  });
+
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      modal.classList.add("hidden");
+    }
+  });
+
+  searchInput?.addEventListener("input", () => {
+    renderPublicCommunityMembers(searchInput.value);
+  });
+}
+
+async function loadPublicCommunityMembers() {
+  const list = document.getElementById("communityMembersList");
+
+  if (!list) return;
+
+  list.innerHTML = `<p class="members-empty">Carregando membros...</p>`;
+
+  const { data: members, error } = await supabaseClient
+    .from("community_members")
+    .select(`
+      id,
+      user_id,
+      role,
+      joined_at,
+      profiles:user_id (
+        id,
+        full_name,
+        username,
+        avatar_url
+      )
+    `)
+    .eq("community_id", communityId)
+    .order("role", { ascending: true });
+
+  if (error) {
+    console.error("Erro ao carregar membros:", error);
+    list.innerHTML = `<p class="members-empty">Não foi possível carregar os membros.</p>`;
+    return;
+  }
+
+  allCommunityMembers = members || [];
+
+  renderPublicCommunityMembers("");
+}
+
+function renderPublicCommunityMembers(searchTerm) {
+  const list = document.getElementById("communityMembersList");
+
+  if (!list) return;
+
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+
+  const filteredMembers = allCommunityMembers.filter((member) => {
+    const profile = member.profiles;
+
+    const name = profile?.full_name || "";
+    const username = profile?.username || "";
+
+    return (
+      name.toLowerCase().includes(normalizedSearch) ||
+      username.toLowerCase().includes(normalizedSearch)
+    );
+  });
+
+  if (filteredMembers.length === 0) {
+    list.innerHTML = `<p class="members-empty">Nenhum membro encontrado.</p>`;
+    return;
+  }
+
+  list.innerHTML = filteredMembers.map((member) => {
+    const profile = member.profiles;
+
+    const name =
+      profile?.full_name ||
+      profile?.username ||
+      "Usuário";
+
+    const username =
+      profile?.username ||
+      "usuario";
+
+    const firstLetter = name.charAt(0).toUpperCase();
+
+    const avatar = profile?.avatar_url
+      ? `<img src="${profile.avatar_url}" alt="${name}">`
+      : firstLetter;
+
+    return `
+      <article class="member-row">
+        <div class="member-info">
+          <div class="member-avatar">
+            ${avatar}
+          </div>
+
+          <div class="member-text">
+            <strong>${name}</strong>
+            <span>@${username}</span>
+          </div>
+        </div>
+
+        <div class="member-role-area">
+          <span class="member-role-badge ${member.role}">
+            ${getRoleIcon(member.role)} ${getRoleLabel(member.role)}
+          </span>
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
+function getRoleIcon(role) {
+  const icons = {
+    owner: "👑",
+    moderator: "🛡️",
+    member: "👤"
+  };
+
+  return icons[role] || "👤";
 }
 
 /* =========================
