@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
   <link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
@@ -10,7 +10,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Histórias | Verse</title>
+  <title>Comunidades | Verse</title>
 
   <link rel="stylesheet" href="../css/base/reset.css">
   <link rel="stylesheet" href="../css/base/global.css">
@@ -20,11 +20,8 @@
   <link rel="stylesheet" href="../css/components/notifications.css">
   <link rel="stylesheet" href="../css/components/dropdown.css">
   <link rel="stylesheet" href="../css/components/avatar.css">
-  <link rel="stylesheet" href="../css/components/sidebar.css">
-  <link rel="stylesheet" href="../css/components/suggestions.css">
 
-  <link rel="stylesheet" href="../css/pages/feed.css">
-  <link rel="stylesheet" href="../css/pages/stories.css">
+  <link rel="stylesheet" href="../css/pages/communities.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,7 +30,10 @@
 </head>
 
 <body>
+
+  <!-- NAVBAR -->
   <nav class="navbar">
+
     <div class="logo">
       <a href="../html/feed.html" class="logo-link">
         <h1>VERSE</h1>
@@ -46,15 +46,17 @@
         type="text"
         id="globalSearchInput"
         placeholder="Pesquisar na Verse..."
-        autocomplete="off">
+        autocomplete="off"
+      >
 
       <div id="globalSearchResults" class="global-search-results"></div>
     </div>
 
     <div class="nav-actions">
+
       <a href="../html/feed.html" class="nav-icon-btn" title="Feed">🏠</a>
       <a href="../html/stories.html" class="nav-icon-btn" title="Histórias">📚</a>
-      <a href="../html/communities.html" class="nav-icon-btn" title="Comunidades">👥</a>
+      <a href="../html/communities.html" class="nav-icon-btn active" title="Comunidades">👥</a>
 
       <div class="notification-wrapper">
         <button id="notificationBtn" class="notification-btn" type="button">
@@ -88,107 +90,139 @@
 
           <a href="../html/settings.html">⚙️ Configurações</a>
 
-          <button id="logoutBtn" type="button">
-            🚪 Sair
-          </button>
+          <button id="logoutBtn" type="button">🚪 Sair</button>
         </div>
       </div>
+
     </div>
   </nav>
 
-  <main class="app-layout">
-    <aside class="sidebar-left">
-      <h2>Menu</h2>
+  <!-- PAGE -->
+  <main class="communities-page">
 
-      <div class="logged-user-card">
-        <div class="logged-avatar" id="userAvatar">V</div>
+    <section class="communities-main">
 
-        <div class="logged-user-info">
-          <strong id="userName">Usuário Verse</strong>
-          <p id="userEmail">email@verse.com</p>
-        </div>
-      </div>
+      <section class="communities-hero">
 
-      <nav class="side-menu">
-        <a href="../html/profile.html">Perfil</a>
-        <a href="../html/publications.html">Minhas Publicações</a>
-        <a href="../html/my-stories.html">Minhas Histórias</a>
-        <a href="../html/books.html">Meus Livros</a>
-        <a href="../html/projects.html">Meus Projetos</a>
+        <div class="communities-hero-text">
+          <span class="communities-kicker">Comunidades Verse</span>
 
-        <a href="../html/messages.html" class="sidebar-link message-link">
-          Mensagens
-          <span id="sidebarMessagesBadge" class="message-dot"></span>
-        </a>
-
-        <a href="../html/partnerships.html">Parcerias</a>
-        <a href="../html/events.html">Eventos</a>
-        <a href="../html/settings.html">Configurações</a>
-      </nav>
-    </aside>
-
-    <section class="feed-main stories-main">
-      <div class="stories-header">
-        <div>
-          <span class="page-label">Biblioteca da comunidade</span>
-
-          <h1>Histórias</h1>
+          <h1>Encontre sua comunidade literária</h1>
 
           <p>
-            Descubra histórias publicadas por leitores, escritores e autores da comunidade Verse.
+            Participe de espaços dedicados a livros, escrita, gêneros literários,
+            autores independentes e projetos criativos.
           </p>
         </div>
 
-        <a href="../html/my-stories.html" class="new-story-btn">
-          Criar história
-        </a>
-      </div>
-
-      <div class="stories-sort">
-        <button type="button" class="story-sort-btn active" data-sort="recent">
-          Recentes
+        <button id="openCreateCommunityModal" class="create-community-btn" type="button">
+          Criar comunidade
         </button>
 
-        <button type="button" class="story-sort-btn" data-sort="views">
-          Mais Lidas
-        </button>
+      </section>
 
-        <button type="button" class="story-sort-btn" data-sort="rating">
-          Melhor Avaliadas
-        </button>
-      </div>
+      <section class="communities-tools">
 
-      <div id="storiesGrid" class="stories-grid">
-        <p>Carregando histórias...</p>
-      </div>
+        <div class="communities-search-box">
+          <input
+            type="text"
+            id="communitySearchInput"
+            placeholder="Pesquisar comunidades..."
+            autocomplete="off"
+          >
+        </div>
+
+        <div class="communities-filters">
+          <button class="community-filter-btn active" data-filter="all" type="button">
+            Todas
+          </button>
+
+          <button class="community-filter-btn" data-filter="mine" type="button">
+            Minhas comunidades
+          </button>
+
+          <button class="community-filter-btn" data-filter="popular" type="button">
+            Populares
+          </button>
+
+          <button class="community-filter-btn" data-filter="recent" type="button">
+            Recentes
+          </button>
+        </div>
+
+      </section>
+
+      <section class="communities-grid" id="communitiesGrid">
+        <p class="loading-text">Carregando comunidades...</p>
+      </section>
+
     </section>
 
-    <aside class="sidebar-right">
-      <h2>Sugestões</h2>
-
-      <div class="trend-card">
-        <div class="suggestion-avatar">V</div>
-
-        <span>Comunidade Verse</span>
-
-        <p class="friend-tags">
-          descubra autores · leia capítulos · acompanhe histórias
-        </p>
-
-        <a href="../html/my-stories.html" class="follow-btn">
-          Criar minha história
-        </a>
-      </div>
-
-      <div class="trending-box">
-        <h3>📖 Em Alta na Verse</h3>
-
-        <div id="trendingHashtags">
-          Histórias recentes da comunidade aparecerão aqui.
-        </div>
-      </div>
-    </aside>
   </main>
+
+  <!-- CREATE COMMUNITY MODAL -->
+  <div id="createCommunityModal" class="create-community-modal hidden">
+    <div class="create-community-box">
+
+      <div class="create-community-header">
+        <h2>Criar comunidade</h2>
+
+        <button id="closeCreateCommunityModal" type="button">
+          ×
+        </button>
+      </div>
+
+      <form id="createCommunityForm" class="create-community-form">
+
+        <div class="form-group">
+          <label for="communityNameInput">Nome da comunidade</label>
+
+          <input
+            type="text"
+            id="communityNameInput"
+            placeholder="Ex: Escritores Cristãos"
+            maxlength="60"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="communitySlugInput">Slug</label>
+
+          <input
+            type="text"
+            id="communitySlugInput"
+            placeholder="ex: escritores-cristaos"
+            maxlength="80"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="communityDescriptionInput">Descrição</label>
+
+          <textarea
+            id="communityDescriptionInput"
+            placeholder="Descreva o objetivo da comunidade..."
+            rows="5"
+            required
+          ></textarea>
+        </div>
+
+        <div class="create-community-actions">
+          <button type="button" id="cancelCreateCommunity" class="cancel-create-community">
+            Cancelar
+          </button>
+
+          <button type="submit" class="submit-create-community">
+            Criar comunidade
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../js/supabaseClient.js"></script>
@@ -201,6 +235,7 @@
   <script src="../js/modules/notifications.js"></script>
   <script src="../js/modules/messages.js"></script>
 
-  <script src="../js/pages/stories.js"></script>
+  <script src="../js/pages/communities.js"></script>
+
 </body>
 </html>

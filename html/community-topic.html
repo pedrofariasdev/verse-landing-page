@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
   <link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="../assets/favicon/apple-touch-icon.png">
+  <link rel="manifest" href="../assets/favicon/site.webmanifest">
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Leitura do Capítulo | Verse</title>
+  <title>Discussão | Verse</title>
 
   <link rel="stylesheet" href="../css/base/reset.css">
   <link rel="stylesheet" href="../css/base/global.css">
@@ -16,10 +21,8 @@
   <link rel="stylesheet" href="../css/components/notifications.css">
   <link rel="stylesheet" href="../css/components/dropdown.css">
   <link rel="stylesheet" href="../css/components/avatar.css">
-  <link rel="stylesheet" href="../css/components/sidebar.css">
 
-  <link rel="stylesheet" href="../css/pages/feed.css">
-  <link rel="stylesheet" href="../css/pages/chapter-view.css">
+  <link rel="stylesheet" href="../css/pages/community-topic.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,7 +31,10 @@
 </head>
 
 <body>
+
+  <!-- NAVBAR -->
   <nav class="navbar">
+
     <div class="logo">
       <a href="../html/feed.html" class="logo-link">
         <h1>VERSE</h1>
@@ -41,12 +47,14 @@
         type="text"
         id="globalSearchInput"
         placeholder="Pesquisar na Verse..."
-        autocomplete="off">
+        autocomplete="off"
+      >
 
       <div id="globalSearchResults" class="global-search-results"></div>
     </div>
 
     <div class="nav-actions">
+
       <a href="../html/feed.html" class="nav-icon-btn" title="Feed">🏠</a>
       <a href="../html/stories.html" class="nav-icon-btn" title="Histórias">📚</a>
       <a href="../html/communities.html" class="nav-icon-btn" title="Comunidades">👥</a>
@@ -83,52 +91,83 @@
 
           <a href="../html/settings.html">⚙️ Configurações</a>
 
-          <button id="logoutBtn" type="button">
-            🚪 Sair
-          </button>
+          <button id="logoutBtn" type="button">🚪 Sair</button>
         </div>
       </div>
+
     </div>
   </nav>
 
-  <main class="chapter-reader-layout">
-    <section class="chapter-reader-container">
+  <!-- CONTEÚDO -->
+  <main class="topic-page">
 
-      <a href="#" id="backToStoryBtn" class="chapter-back-link">
-        ← Voltar para a história
-      </a>
+    <section class="topic-shell">
 
-      <header class="chapter-reader-header">
-        <span id="storyTitleLabel" class="story-title-label">
-          Carregando história...
-        </span>
+      <button id="backToCommunityBtn" class="back-community-btn" type="button">
+        ← Voltar para comunidade
+      </button>
 
-        <h1 id="chapterTitle">
-          Carregando capítulo...
+      <article class="topic-card-main">
+
+        <div class="topic-community-link" id="topicCommunityName">
+          Comunidade
+        </div>
+
+        <h1 id="topicTitle">
+          Carregando discussão...
         </h1>
 
-        <div class="chapter-reader-meta">
-          <span id="chapterNumber">Capítulo</span>
-          <span>•</span>
-          <span id="chapterDate">Data</span>
+        <div class="topic-info">
+          <span id="topicAuthor">Por usuário</span>
+          <span id="topicDate">Agora</span>
+          <span id="topicViews">0 visualizações</span>
         </div>
-      </header>
 
-      <article id="chapterContent" class="chapter-content">
-        <p>Carregando conteúdo...</p>
+        <div id="topicContent" class="topic-content">
+          Carregando conteúdo...
+        </div>
+
       </article>
 
-      <div class="chapter-navigation">
-        <button type="button" id="prevChapterBtn">
-          ← Capítulo anterior
-        </button>
+      <section class="replies-section">
 
-        <button type="button" id="nextChapterBtn">
-          Próximo capítulo →
-        </button>
-      </div>
+        <div class="replies-header">
+          <h2>Respostas</h2>
+          <span id="repliesCount">0 respostas</span>
+        </div>
+
+        <div id="repliesContainer" class="replies-container">
+          <div class="empty-replies">
+            <h3>Nenhuma resposta ainda</h3>
+            <p>Seja o primeiro a responder esta discussão.</p>
+          </div>
+        </div>
+
+      </section>
+
+      <section class="reply-form-section">
+
+        <h2>Responder discussão</h2>
+
+        <form id="replyForm" class="reply-form">
+          <textarea
+            id="replyContent"
+            placeholder="Escreva sua resposta..."
+            rows="6"
+            required
+          ></textarea>
+
+          <div class="reply-actions">
+            <button type="submit" id="publishReplyBtn">
+              Publicar resposta
+            </button>
+          </div>
+        </form>
+
+      </section>
 
     </section>
+
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -142,6 +181,8 @@
   <script src="../js/modules/notifications.js"></script>
   <script src="../js/modules/messages.js"></script>
 
-  <script src="../js/pages/chapter-view.js"></script>
+  <script src="../js/pages/community-topic.js"></script>
+
 </body>
+
 </html>

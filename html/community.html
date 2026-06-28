@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+
+    <link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
+
+    <link rel="icon" type="image/png" sizes="32x32"
+        href="../assets/favicon/favicon-32x32.png">
+
+    <link rel="icon" type="image/png" sizes="16x16"
+        href="../assets/favicon/favicon-16x16.png">
+
+    <link rel="apple-touch-icon"
+        href="../assets/favicon/apple-touch-icon.png">
+
+    <link rel="manifest"
+        href="../assets/favicon/site.webmanifest">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Comunidade | Verse</title>
+
+  <link rel="stylesheet" href="../css/base/reset.css">
+  <link rel="stylesheet" href="../css/base/global.css">
+
+  <link rel="stylesheet" href="../css/components/navbar.css">
+  <link rel="stylesheet" href="../css/components/search.css">
+  <link rel="stylesheet" href="../css/components/notifications.css">
+  <link rel="stylesheet" href="../css/components/dropdown.css">
+  <link rel="stylesheet" href="../css/components/avatar.css">
+  <link rel="stylesheet" href="../css/components/sidebar.css">
+  <link rel="stylesheet" href="../css/components/post-card.css">
+  <link rel="stylesheet" href="../css/components/comments.css">
+  <link rel="stylesheet" href="../css/components/hashtags.css">
+  <link rel="stylesheet" href="../css/components/suggestions.css">
+  <link rel="stylesheet" href="../css/components/modal.css">
+  <link rel="stylesheet" href="../css/components/quote-modal.css">
+
+
+  <link rel="stylesheet" href="../css/pages/community.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Belleza&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            <a href="../html/feed.html" class="logo-link">
+                <h1>VERSE</h1>
+                <div class="logo-line"></div>
+            </a>
+        </div>
+
+        <div class="search-wrapper">
+
+        <input
+            type="text"
+            id="globalSearchInput"
+            placeholder="Pesquisar na Verse..."
+            autocomplete="off"
+        >
+
+        <div
+            id="globalSearchResults"
+            class="global-search-results">
+        </div>
+
+        </div>
+
+        <div class="nav-actions">
+
+            <a href="../html/feed.html" class="nav-icon-btn" title="Feed">
+                🏠
+            </a>
+
+            <a href="../html/stories.html" class="nav-icon-btn" title="Histórias">
+                📚
+            </a>
+
+            <a href="../html/communities.html" class="nav-icon-btn" title="Comunidades">
+                👥
+            </a>
+
+            <div class="notification-wrapper">
+
+                <button id="notificationBtn" class="notification-btn" type="button">
+                    🔔
+                    <span id="notificationBadge" class="notification-badge">0</span>
+                </button>
+
+                <div id="notificationDropdown" class="notification-dropdown">
+
+                    <div class="notification-header">
+                    <h3>Notificações</h3>
+                </div>
+
+                <div id="notificationList" class="notification-list">
+                    <p class="empty-notifications">Nenhuma notificação ainda.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="profile-menu-wrapper">
+
+            <button class="profile-menu-btn" id="profileMenuBtn" type="button">
+                <div class="nav-avatar" id="navAvatar">V</div>
+            </button>
+
+            <div class="profile-dropdown" id="profileDropdown">
+                <a href="../html/profile.html">👤 Meu perfil</a>
+                <a href="../html/messages.html" class="dropdown-message-link">
+                    💬 Mensagens
+                    <span id="dropdownMessagesBadge" class="message-dot"></span>
+                </a>
+                <a href="../html/settings.html">⚙️ Configurações</a>
+
+                <button id="logoutBtn" type="button">
+                    🚪 Sair
+                </button>
+            </div>
+        </div>
+    </nav>
+
+  <main class="community-page">
+
+    <!-- HEADER DA COMUNIDADE -->
+
+    <section class="community-header">
+
+      <div class="community-banner" id="communityBanner">
+        <button id="changeBannerBtn" class="community-banner-edit" type="button">
+          Alterar banner
+        </button>
+      </div>
+
+      <div class="community-header-content">
+
+        <div class="community-avatar" id="communityAvatar">
+          <button id="changeAvatarBtn" class="community-image-edit" type="button">
+            ✎
+          </button>
+        </div>
+
+        <div class="community-details">
+
+          <h1 id="communityName">
+            Fantasia
+          </h1>
+
+          <span id="communitySlug" class="community-slug">
+            @fantasia
+          </span>
+
+          <span id="communityRoleBadge" class="community-role-badge hidden">
+            Membro
+          </span>          
+
+          <span id="communityRoleBadge" class="community-role-badge hidden">
+            Dono da comunidade
+          </span>          
+
+          <p id="communityDescription">
+            Discussões sobre fantasia, livros, criaturas, sistemas de magia e mundos fictícios.
+          </p>
+
+          <div class="community-meta">
+
+            <span id="communityMembers">
+              0 membros
+            </span>
+
+            <span id="communityTopics">
+              0 tópicos
+            </span>
+
+          </div>
+
+        </div>
+
+        <div class="community-actions">
+
+          <button id="joinCommunityBtn" class="join-btn">
+            Participar
+          </button>
+
+          <div class="community-menu-wrapper">
+            <button id="communityMenuBtn" class="community-menu-btn">
+              ⋯
+            </button>
+
+            <div id="communityMenu" class="community-menu hidden">
+
+              <button id="editCommunityBtn" class="owner-only hidden">
+                Editar comunidade
+              </button>
+
+              <button id="copyCommunityLinkBtn">
+                Copiar link
+              </button>
+
+              <button id="inviteMembersBtn">
+                Convidar membros
+              </button>
+
+              <button id="manageMembersBtn" class="owner-only hidden">
+                Gerenciar membros
+              </button>
+
+              <button id="leaveCommunityBtn" class="danger">
+                Deixar de participar
+              </button>
+
+              <button id="deleteCommunityBtn" class="danger owner-only hidden">
+                Excluir comunidade
+              </button>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- DISCUSSÕES -->
+
+    <section class="topics-section">
+
+      <div class="topics-header">
+
+        <h2>Discussões</h2>
+
+        <button id="newTopicBtn" class="new-topic-btn">
+          Nova Discussão
+        </button>
+
+      </div>
+
+      <div id="topicsContainer">
+
+        <div class="empty-topics">
+
+          <h3>Nenhuma discussão ainda</h3>
+
+          <p>
+            Seja o primeiro a iniciar uma conversa nesta comunidade.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- MODAL NOVA DISCUSSÃO -->
+  <div id="newTopicModal" class="topic-modal hidden">
+    <div class="topic-modal-content">
+
+      <div class="topic-modal-header">
+        <h2>Nova Discussão</h2>
+
+        <button id="closeTopicModalBtn" class="topic-modal-close">
+          ×
+        </button>
+      </div>
+
+      <form id="newTopicForm" class="new-topic-form">
+
+        <div class="form-group">
+          <label for="topicTitle">Título</label>
+
+          <input
+            type="text"
+            id="topicTitle"
+            placeholder="Ex: Como publicar meu primeiro livro?"
+            maxlength="120"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="topicContent">Conteúdo</label>
+
+          <textarea
+            id="topicContent"
+            placeholder="Escreva o início da discussão..."
+            rows="7"
+            required
+          ></textarea>
+        </div>
+
+        <div class="topic-modal-actions">
+          <button type="button" id="cancelTopicBtn" class="cancel-topic-btn">
+            Cancelar
+          </button>
+
+          <button type="submit" class="publish-topic-btn">
+            Publicar discussão
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+  <div id="editCommunityModal" class="topic-modal hidden">
+    <div class="topic-modal-content">
+
+      <div class="topic-modal-header">
+        <h2>Editar comunidade</h2>
+
+        <button id="closeEditCommunityModal" class="topic-modal-close" type="button">
+          ×
+        </button>
+      </div>
+
+      <form id="editCommunityForm" class="new-topic-form">
+
+        <div class="form-group">
+          <label for="editCommunityName">Nome</label>
+          <input type="text" id="editCommunityName" required>
+        </div>
+
+        <div class="form-group">
+          <label for="editCommunityDescription">Descrição</label>
+          <textarea id="editCommunityDescription" rows="5" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="editCommunityAvatar">URL do avatar</label>
+          <input type="text" id="editCommunityAvatar" placeholder="https://...">
+        </div>
+
+        <div class="form-group">
+          <label for="editCommunityBanner">URL do banner</label>
+          <input type="text" id="editCommunityBanner" placeholder="https://...">
+        </div>
+
+        <div class="topic-modal-actions">
+          <button type="button" id="cancelEditCommunity" class="cancel-topic-btn">
+            Cancelar
+          </button>
+
+          <button type="submit" class="publish-topic-btn">
+            Salvar alterações
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+  <div id="manageMembersModal" class="topic-modal hidden">
+    <div class="topic-modal-content">
+
+      <div class="topic-modal-header">
+        <h2>Gerenciar membros</h2>
+
+        <button id="closeManageMembersModal" class="topic-modal-close" type="button">
+          ×
+        </button>
+      </div>
+
+      <div id="membersList" class="members-list">
+        <p>Carregando membros...</p>
+      </div>
+
+    </div>
+  </div>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabaseClient.js"></script>
+
+    <script src="../js/modules/auth.js"></script>
+
+    <script src="../js/modules/utils.js"></script>
+    <script src="../js/modules/avatar.js"></script>
+    <script src="../js/modules/search.js"></script>
+    <script src="../js/modules/menu.js"></script>
+    <script src="../js/modules/notifications.js"></script>
+    <script src="../js/modules/messages.js"></script>
+    <script src="../js/modules/hashtags.js"></script>
+    <script src="../js/modules/comments.js"></script>
+    <script src="../js/modules/likes.js"></script>
+    <script src="../js/modules/posts.js"></script>
+    <script src="../js/modules/share.js"></script>
+    <script src="../js/modules/reposts.js"></script>
+    <script src="../js/modules/quotes.js"></script>
+
+  <script src="../js/pages/community.js"></script>
+
+</body>
+</html>
