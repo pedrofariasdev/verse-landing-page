@@ -171,6 +171,53 @@ async function criarPost() {
   await carregarHashtagsEmAlta();
 }
 
+async function loadSuggestedCommunity() {
+  const container = document.getElementById("suggestedCommunityCard");
+
+  if (!container) return;
+
+  const { data: communities, error } = await supabaseClient
+    .from("communities")
+    .select("id, name, slug, description, avatar_url, members_count, topics_count")
+    .limit(20);
+
+  if (error) {
+    console.error("Erro ao carregar comunidade sugerida:", error);
+    return;
+  }
+
+  if (!communities || communities.length === 0) return;
+
+  const randomCommunity =
+    communities[Math.floor(Math.random() * communities.length)];
+
+  const avatar = randomCommunity.avatar_url
+    ? `<img src="${randomCommunity.avatar_url}" alt="${randomCommunity.name}">`
+    : randomCommunity.name.charAt(0).toUpperCase();
+
+  container.innerHTML = `
+    <div class="suggested-community-card">
+      <div class="suggested-community-avatar">
+        ${avatar}
+      </div>
+
+      <h3>${randomCommunity.name}</h3>
+      <p>@${randomCommunity.slug}</p>
+
+      <span>
+        ${randomCommunity.members_count || 0} membros ·
+        ${randomCommunity.topics_count || 0} discussões
+      </span>
+
+      <a
+        class="follow-btn"
+        href="../html/community.html?id=${randomCommunity.id}">
+        Explorar
+      </a>
+    </div>
+  `;
+}
+
 
 async function uploadImagemPost() {
   if (!imagemSelecionada || !usuarioLogado) return null;
@@ -357,6 +404,7 @@ async function iniciarFeed() {
   configurarPesquisaGlobal();
   configurarModalRepost();
   configurarModalQuote();
+  loadSuggestedCommunity();
 }
 
 iniciarFeed();

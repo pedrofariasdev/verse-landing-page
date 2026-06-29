@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   setupEditCommunityModal();
   setupManageMembersModal();
   setupCommunityMembersModal();
+  await loadPublicCommunityMembers();
 
   await loadTopics();
 });
@@ -446,12 +447,6 @@ function openEditCommunityModal() {
   document.getElementById("editCommunityDescription").value =
     currentCommunity.description || "";
 
-  document.getElementById("editCommunityAvatar").value =
-    currentCommunity.avatar_url || "";
-
-  document.getElementById("editCommunityBanner").value =
-    currentCommunity.banner_url || "";
-
   modal.classList.remove("hidden");
 }
 
@@ -492,12 +487,39 @@ async function updateCommunity() {
 
   const name = document.getElementById("editCommunityName").value.trim();
   const description = document.getElementById("editCommunityDescription").value.trim();
-  const avatar_url = document.getElementById("editCommunityAvatar").value.trim();
-  const banner_url = document.getElementById("editCommunityBanner").value.trim();
+
+  const avatarInput = document.getElementById("editCommunityAvatar");
+  const bannerInput = document.getElementById("editCommunityBanner");
+
+  const avatarFile = avatarInput?.files?.[0] || null;
+  const bannerFile = bannerInput?.files?.[0] || null;
 
   if (!name || !description) {
     alert("Nome e descrição são obrigatórios.");
     return;
+  }
+
+  let avatarUrl = currentCommunity.avatar_url || null;
+  let bannerUrl = currentCommunity.banner_url || null;
+
+  if (avatarFile) {
+    avatarUrl = await uploadCommunityImage(
+      avatarFile,
+      "avatar-community",
+      "avatar"
+    );
+
+    if (!avatarUrl) return;
+  }
+
+  if (bannerFile) {
+    bannerUrl = await uploadCommunityImage(
+      bannerFile,
+      "banner-community",
+      "banner"
+    );
+
+    if (!bannerUrl) return;
   }
 
   const { error } = await supabaseClient
@@ -505,8 +527,8 @@ async function updateCommunity() {
     .update({
       name,
       description,
-      avatar_url: avatar_url || null,
-      banner_url: banner_url || null
+      avatar_url: avatarUrl,
+      banner_url: bannerUrl
     })
     .eq("id", communityId);
 
@@ -518,7 +540,50 @@ async function updateCommunity() {
 
   document.getElementById("editCommunityModal").classList.add("hidden");
 
+  const form = document.getElementById("editCommunityForm");
+  form?.reset();
+
   await loadCommunity();
+}
+
+async function uploadCommunityImage(file, bucketName, folderName) {
+  if (!file) return null;
+
+  const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+
+  if (!allowedTypes.includes(file.type)) {
+    alert("Use uma imagem JPG, PNG ou WEBP.");
+    return null;
+  }
+
+  const maxSize = 5 * 1024 * 1024;
+
+  if (file.size > maxSize) {
+    alert("A imagem precisa ter no máximo 5MB.");
+    return null;
+  }
+
+  const fileExtension = file.name.split(".").pop();
+  const fileName = `${folderName}/${communityId}-${Date.now()}.${fileExtension}`;
+
+  const { error: uploadError } = await supabaseClient.storage
+    .from(bucketName)
+    .upload(fileName, file, {
+      cacheControl: "3600",
+      upsert: true
+    });
+
+  if (uploadError) {
+    console.error("Erro ao enviar imagem:", uploadError);
+    alert("Não foi possível enviar a imagem.");
+    return null;
+  }
+
+  const { data } = supabaseClient.storage
+    .from(bucketName)
+    .getPublicUrl(fileName);
+
+  return data.publicUrl;
 }
 
 /* =========================
@@ -628,6 +693,7 @@ async function loadTopics() {
       is_pinned,
       created_at,
       profiles:author_id (
+        id,
         username,
         full_name
       )
@@ -656,6 +722,9 @@ async function loadTopics() {
       topic.profiles?.full_name ||
       topic.profiles?.username ||
       "Usuário";
+
+      const authorRole = getTopicAuthorRole(topic.profiles?.id);
+      const authorRoleIcon = getRoleIcon(authorRole);
 
       const canModerate =
         currentUserRole === "owner" ||
@@ -690,7 +759,7 @@ async function loadTopics() {
         </div>
 
         <div class="topic-meta">
-          <span>Por ${authorName}</span>
+          <span>Por ${authorRoleIcon} ${authorName}</span>
           <span>♡ ${topic.likes_count || 0} curtidas</span>
           <span>💬 ${topic.replies_count || 0} respostas</span>
           <span>👁️ ${topic.views_count || 0} visualizações</span>
@@ -1198,6 +1267,17 @@ function getRoleIcon(role) {
   };
 
   return icons[role] || "👤";
+}
+
+
+function getTopicAuthorRole(authorId) {
+  if (!authorId) return "member";
+
+  const member = allCommunityMembers.find(
+    (item) => item.user_id === authorId
+  );
+
+  return member?.role || "member";
 }
 
 /* =========================

@@ -7,6 +7,7 @@ let currentUser = null;
 let currentTopic = null;
 let currentCommunity = null;
 let currentUserRole = null;
+let allCommunityMembers = [];
 
 document.addEventListener("DOMContentLoaded", async () => {
   await loadCurrentUser();
@@ -91,6 +92,9 @@ async function loadTopic() {
   await loadCurrentUserRole();
 
   currentTopic.communities = community || null;
+
+  await loadCommunityMembersRoles();
+
   currentTopic.profiles = author || null;
 
   renderTopic(currentTopic);
@@ -362,6 +366,12 @@ async function loadReplies() {
       reply.profiles?.username ||
       "usuario";
 
+    const authorRole = getReplyAuthorRole(
+      reply.profiles?.id
+    );
+
+    const roleIcon = getRoleIcon(authorRole);
+
     const firstLetter = authorName.charAt(0).toUpperCase();
 
     const avatar = reply.profiles?.avatar_url
@@ -386,7 +396,9 @@ async function loadReplies() {
           </div>
 
           <div class="reply-author-info">
-            <strong>${authorName}</strong>
+            <strong>
+              ${authorName} ${roleIcon}
+            </strong>
 
             <span class="reply-username">
               @${username}
@@ -602,6 +614,55 @@ async function toggleTopicLike() {
 
   if (likeBtn) {
     likeBtn.textContent = `♡ ${newCount} curtidas`;
+  }
+}
+
+function getReplyAuthorRole(authorId) {
+  if (!authorId) return "member";
+
+  const member = allCommunityMembers.find(
+    member => member.user_id === authorId
+  );
+
+  return member?.role || "member";
+}
+
+
+async function loadCommunityMembersRoles() {
+  if (!currentTopic?.community_id) return;
+
+  const { data, error } = await supabaseClient
+    .from("community_members")
+    .select(`
+      user_id,
+      role
+    `)
+    .eq("community_id", currentTopic.community_id);
+
+  if (error) {
+    console.error(
+      "Erro ao carregar cargos:",
+      error
+    );
+    return;
+  }
+
+  allCommunityMembers = data || [];
+}
+
+function getRoleIcon(role) {
+  switch (role) {
+    case "owner":
+      return "👑";
+
+    case "moderator":
+      return "🛡️";
+
+    case "member":
+      return "👤";
+
+    default:
+      return "";
   }
 }
 

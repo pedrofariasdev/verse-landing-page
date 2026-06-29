@@ -1009,3 +1009,54 @@
   border-color: #79B4A9;
   background: #ffffff;
 }
+
+/* Upload de imagem */
+
+#createCommunityModal input[type="file"],
+#editCommunityModal input[type="file"] {
+  width: 100%;
+
+  padding: 12px;
+
+  border: 2px dashed #79B4A9;
+  border-radius: 12px;
+
+  background: #f8fbfa;
+
+  color: #676F54;
+
+  font-size: 14px;
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+#createCommunityModal input[type="file"]:hover,
+#editCommunityModal input[type="file"]:hover {
+  background: #eef8f6;
+  border-color: #5e9f93;
+}
+
+#createCommunityModal input[type="file"]::file-selector-button,
+#editCommunityModal input[type="file"]::file-selector-button {
+  margin-right: 12px;
+
+  padding: 8px 14px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #79B4A9;
+  color: white;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+#createCommunityModal input[type="file"]::file-selector-button:hover,
+#editCommunityModal input[type="file"]::file-selector-button:hover {
+  background: #5e9f93;
+}
