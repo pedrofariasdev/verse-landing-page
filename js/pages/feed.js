@@ -382,12 +382,12 @@ async function alternarFollowSugestao(userId, button) {
 }
 
 async function checkOnboarding() {
-  if (!currentUser) return;
+  if (!usuarioLogado) return;
 
   const { data: profile, error } = await supabaseClient
     .from("profiles")
     .select("onboarding_completed")
-    .eq("id", currentUser.id)
+    .eq("id", usuarioLogado.id)
     .single();
 
   if (error) {
@@ -403,7 +403,10 @@ async function checkOnboarding() {
 function openOnboardingModal() {
   const modal = document.getElementById("onboardingModal");
 
-  if (!modal) return;
+  if (!modal) {
+    console.error("Modal onboardingModal não encontrado no HTML.");
+    return;
+  }
 
   modal.classList.remove("hidden");
 
@@ -439,14 +442,14 @@ function setupOnboardingActions() {
 }
 
 async function completeOnboarding() {
-  if (!currentUser) return;
+  if (!usuarioLogado) return;
 
   const { error } = await supabaseClient
     .from("profiles")
     .update({
       onboarding_completed: true
     })
-    .eq("id", currentUser.id);
+    .eq("id", usuarioLogado.id);
 
   if (error) {
     console.error("Erro ao concluir onboarding:", error);
@@ -459,6 +462,7 @@ async function iniciarFeed() {
   await carregarPosts();
   await carregarSugestoes();
   await carregarNotificacoes();
+  await checkOnboarding();
   //await carregarBadgeMensagens();
 
   const publishBtn = document.getElementById("publishBtn");
