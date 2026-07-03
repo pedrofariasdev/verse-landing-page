@@ -381,6 +381,78 @@ async function alternarFollowSugestao(userId, button) {
   button.disabled = false;
 }
 
+async function checkOnboarding() {
+  if (!currentUser) return;
+
+  const { data: profile, error } = await supabaseClient
+    .from("profiles")
+    .select("onboarding_completed")
+    .eq("id", currentUser.id)
+    .single();
+
+  if (error) {
+    console.error("Erro ao verificar onboarding:", error);
+    return;
+  }
+
+  if (!profile?.onboarding_completed) {
+    openOnboardingModal();
+  }
+}
+
+function openOnboardingModal() {
+  const modal = document.getElementById("onboardingModal");
+
+  if (!modal) return;
+
+  modal.classList.remove("hidden");
+
+  setupOnboardingActions();
+}
+
+function setupOnboardingActions() {
+  document.getElementById("completeProfileBtn")?.addEventListener("click", async () => {
+    await completeOnboarding();
+    window.location.href = "../html/profile.html";
+  });
+
+  document.getElementById("joinVerseCommunityBtn")?.addEventListener("click", async () => {
+    await completeOnboarding();
+    window.location.href = "../html/community.html?id=a0bc1dba-e42d-4357-90e6-5ffc91d0a6f1";
+  });
+
+  document.getElementById("createFirstPostBtn")?.addEventListener("click", async () => {
+    await completeOnboarding();
+
+    const modal = document.getElementById("onboardingModal");
+    modal?.classList.add("hidden");
+
+    document.getElementById("postContent")?.focus();
+  });
+
+  document.getElementById("skipOnboardingBtn")?.addEventListener("click", async () => {
+    await completeOnboarding();
+
+    const modal = document.getElementById("onboardingModal");
+    modal?.classList.add("hidden");
+  });
+}
+
+async function completeOnboarding() {
+  if (!currentUser) return;
+
+  const { error } = await supabaseClient
+    .from("profiles")
+    .update({
+      onboarding_completed: true
+    })
+    .eq("id", currentUser.id);
+
+  if (error) {
+    console.error("Erro ao concluir onboarding:", error);
+  }
+}
+
 
 async function iniciarFeed() {
   await carregarUsuarioLogado();
