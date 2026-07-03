@@ -382,7 +382,12 @@ async function alternarFollowSugestao(userId, button) {
 }
 
 async function checkOnboarding() {
-  if (!usuarioLogado) return;
+  console.log("Verificando onboarding...");
+
+  if (!usuarioLogado) {
+    console.log("Usuário não encontrado.");
+    return;
+  }
 
   const { data: profile, error } = await supabaseClient
     .from("profiles")
@@ -390,12 +395,15 @@ async function checkOnboarding() {
     .eq("id", usuarioLogado.id)
     .single();
 
+  console.log("Profile:", profile);
+
   if (error) {
-    console.error("Erro ao verificar onboarding:", error);
+    console.error("Erro onboarding:", error);
     return;
   }
 
   if (!profile?.onboarding_completed) {
+    console.log("Abrindo modal...");
     openOnboardingModal();
   }
 }
@@ -459,10 +467,12 @@ async function completeOnboarding() {
 
 async function iniciarFeed() {
   await carregarUsuarioLogado();
+
+  await checkOnboarding();
+
   await carregarPosts();
   await carregarSugestoes();
   await carregarNotificacoes();
-  await checkOnboarding();
   //await carregarBadgeMensagens();
 
   const publishBtn = document.getElementById("publishBtn");
