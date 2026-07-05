@@ -6,11 +6,16 @@ body {
   font-family: "Inter", Arial, sans-serif;
   background: linear-gradient(135deg, #f8f8f5, #D7F2BA);
   min-height: 100vh;
-  overflow: hidden;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
   display: flex;
   align-items: center;
-  justify-content: right;
+  justify-content: center;
+
   padding: 20px;
+
   line-height: 1.6;
   color: #2b2b2b;
 }
@@ -246,77 +251,83 @@ body {
 
 @media (max-width: 900px) {
   body {
-    justify-content: center;
-    padding: 20px;
+    display: block;
+    padding: 0;
   }
 
   .back-button {
-    top: 20px;
-    left: 20px;
+    position: relative;
+    top: auto;
+    left: auto;
+
+    display: inline-flex;
+
+    margin: 18px 0 0 18px;
     font-size: 16px;
   }
 
   .page-cadastro {
+    min-height: auto;
+
     flex-direction: column;
-    gap: 25px;
-    padding: 80px 20px 30px;
+    gap: 20px;
+
+    padding: 20px 16px 40px;
   }
 
   .left-side {
     order: 1;
+    width: 100%;
   }
 
   .cadastro-container {
     order: 2;
-    max-width: 420px;
+
+    width: 100%;
+    max-width: 430px;
   }
 
   .page-cadastro-image img {
-    max-width: 300px;
+    max-width: 240px;
+    margin: 0 auto;
+  }
+
+  .quote {
+    margin-top: 8px;
+    padding: 0 12px;
   }
 
   .quote p {
-    font-size: 18px;
+    font-size: 17px;
   }
 
   .quote span {
-    font-size: 13px;
-  }
-
-  .cadastro-logo h1 {
-    font-size: 46px;
-  }
-
-  .cadastro-header h2 {
-    font-size: 2rem;
+    font-size: 12px;
   }
 
   .cadastro-card {
-    padding: 28px;
+    width: 100%;
+
+    padding: 26px 20px;
     border-radius: 24px;
   }
-}
 
-@media (max-width: 480px) {
-  .page-cadastro {
-    padding: 75px 12px 25px;
-  }
-
-  .page-cadastro-image img {
-    max-width: 230px;
-  }
-
-  .cadastro-card {
-    padding: 24px 20px;
+  .cadastro-logo {
+    margin-bottom: 20px;
   }
 
   .cadastro-logo h1 {
-    font-size: 40px;
+    font-size: 42px;
     letter-spacing: 4px;
   }
 
   .cadastro-logo .logo-line {
     width: 110px;
+    height: 3px;
+  }
+
+  .cadastro-header {
+    margin-bottom: 22px;
   }
 
   .cadastro-header h2 {
@@ -328,11 +339,57 @@ body {
   }
 
   .input-wrapper input {
+    height: 58px;
+    padding: 22px 52px 8px 18px;
+
+    font-size: 16px;
+    border-radius: 18px;
+  }
+
+  .input-wrapper label {
+    left: 18px;
     font-size: 15px;
-    padding: 15px 16px 10px;
+  }
+
+  .input-wrapper input:focus + label,
+  .input-wrapper input:valid + label {
+    top: 14px;
+    font-size: 12px;
+  }
+
+  .password-toggle {
+    right: 18px;
   }
 
   .cadastro-btn {
-    padding: 14px 20px;
+    min-height: 48px;
+    padding: 14px 18px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 380px) {
+  .page-cadastro {
+    padding: 16px 12px 32px;
+  }
+
+  .page-cadastro-image img {
+    max-width: 190px;
+  }
+
+  .cadastro-card {
+    padding: 22px 16px;
+  }
+
+  .cadastro-logo h1 {
+    font-size: 36px;
+  }
+
+  .cadastro-header h2 {
+    font-size: 1.45rem;
+  }
+
+  .quote p {
+    font-size: 15px;
   }
 }
