@@ -551,3 +551,77 @@ body.dark-theme {
     font-size: 26px;
   }
 }
+
+.hamburger-btn {
+  display: none;
+
+  border: none;
+  background: transparent;
+
+  font-size: 30px;
+  color: #676F54;
+
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    position: relative;
+  }
+
+  .hamburger-btn {
+    display: block;
+  }
+
+  .mobile-menu {
+    display: none;
+
+    position: absolute;
+    top: 100%;
+    left: 16px;
+    right: 16px;
+
+    padding: 18px;
+
+    background: #ffffff;
+
+    border: 1px solid rgba(103, 111, 84, 0.12);
+    border-radius: 22px;
+
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+
+    z-index: 999;
+  }
+
+  .mobile-menu.show {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .mobile-menu .menu-buttons,
+  .mobile-menu .nav-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .mobile-menu a {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .menu-buttons,
+  .nav-buttons {
+    display: none;
+  }
+
+  .mobile-menu.show .menu-buttons,
+  .mobile-menu.show .nav-buttons {
+    display: flex;
+  }
+
+}
