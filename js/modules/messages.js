@@ -128,7 +128,7 @@ async function abrirConversa(userProfile) {
 
   await marcarMensagensComoLidas(conversaSelecionada.id);
   await carregarConversas();
-  //await carregarBadgeMensagens();
+  await carregarBadgeMensagens();
 
   document.querySelectorAll(".conversation-item").forEach(item => {
     item.classList.remove("active");
@@ -345,7 +345,7 @@ async function marcarMensagensComoLidas(usuarioId) {
     console.error("Erro ao marcar mensagens como lidas:", error.message);
   }
 
-  //await carregarBadgeMensagens();
+  await carregarBadgeMensagens();
 }
 
 

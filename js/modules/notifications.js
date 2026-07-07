@@ -11,6 +11,8 @@ async function carregarNotificacoes() {
 
   const userId = authData.user.id;
 
+  await carregarBadgeMensagens();
+
   const { data: notifications, error } = await supabaseClient
     .from("notifications")
     .select("*")
@@ -132,4 +134,41 @@ async function criarNotificacao(userId, senderId, type, message, link = null) {
   if (error) {
     console.error("Erro ao criar notificação:", error.message);
   }
+}
+
+async function carregarBadgeMensagens() {
+  const sidebarBadge = document.getElementById("sidebarMessagesBadge");
+  const dropdownBadge = document.getElementById("dropdownMessagesBadge");
+
+  const { data: authData, error: authError } =
+    await supabaseClient.auth.getUser();
+
+  if (authError || !authData.user) return;
+
+  const userId = authData.user.id;
+
+  const { count, error } = await supabaseClient
+    .from("messages")
+    .select("*", { count: "exact", head: true })
+    .eq("receiver_id", userId)
+    .eq("is_read", false);
+
+  if (error) {
+    console.error("Erro ao carregar badge de mensagens:", error.message);
+    return;
+  }
+
+  const unreadCount = count || 0;
+
+  [sidebarBadge, dropdownBadge].forEach((badge) => {
+    if (!badge) return;
+
+    if (unreadCount > 0) {
+      badge.textContent = unreadCount;
+      badge.classList.add("show");
+    } else {
+      badge.textContent = "";
+      badge.classList.remove("show");
+    }
+  });
 }

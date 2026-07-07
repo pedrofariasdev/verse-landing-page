@@ -863,7 +863,7 @@ async function iniciarPerfil() {
   await carregarContadoresFollowPerfil();
   await carregarNotificacoes();
   await carregarContadorHistoriasPerfil();
-  //await carregarBadgeMensagens();
+  await carregarBadgeMensagens();
   configurarPesquisaGlobal();
   
 
