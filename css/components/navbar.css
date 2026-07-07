@@ -88,3 +88,174 @@
   background: #79B4A9;
   transform: translateY(-2px);
 }
+
+@media (max-width: 768px) {
+  .navbar {
+    height: 88px;
+    padding: 0 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    overflow: hidden;
+  }
+
+  .logo h1,
+  .logo-link h1 {
+    font-size: 38px;
+    letter-spacing: 4px;
+  }
+
+  .logo-line {
+    height: 3px;
+  }
+
+  .search-wrapper {
+    display: none;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .nav-icon-btn {
+    display: none;
+  }
+
+  .notification-btn,
+  .profile-menu-btn {
+    width: 46px;
+    height: 46px;
+  }
+
+  .nav-avatar {
+    width: 46px;
+    height: 46px;
+  }
+}
+@media (max-width: 768px) {
+  .profile-menu-wrapper {
+    position: relative;
+  }
+
+  .profile-dropdown {
+    position: fixed;
+
+    top: 82px;
+    right: 12px;
+    left: 12px;
+
+    width: auto;
+    max-width: none;
+
+    z-index: 3000;
+
+    padding: 14px;
+
+    border-radius: 22px;
+    background: #ffffff;
+
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+  }
+
+  .profile-dropdown a,
+  .profile-dropdown button {
+    width: 100%;
+
+    padding: 14px 16px;
+
+    font-size: 15px;
+    text-align: left;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-menu-wrapper {
+    position: relative;
+  }
+
+  .profile-dropdown {
+    position: fixed;
+    top: 88px;
+    left: 12px;
+    right: 12px;
+
+    width: auto;
+    max-width: none;
+
+    z-index: 5000;
+
+    display: none;
+
+    padding: 14px;
+
+    background: #ffffff;
+    border: 1px solid #ececec;
+    border-radius: 22px;
+
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+  }
+
+  .profile-dropdown.show {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .profile-dropdown a,
+  .profile-dropdown button {
+    width: 100%;
+    padding: 14px 16px;
+
+    text-align: left;
+    font-size: 15px;
+
+    border-radius: 14px;
+  }
+}
+
+.navbar {
+  overflow: visible;
+  z-index: 9000;
+}
+
+.profile-menu-wrapper {
+  position: relative;
+  z-index: 9100;
+}
+
+.profile-dropdown {
+  z-index: 9999;
+}
+
+.profile-dropdown.show {
+  display: flex;
+}
+
+@media (max-width: 768px) {
+  .profile-dropdown.show {
+    position: fixed;
+
+    top: 80px;
+    left: auto;
+    right: 10px;
+    width: 220px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    background: #ffffff;
+    border: 1px solid #ececec;
+    border-radius: 22px;
+    padding: 14px;
+
+    z-index: 99999;
+
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
+  }
+}

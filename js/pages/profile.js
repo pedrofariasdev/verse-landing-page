@@ -854,7 +854,10 @@ async function carregarComentarios(postId) {
 
 
 async function iniciarPerfil() {
+
   await carregarPerfil();
+  configurarMenuPerfil();
+  configurarNotificacoes();
   await carregarPostsDoPerfil();
   await carregarSugestoes();
   await carregarContadoresFollowPerfil();
@@ -894,8 +897,7 @@ async function iniciarPerfil() {
     saveProfileBtn.addEventListener("click", salvarPerfil);
   }
 
-  configurarMenuPerfil();
-  configurarNotificacoes();
+
   configurarPesquisaGlobal();
   configurarCompartilhamentoPost();
 }
