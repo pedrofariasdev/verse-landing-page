@@ -17,3 +17,30 @@ function formatarTempo(dataPost) {
 
 const slides = document.querySelectorAll(".slide");
 
+function gerarLinkPerfil(userId) {
+  if (!userId) return "#";
+
+  return `../html/public-profile.html?id=${userId}`;
+}
+
+function criarNomeUsuarioClicavel(user) {
+  if (!user) {
+    return `
+      <strong>Usuário Verse</strong>
+      <span>@usuario</span>
+    `;
+  }
+
+  const link = gerarLinkPerfil(user.id);
+
+  return `
+    <a href="${link}" class="user-clickable">
+      <strong>${user.full_name || "Usuário Verse"}</strong>
+    </a>
+
+    <a href="${link}" class="user-clickable muted">
+      <span>@${user.username || "usuario"}</span>
+    </a>
+  `;
+}
+

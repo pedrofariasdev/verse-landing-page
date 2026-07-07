@@ -35,12 +35,28 @@ async function carregarNotificacoes() {
     return;
   }
 
-  const unreadCount = notifications.filter(item => !item.is_read).length;
+  const unreadNotifications =
+    notifications.filter(item => !item.is_read).length;
 
-  if (unreadCount > 0) {
-    notificationBadge.textContent = unreadCount;
+  const { count: unreadMessages, error: messagesError } =
+    await supabaseClient
+      .from("messages")
+      .select("*", { count: "exact", head: true })
+      .eq("receiver_id", userId)
+      .eq("is_read", false);
+
+  if (messagesError) {
+    console.error("Erro ao contar mensagens não lidas:", messagesError.message);
+  }
+
+  const totalBadge =
+    unreadNotifications + (unreadMessages || 0);
+
+  if (totalBadge > 0) {
+    notificationBadge.textContent = totalBadge;
     notificationBadge.classList.add("show");
   } else {
+    notificationBadge.textContent = "0";
     notificationBadge.classList.remove("show");
   }
 
