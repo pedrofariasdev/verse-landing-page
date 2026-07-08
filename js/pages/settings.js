@@ -1,8 +1,5 @@
 console.log("Settings.js carregado!");
 
-
-
-
 async function carregarUsuario() {
   const { data, error } = await supabaseClient.auth.getUser();
 
@@ -39,26 +36,19 @@ async function carregarUsuario() {
 
   if (navAvatar) {
     navAvatar.textContent = firstLetter;
-  }
 
-  if (perfilLogado.avatar_url && navAvatar) {
-    navAvatar.style.backgroundImage = `url(${perfilLogado.avatar_url})`;
-    navAvatar.style.backgroundSize = "cover";
-    navAvatar.style.backgroundPosition = "center";
-    navAvatar.style.color = "transparent";
+    if (perfilLogado.avatar_url) {
+      navAvatar.style.backgroundImage = `url(${perfilLogado.avatar_url})`;
+      navAvatar.style.backgroundSize = "cover";
+      navAvatar.style.backgroundPosition = "center";
+      navAvatar.style.color = "transparent";
+    } else {
+      navAvatar.style.backgroundImage = "none";
+      navAvatar.style.color = "#ffffff";
+    }
   }
 
   carregarConfiguracoesNaTela();
-}
-
-function aplicarTema(theme) {
-  document.body.classList.remove(
-    "theme-light",
-    "theme-dark",
-    "theme-auto"
-  );
-
-  document.body.classList.add(`theme-${theme}`);
 }
 
 function carregarConfiguracoesNaTela() {
@@ -108,11 +98,7 @@ function carregarConfiguracoesNaTela() {
 
   if (themeSelect) {
     themeSelect.value = perfilLogado.theme || "light";
-
-  aplicarTema(
-    perfilLogado.theme || "light"
-  );
-}
+  }
 }
 
 async function salvarConfiguracoes() {
@@ -127,7 +113,6 @@ async function salvarConfiguracoes() {
   const notifyMessages = document.getElementById("notifyMessages");
 
   const themeSelect = document.getElementById("themeSelect");
-  
 
   const { error } = await supabaseClient
     .from("profiles")
@@ -157,16 +142,9 @@ async function salvarConfiguracoes() {
 
 function configurarBotoes() {
   const saveSettingsBtn = document.getElementById("saveSettingsBtn");
-  const themeSelect = document.getElementById("themeSelect");
 
   if (saveSettingsBtn) {
     saveSettingsBtn.addEventListener("click", salvarConfiguracoes);
-  }
-
-  if (themeSelect) {
-    themeSelect.addEventListener("change", function () {
-      aplicarTema(this.value);
-    });
   }
 }
 
